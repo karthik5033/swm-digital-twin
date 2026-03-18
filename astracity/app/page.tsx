@@ -79,7 +79,8 @@ function ParticleField() {
         if (p.y > window.innerHeight) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 212, 170, ${p.o})`;
+        // Subtle teal particles for the light theme
+        ctx.fillStyle = `rgba(13, 148, 136, ${p.o})`;
         ctx.fill();
       }
       raf = requestAnimationFrame(draw);
@@ -122,21 +123,15 @@ function StatCard({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 0.61, 0.36, 1] }}
-      className="flex flex-col items-center px-6 py-5 rounded-2xl min-w-[170px]"
-      style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.06)',
-        backdropFilter: 'blur(8px)',
-      }}
+      className="flex flex-col items-center px-6 py-5 rounded-2xl min-w-[170px] bg-white border border-slate-200 shadow-sm"
     >
-      <span className="text-3xl md:text-4xl font-bold tabular-nums text-white tracking-tight">
+      <span className="text-3xl md:text-4xl font-extrabold tabular-nums text-teal-600 tracking-tight">
         {prefix}
         {value}
         {suffix}
       </span>
       <span
-        className="mt-2 text-[11px] font-semibold uppercase tracking-[0.12em]"
-        style={{ color: 'rgba(255,255,255,0.4)' }}
+        className="mt-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500"
       >
         {label}
       </span>
@@ -167,27 +162,24 @@ export default function Home() {
   return (
     <div
       id="landing-page"
-      className="relative flex flex-col items-center justify-center text-center overflow-hidden"
-      style={{
-        minHeight: '100vh',
-        /* dark space gradient background */
-        background:
-          'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0,212,170,0.06) 0%, transparent 60%), ' +
-          'radial-gradient(ellipse 60% 50% at 80% 80%, rgba(99,102,241,0.05) 0%, transparent 50%), ' +
-          'linear-gradient(180deg, #070b17 0%, #0a0f1e 40%, #0d1225 100%)',
-      }}
+      className="relative flex flex-col items-center justify-center text-center overflow-hidden bg-slate-50"
+      style={{ minHeight: '100vh' }}
     >
       <ParticleField />
 
       {/* Subtle grid overlay */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025]"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.05]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
+            'linear-gradient(rgba(13,148,136,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(13,148,136,0.3) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
+
+      {/* Background radial gradients for depth */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-teal-100 rounded-full blur-[120px] pointer-events-none opacity-60" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-100 rounded-full blur-[120px] pointer-events-none opacity-60" />
 
       {/* ---- Content ---- */}
       <div className="relative z-10 flex flex-col items-center px-6 py-20 max-w-5xl mx-auto">
@@ -196,16 +188,11 @@ export default function Home() {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8"
-          style={{
-            background: 'rgba(0,212,170,0.08)',
-            border: '1px solid rgba(0,212,170,0.18)',
-          }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 bg-teal-50 border border-teal-200"
         >
           <span className="text-sm">🛰</span>
           <span
-            className="text-[12px] font-semibold tracking-wide"
-            style={{ color: '#00d4aa' }}
+            className="text-[12px] font-bold tracking-wide text-teal-700"
           >
             Space Tech · Solid Waste Intelligence
           </span>
@@ -216,10 +203,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
-          className="text-6xl sm:text-7xl md:text-8xl font-extrabold tracking-tight text-white mb-5"
-          style={{
-            textShadow: '0 0 80px rgba(0,212,170,0.15), 0 0 160px rgba(0,212,170,0.06)',
-          }}
+          className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight text-slate-900 mb-5"
         >
           AstraCity
         </motion.h1>
@@ -229,8 +213,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-lg sm:text-xl md:text-2xl font-medium tracking-wide mb-4"
-          style={{ color: '#00d4aa' }}
+          className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide mb-4 text-teal-600"
         >
           Simulate. Predict. Optimize. Decarbonize.
         </motion.p>
@@ -240,8 +223,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-sm md:text-base max-w-2xl mb-14 leading-relaxed"
-          style={{ color: 'rgba(255,255,255,0.45)' }}
+          className="text-sm md:text-lg max-w-2xl mb-14 leading-relaxed text-slate-600 font-medium"
         >
           A policy simulation AI platform that maps Bengaluru&apos;s waste ecosystem using
           satellite intelligence, predicts illegal dumping, models methane emissions, and
@@ -279,32 +261,16 @@ export default function Home() {
           <Link
             id="enter-astracity-btn"
             href="/map"
-            className="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold transition-all duration-300"
-            style={{
-              background: 'linear-gradient(135deg, #00d4aa, #00b894)',
-              color: '#0a0f1e',
-              boxShadow:
-                '0 0 30px rgba(0,212,170,0.25), 0 4px 20px rgba(0,212,170,0.2)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow =
-                '0 0 50px rgba(0,212,170,0.4), 0 8px 32px rgba(0,212,170,0.35)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow =
-                '0 0 30px rgba(0,212,170,0.25), 0 4px 20px rgba(0,212,170,0.2)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
+            className="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 bg-teal-500 text-white shadow-[0_8px_30px_rgba(20,184,166,0.3)] hover:bg-teal-400 hover:shadow-[0_8px_40px_rgba(20,184,166,0.4)] hover:-translate-y-1"
           >
             Enter AstraCity
             <svg
-              width="18"
-              height="18"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2.5"
+              strokeWidth="3"
               className="transition-transform duration-300 group-hover:translate-x-1"
             >
               <path
@@ -313,13 +279,6 @@ export default function Home() {
                 strokeLinejoin="round"
               />
             </svg>
-            {/* Glow ring */}
-            <span
-              className="absolute inset-0 rounded-xl pointer-events-none animate-pulse"
-              style={{
-                boxShadow: '0 0 40px rgba(0,212,170,0.15)',
-              }}
-            />
           </Link>
         </motion.div>
 
@@ -328,16 +287,13 @@ export default function Home() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.7 }}
-          className="flex flex-wrap justify-center gap-2.5 mt-16"
+          className="flex flex-wrap justify-center gap-3 mt-16"
         >
           {FEATURES.map((f, i) => (
             <span
               key={f}
-              className="px-4 py-1.5 rounded-full text-[12px] font-medium"
+              className="px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-500 border border-slate-200 shadow-sm"
               style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.07)',
-                color: 'rgba(255,255,255,0.5)',
                 animationDelay: `${i * 0.08}s`,
               }}
             >
@@ -348,7 +304,7 @@ export default function Home() {
       </div>
 
       {/* Bottom fade */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0f1e] to-transparent z-[1]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-50 to-transparent z-[1]" />
     </div>
   );
 }
