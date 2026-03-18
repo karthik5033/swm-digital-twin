@@ -69,31 +69,12 @@ export default function MapContainer() {
   const setSelectedWardId = useStore((s) => s.setSelectedWardId);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const initMap = useCallback(async () => {
-    if (map.current || !mapContainer.current) return;
+  useEffect(() => {
+    if (map.current || !mapContainer.current) return; // initialize map only once
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: {
-        version: 8,
-        sources: {
-          osm: {
-            type: 'raster',
-            tiles: ['https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png'],
-            tileSize: 256,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>'
-          }
-        },
-        layers: [
-          {
-            id: 'osm-tiles',
-            type: 'raster',
-            source: 'osm',
-            minzoom: 0,
-            maxzoom: 22
-          }
-        ]
-      },
+      style: 'https://tiles.openfreemap.org/styles/positron',
       center: [77.5946, 12.9716],
       zoom: 11,
       pitch: 40,
@@ -103,6 +84,8 @@ export default function MapContainer() {
     map.current.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
     map.current.on('load', async () => {
+      map.current?.resize(); // <--- Forces MapLibre to read the actual screen dimensions
+
       try {
         const res = await fetch('/api/geojson');
         const geojson = await res.json();
@@ -298,13 +281,12 @@ export default function MapContainer() {
         console.error('Failed to load map data', err);
       }
     });
-  }, [setSelectedWardId]);
 
-  useEffect(() => {
-    initMap();
     return () => {
-      map.current?.remove();
-      map.current = null;
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -320,8 +302,8 @@ export default function MapContainer() {
   }, [activeLayers, mapLoaded]);
 
   return (
-    <div id="map-page" className="relative w-screen bg-slate-100" style={{ height: 'calc(100vh - 65px)' }}>
-      <div ref={mapContainer} className="absolute inset-0" />
+    <div id="map-page" className="relative w-full bg-slate-100" style={{ height: 'calc(100vh - 65px)' }}>
+      <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-50/80 to-transparent z-[1]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-50/80 to-transparent z-[1]" />
       <LayerToggle />
