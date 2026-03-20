@@ -1,0 +1,13 @@
+{
+  "costPerKmTruck": 15.65,
+  "avgCleanupCostPerDump": 52000,
+  "carbonPricePerTon": 1200,
+  "laborCostPerHour": 175,
+  "totalTrucks": 2500,
+  "daysPerYear": 365,
+  "baselineRouteKm": 48,
+  "optimizedRouteKm": 38,
+  "dumpsPreventedPerYear": 847,
+  "methaneReductionTons": 3400,
+  "hoursSavedPerTruckPerDay": 1.2
+}

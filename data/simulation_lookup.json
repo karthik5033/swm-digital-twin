@@ -1,0 +1,272 @@
+{
+  "pop_0_rain_low_festival_none": {
+    "wasteGenerated": 4750,
+    "dumpsPredicted": 51,
+    "landfillInflow": 3325,
+    "methaneProjection": 3192
+  },
+  "pop_0_rain_low_festival_diwali": {
+    "wasteGenerated": 5463,
+    "dumpsPredicted": 58,
+    "landfillInflow": 3823.75,
+    "methaneProjection": 3670.8
+  },
+  "pop_0_rain_low_festival_ganesh": {
+    "wasteGenerated": 5938,
+    "dumpsPredicted": 63,
+    "landfillInflow": 4156.25,
+    "methaneProjection": 3990
+  },
+  "pop_0_rain_normal_festival_none": {
+    "wasteGenerated": 5000,
+    "dumpsPredicted": 53,
+    "landfillInflow": 3500,
+    "methaneProjection": 3360
+  },
+  "pop_0_rain_normal_festival_diwali": {
+    "wasteGenerated": 5750,
+    "dumpsPredicted": 61,
+    "landfillInflow": 4025,
+    "methaneProjection": 3864
+  },
+  "pop_0_rain_normal_festival_ganesh": {
+    "wasteGenerated": 6250,
+    "dumpsPredicted": 67,
+    "landfillInflow": 4375,
+    "methaneProjection": 4200
+  },
+  "pop_0_rain_heavy_festival_none": {
+    "wasteGenerated": 5500,
+    "dumpsPredicted": 59,
+    "landfillInflow": 3850,
+    "methaneProjection": 3696
+  },
+  "pop_0_rain_heavy_festival_diwali": {
+    "wasteGenerated": 6325,
+    "dumpsPredicted": 67,
+    "landfillInflow": 4427.5,
+    "methaneProjection": 4250.4
+  },
+  "pop_0_rain_heavy_festival_ganesh": {
+    "wasteGenerated": 6875,
+    "dumpsPredicted": 73,
+    "landfillInflow": 4812.5,
+    "methaneProjection": 4620
+  },
+  "pop_10_rain_low_festival_none": {
+    "wasteGenerated": 5225,
+    "dumpsPredicted": 56,
+    "landfillInflow": 3657.5,
+    "methaneProjection": 3511.2
+  },
+  "pop_10_rain_low_festival_diwali": {
+    "wasteGenerated": 6009,
+    "dumpsPredicted": 64,
+    "landfillInflow": 4206.12,
+    "methaneProjection": 4037.88
+  },
+  "pop_10_rain_low_festival_ganesh": {
+    "wasteGenerated": 6531,
+    "dumpsPredicted": 70,
+    "landfillInflow": 4571.88,
+    "methaneProjection": 4389
+  },
+  "pop_10_rain_normal_festival_none": {
+    "wasteGenerated": 5500,
+    "dumpsPredicted": 59,
+    "landfillInflow": 3850,
+    "methaneProjection": 3696
+  },
+  "pop_10_rain_normal_festival_diwali": {
+    "wasteGenerated": 6325,
+    "dumpsPredicted": 67,
+    "landfillInflow": 4427.5,
+    "methaneProjection": 4250.4
+  },
+  "pop_10_rain_normal_festival_ganesh": {
+    "wasteGenerated": 6875,
+    "dumpsPredicted": 73,
+    "landfillInflow": 4812.5,
+    "methaneProjection": 4620
+  },
+  "pop_10_rain_heavy_festival_none": {
+    "wasteGenerated": 6050,
+    "dumpsPredicted": 65,
+    "landfillInflow": 4235,
+    "methaneProjection": 4065.6
+  },
+  "pop_10_rain_heavy_festival_diwali": {
+    "wasteGenerated": 6958,
+    "dumpsPredicted": 74,
+    "landfillInflow": 4870.25,
+    "methaneProjection": 4675.44
+  },
+  "pop_10_rain_heavy_festival_ganesh": {
+    "wasteGenerated": 7563,
+    "dumpsPredicted": 81,
+    "landfillInflow": 5293.75,
+    "methaneProjection": 5082
+  },
+  "pop_20_rain_low_festival_none": {
+    "wasteGenerated": 5700,
+    "dumpsPredicted": 61,
+    "landfillInflow": 3990,
+    "methaneProjection": 3830.4
+  },
+  "pop_20_rain_low_festival_diwali": {
+    "wasteGenerated": 6555,
+    "dumpsPredicted": 70,
+    "landfillInflow": 4588.5,
+    "methaneProjection": 4404.96
+  },
+  "pop_20_rain_low_festival_ganesh": {
+    "wasteGenerated": 7125,
+    "dumpsPredicted": 76,
+    "landfillInflow": 4987.5,
+    "methaneProjection": 4788
+  },
+  "pop_20_rain_normal_festival_none": {
+    "wasteGenerated": 6000,
+    "dumpsPredicted": 64,
+    "landfillInflow": 4200,
+    "methaneProjection": 4032
+  },
+  "pop_20_rain_normal_festival_diwali": {
+    "wasteGenerated": 6900,
+    "dumpsPredicted": 74,
+    "landfillInflow": 4830,
+    "methaneProjection": 4636.8
+  },
+  "pop_20_rain_normal_festival_ganesh": {
+    "wasteGenerated": 7500,
+    "dumpsPredicted": 80,
+    "landfillInflow": 5250,
+    "methaneProjection": 5040
+  },
+  "pop_20_rain_heavy_festival_none": {
+    "wasteGenerated": 6600,
+    "dumpsPredicted": 70,
+    "landfillInflow": 4620,
+    "methaneProjection": 4435.2
+  },
+  "pop_20_rain_heavy_festival_diwali": {
+    "wasteGenerated": 7590,
+    "dumpsPredicted": 81,
+    "landfillInflow": 5313,
+    "methaneProjection": 5100.48
+  },
+  "pop_20_rain_heavy_festival_ganesh": {
+    "wasteGenerated": 8250,
+    "dumpsPredicted": 88,
+    "landfillInflow": 5775,
+    "methaneProjection": 5544
+  },
+  "pop_30_rain_low_festival_none": {
+    "wasteGenerated": 6175,
+    "dumpsPredicted": 66,
+    "landfillInflow": 4322.5,
+    "methaneProjection": 4149.6
+  },
+  "pop_30_rain_low_festival_diwali": {
+    "wasteGenerated": 7101,
+    "dumpsPredicted": 76,
+    "landfillInflow": 4970.87,
+    "methaneProjection": 4772.04
+  },
+  "pop_30_rain_low_festival_ganesh": {
+    "wasteGenerated": 7719,
+    "dumpsPredicted": 82,
+    "landfillInflow": 5403.13,
+    "methaneProjection": 5187
+  },
+  "pop_30_rain_normal_festival_none": {
+    "wasteGenerated": 6500,
+    "dumpsPredicted": 69,
+    "landfillInflow": 4550,
+    "methaneProjection": 4368
+  },
+  "pop_30_rain_normal_festival_diwali": {
+    "wasteGenerated": 7475,
+    "dumpsPredicted": 80,
+    "landfillInflow": 5232.5,
+    "methaneProjection": 5023.2
+  },
+  "pop_30_rain_normal_festival_ganesh": {
+    "wasteGenerated": 8125,
+    "dumpsPredicted": 87,
+    "landfillInflow": 5687.5,
+    "methaneProjection": 5460
+  },
+  "pop_30_rain_heavy_festival_none": {
+    "wasteGenerated": 7150,
+    "dumpsPredicted": 76,
+    "landfillInflow": 5005,
+    "methaneProjection": 4804.8
+  },
+  "pop_30_rain_heavy_festival_diwali": {
+    "wasteGenerated": 8223,
+    "dumpsPredicted": 88,
+    "landfillInflow": 5755.75,
+    "methaneProjection": 5525.52
+  },
+  "pop_30_rain_heavy_festival_ganesh": {
+    "wasteGenerated": 8938,
+    "dumpsPredicted": 95,
+    "landfillInflow": 6256.25,
+    "methaneProjection": 6006
+  },
+  "pop_50_rain_low_festival_none": {
+    "wasteGenerated": 7125,
+    "dumpsPredicted": 76,
+    "landfillInflow": 4987.5,
+    "methaneProjection": 4788
+  },
+  "pop_50_rain_low_festival_diwali": {
+    "wasteGenerated": 8194,
+    "dumpsPredicted": 87,
+    "landfillInflow": 5735.63,
+    "methaneProjection": 5506.2
+  },
+  "pop_50_rain_low_festival_ganesh": {
+    "wasteGenerated": 8906,
+    "dumpsPredicted": 95,
+    "landfillInflow": 6234.38,
+    "methaneProjection": 5985
+  },
+  "pop_50_rain_normal_festival_none": {
+    "wasteGenerated": 7500,
+    "dumpsPredicted": 80,
+    "landfillInflow": 5250,
+    "methaneProjection": 5040
+  },
+  "pop_50_rain_normal_festival_diwali": {
+    "wasteGenerated": 8625,
+    "dumpsPredicted": 92,
+    "landfillInflow": 6037.5,
+    "methaneProjection": 5796
+  },
+  "pop_50_rain_normal_festival_ganesh": {
+    "wasteGenerated": 9375,
+    "dumpsPredicted": 100,
+    "landfillInflow": 6562.5,
+    "methaneProjection": 6300
+  },
+  "pop_50_rain_heavy_festival_none": {
+    "wasteGenerated": 8250,
+    "dumpsPredicted": 88,
+    "landfillInflow": 5775,
+    "methaneProjection": 5544
+  },
+  "pop_50_rain_heavy_festival_diwali": {
+    "wasteGenerated": 9488,
+    "dumpsPredicted": 101,
+    "landfillInflow": 6641.25,
+    "methaneProjection": 6375.6
+  },
+  "pop_50_rain_heavy_festival_ganesh": {
+    "wasteGenerated": 10313,
+    "dumpsPredicted": 110,
+    "landfillInflow": 7218.75,
+    "methaneProjection": 6930
+  }
+}

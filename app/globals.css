@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #f8fafc; /* slate-50 */
+    color: #0f172a; /* slate-900 */
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  .dark body {
+    background-color: #020617; /* slate-950 */
+    color: #f8fafc; /* slate-50 */
+  }
+}
+
+/* ---- Mapbox overrides for light theme ---- */
+.maplibregl-popup-content {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a !important;
+}
+
+.maplibregl-popup-close-button {
+  color: rgba(15, 23, 42, 0.5) !important;
+  font-size: 18px !important;
+  right: 6px !important;
+  top: 4px !important;
+}
+
+.maplibregl-popup-close-button:hover {
+  color: #0f172a !important;
+  background: transparent !important;
+}
+
+.maplibregl-popup-tip {
+  border-top-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Light navigation controls */
+.maplibregl-ctrl-group {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+.maplibregl-ctrl-group button {
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.maplibregl-ctrl-group button span {
+  /* No invert for light map */
+}
+
+/* Hide default mapbox attribution for cleaner look */
+.maplibregl-ctrl-attrib {
+  opacity: 0.3;
+}
+
+/* Smooth scrollbar for sidebar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5); /* slate-400 */
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.8);
+}
