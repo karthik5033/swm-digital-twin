@@ -22,9 +22,11 @@ export const HSR_DATA = {
   waste_per_capita: 0.5,
   waste_per_capita_kg: 0.5,
   waste_daily_tons: 23.11,
+  daily_waste_tons: 23.11, // Missing Alias Fixed
   waste_daily_kg: 23110,
   daily_waste_kg: 23110,
   waste_display: '23.1 tons/day',
+  waste_daily_display: '23.1 tons/day',
   daily_waste_display: '23.1 tons/day',
   
   waste_wet_tons: 14.1,
@@ -163,6 +165,7 @@ export const HSR_DATA = {
   annual_savings_carbon_cr: 5.19,
   savings_total_cr: 9.42,
   annual_savings_total_cr: 9.42,
+  annual_savings_total_cr_val: 9.42,
   savings_scaled_198_cr: 1865,
 
   ward: 'HSR Layout',
