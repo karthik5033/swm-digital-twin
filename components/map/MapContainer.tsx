@@ -273,19 +273,94 @@ export default function MapContainer() {
       map.current!.addSource('dryWaste-source', { type: 'geojson', data: DRY_WASTE_GEOJSON });
       map.current!.addSource('processing-source', { type: 'geojson', data: PROCESSING_GEOJSON });
       map.current!.addSource('methane-source', { type: 'geojson', data: METHANE_GEOJSON });
-      map.current!.addSource('wasteZones-source', { type: 'geojson', data: WASTE_ZONES_GEOJSON });
+
       map.current!.addSource('openSpaces-source', { type: 'geojson', data: OPEN_SPACES_GEOJSON });
       map.current!.addSource('segregation-source', { type: 'geojson', data: SEGREGATION_GEOJSON });
       map.current!.addSource('lulc-source', { type: 'geojson', data: LULC_GEOJSON });
-      
       map.current!.addSource('mainRoute-source', { type: 'geojson', data: MAIN_ROUTE_GEOJSON });
       map.current!.addSource('autoRoutes-source', { type: 'geojson', data: AUTO_ROUTES_GEOJSON });
       map.current!.addSource('auto-dots', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
       map.current!.addSource('main-dot', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-
       map.current!.addSource('agara-source', { type: 'geojson', data: AGARA_GEOJSON });
       map.current!.addSource('agara-buffer', { type: 'geojson', data: AGARA_BUFFER_GEOJSON });
       map.current!.addSource('agara-lines', { type: 'geojson', data: AGARA_LINES_GEOJSON });
+
+      // Waste Heatmap: Load buildings_osm.geojson, convert polygons to centroids, assign waste_value
+      fetch('/data/buildings_osm.geojson')
+        .then(res => res.json())
+        .then(data => {
+          if (!map.current) return;
+          // Convert polygons to centroids and assign waste_value
+          const wasteTypeMap = {
+            'Residential (House)': 1.8,
+            'Residential (Apartment)': 8.0,
+            'Commercial/Retail': 2.5,
+            'Office/IT': 18.0,
+            'Hospital/Medical': 120.0,
+            'Restaurant': 10.0,
+            'Educational': 20.0
+          };
+          const features = data.features.map((f: any) => {
+            let coords = f.geometry.coordinates[0];
+            // Calculate centroid
+            let x = 0, y = 0, n = coords.length;
+            coords.forEach((c: any) => { x += c[0]; y += c[1]; });
+            x /= n; y /= n;
+            const type = f.properties.building_type;
+            let waste = wasteTypeMap[type] ?? 1.0;
+            return {
+              type: 'Feature',
+              geometry: { type: 'Point', coordinates: [x, y] },
+              properties: {
+                ...f.properties,
+                waste_value: waste
+              }
+            };
+          });
+          const wastePointGeojson = { type: 'FeatureCollection', features };
+          map.current.addSource('buildings-source', { type: 'geojson', data: wastePointGeojson });
+          // Add heatmap layer
+          map.current.addLayer({
+            id: 'waste-heatmap',
+            type: 'heatmap',
+            source: 'buildings-source',
+            maxzoom: 17,
+            paint: {
+              'heatmap-weight': [
+                'interpolate', ['linear'],
+                ['get', 'waste_value'],
+                0, 0,
+                2, 0.2,
+                10, 0.6,
+                120, 1.0
+              ],
+              'heatmap-intensity': [
+                'interpolate', ['linear'],
+                ['zoom'],
+                12, 0.8,
+                15, 1.5
+              ],
+              'heatmap-color': [
+                'interpolate', ['linear'],
+                ['heatmap-density'],
+                0, 'rgba(0,0,0,0)',
+                0.1, 'rgba(34,197,94,0.3)',
+                0.3, 'rgba(234,179,8,0.5)',
+                0.5, 'rgba(249,115,22,0.7)',
+                0.7, 'rgba(239,68,68,0.8)',
+                1.0, 'rgba(153,27,27,0.9)'
+              ],
+              'heatmap-radius': [
+                'interpolate', ['linear'],
+                ['zoom'],
+                12, 15,
+                14, 25,
+                16, 35
+              ],
+              'heatmap-opacity': 0.65
+            }
+          });
+        });
 
       // Add Layers
       // 1. Dumpyards (red circles)
@@ -324,46 +399,45 @@ export default function MapContainer() {
         layout: { visibility: 'visible' }
       });
 
-      // 5. Waste Zone Polygons
-      map.current!.addLayer({
-        id: 'density',
-        type: 'fill',
-        source: 'wasteZones-source',
-        paint: {
-          'fill-color': ['get', 'color'],
-          'fill-opacity': 0.32
-        },
-        layout: { visibility: 'visible' }
-      });
-      map.current!.addLayer({
-        id: 'density-outline',
-        type: 'line',
-        source: 'wasteZones-source',
-        paint: {
-          'line-color': ['get', 'color'],
-          'line-width': 1.5,
-          'line-opacity': 0.7
-        },
-        layout: { visibility: 'visible' }
-      });
-      map.current!.addLayer({
-        id: 'density-labels',
-        type: 'symbol',
-        source: 'wasteZones-source',
-        layout: {
-          'text-field': ['concat', ['get', 'zone'], ' | ', ['to-string', ['get', 'waste']], ' kg/day'],
-          'text-size': 11,
-          'text-font': ['Open Sans SemiBold', 'Arial Unicode MS Regular'],
-          'text-offset': [0, 0],
-          'text-anchor': 'center',
-          'visibility': 'visible'
-        },
-        paint: {
-          'text-color': '#1e293b',
-          'text-halo-color': '#ffffff',
-          'text-halo-width': 2
-        }
-      });
+      // 5. Real Zone Labels (from building_report.json)
+      fetch('/building_report.json')
+        .then(res => res.json())
+        .then(report => {
+          if (!map.current) return;
+          const zoneLabels = [
+            { id: 'B2', center: [77.6402, 12.9103], label: 'B2 | 2,189 bldgs | 5.1T/day' },
+            { id: 'C3', center: [77.6519, 12.9186], label: 'C3 | 2,082 bldgs | 4.8T/day' },
+            { id: 'B3', center: [77.6519, 12.9103], label: 'B3 | 1,734 bldgs | 4.0T/day' },
+            { id: 'B1', center: [77.6285, 12.9103], label: 'B1 | 1,383 bldgs | 3.2T/day' },
+            { id: 'C2', center: [77.6402, 12.9186], label: 'C2 | 554 bldgs | 1.3T/day' }
+          ];
+          const features = zoneLabels.map(z => ({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: z.center },
+            properties: { label: z.label }
+          }));
+          map.current.addSource('zone-labels', { type: 'geojson', data: { type: 'FeatureCollection', features } });
+          map.current.addLayer({
+            id: 'zone-labels',
+            type: 'symbol',
+            source: 'zone-labels',
+            minzoom: 14,
+            layout: {
+              'text-field': ['get', 'label'],
+              'text-size': 10,
+              'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+              'text-offset': [0, 0],
+              'text-anchor': 'center',
+              'visibility': 'visible',
+              'text-padding': 2
+            },
+            paint: {
+              'text-color': '#fff',
+              'text-halo-color': '#1e293b',
+              'text-halo-width': 2
+            }
+          });
+        });
 
       // 6. Open Spaces (light green polygons)
       map.current!.addLayer({
@@ -569,20 +643,7 @@ export default function MapContainer() {
       setupPopup('dryWaste', p => `<strong>🔵 ${p.name}</strong><br/>Capacity: ${p.capacity}`);
       setupPopup('processing', p => `<strong>🟢 ${p.type}</strong><br/>Capacity: ${p.capacity}`);
       setupPopup('methane', p => `<strong>🟠 ${p.name}</strong><br/>Output: ${p.output}`);
-      setupPopup('density', p => `
-        <div style="font-family:Inter,sans-serif;font-size:12px;width:220px;color:#0f172a">
-          <div style="font-weight:900;font-size:13px;border-bottom:2px solid ${p.color};margin-bottom:6px;padding-bottom:4px">
-            🗺️ ${p.name}
-          </div>
-          <div style="margin-bottom:6px">
-            <b>Daily Waste:</b> <span style="color:${p.color};font-weight:800">${p.waste} kg/day</span><br/>
-            <b>Buildings:</b> ${p.buildings}<br/>
-            <b>Population:</b> ${(p.population as number).toLocaleString()}<br/>
-            <b>Collection:</b> ${p.freq}<br/>
-            <b>Status:</b> <span style="color:${p.color};font-weight:700">${p.status}</span>
-          </div>
-        </div>
-      `);
+      // ...existing code...
       setupPopup('agaraLake-fill', () => `
         <div style="font-family:Inter,sans-serif;font-size:12px;width:240px;color:#0f172a;">
           <div style="font-weight:900;font-size:14px;border-bottom:2px solid #3b82f6;margin-bottom:6px;padding-bottom:4px;display:flex;justify-content:space-between">
@@ -724,29 +785,19 @@ export default function MapContainer() {
       <LayerToggle />
       <WardSidebar />
 
-      {/* Waste Zone Legend - bottom right */}
-      <div className="absolute bottom-6 right-6 z-[10] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-2xl text-white text-xs">
-        <h3 className="font-extrabold uppercase tracking-widest text-slate-300 mb-3 text-[10px] border-b border-slate-700/50 pb-1.5">Waste Zone Legend</h3>
-        <div className="space-y-2">
-          {[
-            { color: '#ef4444', label: '>200 kg/day', level: 'Critical' },
-            { color: '#f97316', label: '150-200 kg/day', level: 'High' },
-            { color: '#f59e0b', label: '100-150 kg/day', level: 'Medium' },
-            { color: '#22c55e', label: '<100 kg/day', level: 'Low' },
-          ].map(({ color, label, level }) => (
-            <div key={level} className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-sm shrink-0" style={{ background: color, opacity: 0.85 }} />
-              <span className="text-slate-300 font-semibold">{label}</span>
-              <span className="ml-auto text-slate-500 font-bold">{level}</span>
-            </div>
-          ))}
+      {/* Waste Intensity Heatmap Legend - bottom right */}
+      <div className="absolute bottom-6 right-6 z-[10] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-xl p-3 shadow-2xl text-white text-xs flex flex-col items-center min-w-[140px]">
+        <div className="font-extrabold uppercase tracking-widest text-slate-300 mb-2 text-[10px]">Waste Intensity</div>
+        <div className="w-28 h-3 rounded-full mb-1 bg-gradient-to-r from-green-500 via-yellow-400 via-orange-500 via-red-500 to-red-900 border border-slate-700/60" style={{background: 'linear-gradient(90deg,#22c55e 0%,#eab308 30%,#f97316 60%,#ef4444 80%,#991b1b 100%)'}} />
+        <div className="flex w-full justify-between text-[10px] text-slate-300 font-bold">
+          <span>Low</span>
+          <span>High</span>
         </div>
       </div>
 
       {/* Building Distribution Card */}
       <div className="absolute bottom-6 left-6 z-[10] w-[350px] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-5 shadow-2xl text-white">
         <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-300 mb-4 border-b border-slate-700/50 pb-2">Building Distribution</h3>
-        
         <div className="space-y-4 mb-5 text-xs font-medium">
           <div>
             <div className="flex justify-between text-slate-300 mb-1"><span>🏠 Residential Houses</span></div>
@@ -765,12 +816,14 @@ export default function MapContainer() {
             <div className="flex items-center gap-3"><div className="h-2 bg-purple-500 rounded-full w-[5%]" /> <span>0.6% | 47</span></div>
           </div>
         </div>
-        
         <div className="flex justify-between border-t border-slate-700/50 pt-3 text-sm mb-4">
           <span className="font-bold text-slate-400">Total Analyzed:</span>
           <span className="font-black text-teal-400">9,471 buildings</span>
         </div>
-
+        <div className="flex justify-between border-t border-slate-700/50 pt-3 text-sm mb-4">
+          <span className="font-bold text-slate-400">Total Waste:</span>
+          <span className="font-black text-orange-400">19.78T waste/day</span>
+        </div>
         <div className="flex flex-wrap gap-2">
           {['All', 'Houses Only', 'Large Only', 'Commercial Only'].map(f => (
             <button 
