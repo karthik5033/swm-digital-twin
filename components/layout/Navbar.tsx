@@ -12,7 +12,6 @@ const MAIN_LINKS = [
   { href: '/osm', label: 'OSM' },
   { href: '/simulation', label: 'Simulation' },
   { href: '/routes', label: 'Routes' },
-  { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
   { href: '/forecast', label: '🔮 Forecast' },
   { href: '/methodology', label: 'Methodology' },
   { href: '/impact', label: 'Impact' },
