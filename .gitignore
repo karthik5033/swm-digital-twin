@@ -43,6 +43,17 @@ data/spaceTech Dataset/output/*.png
 public/data/*.png
 *.tif
 
+# Geospatial dataset shapes
+/DS/
+/DS/**
+*.dbf
+*.shp
+*.shx
+*.prj
+*.cpg
+*.sbn
+*.sbx
+
 # Build / lint logs
 eslint.log
 eslint_output.log

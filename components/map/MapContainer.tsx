@@ -307,7 +307,7 @@ export default function MapContainer() {
             coords.forEach((c: any) => { x += c[0]; y += c[1]; });
             x /= n; y /= n;
             const type = f.properties.building_type;
-            let waste = wasteTypeMap[type] ?? 1.0;
+            let waste = (wasteTypeMap as any)[type] ?? 1.0;
             return {
               type: 'Feature',
               geometry: { type: 'Point', coordinates: [x, y] },
@@ -317,7 +317,7 @@ export default function MapContainer() {
               }
             };
           });
-          const wastePointGeojson = { type: 'FeatureCollection', features };
+          const wastePointGeojson: any = { type: 'FeatureCollection', features };
           map.current.addSource('buildings-source', { type: 'geojson', data: wastePointGeojson });
           // Add heatmap layer
           map.current.addLayer({
@@ -416,7 +416,7 @@ export default function MapContainer() {
             geometry: { type: 'Point', coordinates: z.center },
             properties: { label: z.label }
           }));
-          map.current.addSource('zone-labels', { type: 'geojson', data: { type: 'FeatureCollection', features } });
+          map.current.addSource('zone-labels', { type: 'geojson', data: { type: 'FeatureCollection', features } as any });
           map.current.addLayer({
             id: 'zone-labels',
             type: 'symbol',

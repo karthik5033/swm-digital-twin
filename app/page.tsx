@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { HSR_DATA } from '@/lib/constants';
 import wardScoresData from '@/data/ward_scores.json';
 
 // Animated counter hook
@@ -93,14 +94,14 @@ function ParticleField() {
 }
 
 // Dark Stat card
-function StatCard({ value, prefix, suffix, label, delay }: { value: string; prefix?: string; suffix?: string; label: string; delay: number }) {
+function StatCard({ value, prefix, suffix, label, subtext, delay }: { value: string; prefix?: string; suffix?: string; label: string; subtext?: string; delay: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay, ease: [0.22, 0.61, 0.36, 1] }}
-      className="flex flex-col items-center px-6 py-5 rounded-2xl min-w-[170px] bg-white border border-slate-200 dark:border-teal-500/20 dark:bg-white/5 shadow-sm dark:shadow-[0_0_15px_rgba(45,212,191,0.05)] backdrop-blur-sm transition-colors"
+      className="flex flex-col items-center px-6 py-5 rounded-2xl min-w-[200px] bg-white border border-slate-200 dark:border-teal-500/20 dark:bg-white/5 shadow-sm dark:shadow-[0_0_15px_rgba(45,212,191,0.05)] backdrop-blur-sm transition-colors text-center"
     >
       <span className="text-3xl md:text-4xl font-extrabold tabular-nums tracking-tight text-[#2dd4bf]" style={{ fontFamily: 'var(--font-space-mono)' }}>
         {prefix}{value}{suffix}
@@ -108,6 +109,11 @@ function StatCard({ value, prefix, suffix, label, delay }: { value: string; pref
       <span className="mt-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
         {label}
       </span>
+      {subtext && (
+        <span className="mt-1.5 text-[10px] font-medium text-slate-500 max-w-[180px] leading-tight">
+          {subtext}
+        </span>
+      )}
     </motion.div>
   );
 }
@@ -119,13 +125,14 @@ const FEATURES = [
   { title: 'Methane Mapping', desc: 'Monitor atmospheric methane buildup and calculate carbon offsets.', icon: '☁️' },
   { title: 'Route Optimization', desc: 'Cut millions in fuel waste by dynamically rerouting collection vehicles.', icon: '🚛' },
   { title: 'Economic Analytics', desc: 'Translate environmental impact directly into quantifiable rupees saved.', icon: '💰' },
-  { title: 'Policy Simulation', desc: 'Pressure-test the city against population surges and heavy monsoons.', icon: '📊' },
+  { title: 'Carbon Intelligence', desc: 'Track CO2e captures and carbon credit valuation across the ward.', icon: '🌿' },
 ];
 
 export default function Home() {
-  const savedCrores = useCounter(4.2, 2.4, 1);
-  const dumpsDetected = useCounter(847, 2.6);
-  const methaneReduction = useCounter(23, 2.0);
+  const population = useCounter(HSR_DATA.population_building_based, 2.4, 0);
+  const totalWaste = useCounter(HSR_DATA.daily_waste_tons, 2.6, 1); 
+  const routeSaving = useCounter(HSR_DATA.route_improvement_pct, 2.0, 1);
+  const savedCrores = useCounter(HSR_DATA.annual_savings_total_cr, 2.0, 1);
 
   return (
     <div className="bg-slate-50 dark:bg-[#03080f] text-slate-900 dark:text-slate-200 min-h-screen relative overflow-hidden flex flex-col font-sans transition-colors">
@@ -171,15 +178,14 @@ export default function Home() {
            transition={{ duration: 0.8, delay: 0.6 }}
            className="text-base md:text-xl max-w-3xl mb-14 leading-relaxed text-slate-600 dark:text-slate-400"
         >
-          A policy simulation AI platform that maps Bengaluru&apos;s waste ecosystem using
-          satellite intelligence, predicts illegal dumping, models methane emissions, and
-          quantifies ₹ crores in government savings.
+          Satellite + Census intelligence for HSR Layout's 46,219 residents across 7 sectors, 18.5 sq km, 9,471 buildings.
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
-          <StatCard value={savedCrores} prefix="₹" suffix=" Cr" label="Saved Annually" delay={0.8} />
-          <StatCard value={dumpsDetected} label="Dumps Detected" delay={0.9} />
-          <StatCard value={methaneReduction} suffix="%" label="Methane Reduced" delay={1.0} />
+          <StatCard value={population} label="Residents (2025)" subtext="Building × Census 2011 Karnataka" delay={0.8} />
+          <StatCard value={totalWaste} suffix=" Tons" label="Daily waste generated" subtext="CPCB 0.5kg/person · 9,471 buildings" delay={0.9} />
+          <StatCard value={routeSaving} suffix="%" label="Route optimization" subtext="132km → 32km · 2,027 road segments" delay={1.0} />
+          <StatCard value={savedCrores} prefix="₹" suffix=" Crores" label="Annual value identified" subtext="₹4.2Cr ops + ₹5.2Cr carbon credits" delay={1.1} />
         </div>
       </section>
 

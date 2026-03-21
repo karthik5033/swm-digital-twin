@@ -1,0 +1,53 @@
+{
+  "ward": "HSR Layout",
+  "analysis_type": "Methane & Biogas",
+  "inputs": {
+    "wet_waste_tons_day": 14.19,
+    "wet_waste_kg_day": 14190.0,
+    "ch4_factor_ipcc": 0.25,
+    "source": "IPCC Guidelines 2006, Controlled Anaerobic Digestion"
+  },
+  "methane": {
+    "ch4_m3_per_day": 3547.5,
+    "ch4_kg_per_day": 2540.0,
+    "ch4_tons_per_day": 2.54,
+    "ch4_tons_per_year": 927.1
+  },
+  "climate": {
+    "gwp_ch4": 28,
+    "co2e_tons_per_day": 71.1,
+    "co2e_tons_per_year": 25958.9,
+    "source": "IPCC AR5 GWP100"
+  },
+  "energy": {
+    "kwh_per_day": 21285.0,
+    "kwh_per_year": 7769025.0,
+    "homes_powered_per_day": 7095.0
+  },
+  "carbon_credits": {
+    "rate_inr_per_ton": 2000,
+    "annual_inr": 51917804.0,
+    "annual_crores": 5.19,
+    "source": "India carbon market 2024"
+  },
+  "methane_risk": "LOW",
+  "risk_reason": "Zero open dumpyards, all CH4 controlled",
+  "infrastructure": {
+    "bio_meth_units": 2,
+    "open_dumpyards": 0,
+    "swachagraha_kalika_kendra": {
+      "location": "Sector 4 BBMP Park",
+      "features": [
+        "Community composting",
+        "Home composting models",
+        "BBMP approved"
+      ],
+      "source": "Wikipedia + OpenCity"
+    },
+    "kudlu_biogas": {
+      "status": "Under construction",
+      "location": "Kudlu, near HSR Layout",
+      "source": "Deccan Herald"
+    }
+  }
+}

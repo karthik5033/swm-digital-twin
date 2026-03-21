@@ -1,0 +1,220 @@
+{
+  "ward": "HSR Layout",
+  "city": "Bengaluru",
+  "ward_number": "174",
+  "last_updated": "2025",
+  "area": {
+    "sq_km": 18.5,
+    "hectares": 1850.0,
+    "note": "From HSR_Layout_SD.tif coverage"
+  },
+  "population": {
+    "census_2011": 63033,
+    "male_2011": 93782,
+    "female_2011": 82413,
+    "growth_rate_pct": 4.5,
+    "projection_year": 2025,
+    "population_2025": 115000,
+    "density_per_sqkm": 6216,
+    "source": "Census 2011 Ward 174 + 4.5% growth"
+  },
+  "waste": {
+    "per_capita_kg_day": 0.45,
+    "total_kg_day": 51750.0,
+    "total_tons_day": 51.75,
+    "wet_compostable_kg": 28462.500000000004,
+    "wet_compostable_tons": 28.462500000000002,
+    "wet_pct": 55.00000000000001,
+    "dry_recyclable_kg": 18112.5,
+    "dry_recyclable_tons": 18.1125,
+    "dry_pct": 35.0,
+    "hazardous_kg": 2587.5,
+    "hazardous_tons": 2.5875,
+    "hazardous_pct": 5.0,
+    "other_street_kg": 2587.5,
+    "other_street_tons": 2.5875,
+    "other_pct": 5.0,
+    "sources": {
+      "bbmp_official": {
+        "url": "bbmp.gov.in",
+        "rate_g_per_household": 309,
+        "household_pct": 58.5,
+        "commercial_pct": 49.7,
+        "street_sweeping_pct": 6.8
+      },
+      "cpcb_59_cities": {
+        "wet_pct_range": "40-60%",
+        "dry_pct_range": "10-25%",
+        "rate_range_kg": "0.12-0.60"
+      },
+      "cpcb_south_india": {
+        "rate_g_per_capita": 560
+      },
+      "methodology": "Conservative average of BBMP (309g) and CPCB South India (560g) = 435g, rounded to 450g for conservative estimate"
+    }
+  },
+  "waste_composition_history": [
+    {
+      "year": 1999,
+      "wet_organic_pct": 42,
+      "dry_recyclable_pct": 41,
+      "other_pct": 17,
+      "source": "BBMP Official Report"
+    },
+    {
+      "year": 2013,
+      "wet_organic_pct": 61,
+      "dry_recyclable_pct": 25,
+      "other_pct": 14,
+      "source": "BBMP Official Report"
+    },
+    {
+      "year": 2026,
+      "wet_organic_pct": 63,
+      "dry_recyclable_pct": 28,
+      "other_pct": 9,
+      "source": "Projected trend"
+    }
+  ],
+  "composition_insight": "Organic waste increased from 42% (1999) to 61% (2013) — a 19% rise in 14 years. Bio-methanisation infrastructure is critical for HSR Layout's waste management.",
+  "buildings": {
+    "total": 9471,
+    "density_per_sqkm": 511.9,
+    "type_breakdown": {
+      "Residential (House)": {
+        "count": 8998,
+        "pct": 95.0
+      },
+      "Residential (Apartment)": {
+        "count": 250,
+        "pct": 2.6
+      },
+      "Commercial/Retail": {
+        "count": 137,
+        "pct": 1.4
+      },
+      "Office/IT": {
+        "count": 39,
+        "pct": 0.4
+      },
+      "Educational": {
+        "count": 15,
+        "pct": 0.2
+      },
+      "Religious": {
+        "count": 10,
+        "pct": 0.1
+      },
+      "Hospital/Medical": {
+        "count": 2,
+        "pct": 0.0
+      },
+      "Government/Civic": {
+        "count": 3,
+        "pct": 0.0
+      },
+      "Other": {
+        "count": 17,
+        "pct": 0.2
+      }
+    },
+    "area_stats": {
+      "average_sqm": 163,
+      "median_sqm": 114.8,
+      "largest_sqm": 5836,
+      "total_footprint_ha": 154.4
+    },
+    "source": "OpenStreetMap buildings_osm.geojson"
+  },
+  "roads": {
+    "total_segments": 2027,
+    "density_per_sqkm": 109.6,
+    "type_breakdown": {
+      "trunk": {
+        "count": 38,
+        "pct": 1.9,
+        "vehicle": "Large Truck"
+      },
+      "primary": {
+        "count": 10,
+        "pct": 0.5,
+        "vehicle": "Large Truck"
+      },
+      "secondary": {
+        "count": 113,
+        "pct": 5.6,
+        "vehicle": "Truck"
+      },
+      "tertiary": {
+        "count": 191,
+        "pct": 9.4,
+        "vehicle": "Truck"
+      },
+      "residential": {
+        "count": 840,
+        "pct": 41.4,
+        "vehicle": "Auto Rickshaw"
+      },
+      "service": {
+        "count": 179,
+        "pct": 8.8,
+        "vehicle": "Auto Rickshaw"
+      },
+      "footway": {
+        "count": 509,
+        "pct": 25.1,
+        "vehicle": "Walk/Handcart"
+      },
+      "path": {
+        "count": 51,
+        "pct": 2.5,
+        "vehicle": "Walk/Handcart"
+      }
+    },
+    "two_tier_system": {
+      "truck_accessible": {
+        "segments": 352,
+        "percentage": 17.4,
+        "types": [
+          "trunk",
+          "primary",
+          "secondary",
+          "tertiary"
+        ]
+      },
+      "auto_accessible": {
+        "segments": 1579,
+        "percentage": 77.9,
+        "types": [
+          "residential",
+          "service",
+          "footway",
+          "path"
+        ]
+      },
+      "total_coverage_pct": 95.3
+    },
+    "source": "OpenStreetMap hsr_road_network.geojson"
+  },
+  "infrastructure": {
+    "dwcc_centers": 16,
+    "bio_methanisation_units": 2,
+    "dumpyards": 0,
+    "sectors": 7
+  },
+  "satellite": {
+    "image": "HSR_Layout_SD.tif",
+    "size_pixels": "1002x740",
+    "bands": 3,
+    "size_mb": 4.25
+  },
+  "bbmp_city_context": {
+    "bengaluru_total_tpd_min": 3000,
+    "bengaluru_total_tpd_max": 3500,
+    "wet_processing_plants": 7,
+    "wet_processing_capacity_tpd": 1570,
+    "bio_methanation_plants": 13,
+    "bio_methanation_capacity_tpd": 65,
+    "hsr_as_pct_of_city": 1.73
+  }
+}
