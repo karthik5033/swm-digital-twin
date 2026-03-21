@@ -17,6 +17,7 @@ const LINKS = [
   { href: '/wards', label: 'Wards' },
   { href: '/report', label: 'Report' },
   { href: '/economics', label: 'Economics' },
+  { href: '/routing', label: 'Routing' },
 ];
 
 export default function Navbar() {

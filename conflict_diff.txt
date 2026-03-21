@@ -1,0 +1,136 @@
+﻿diff --cc components/map/SmartMap.tsx
+index 4a554be,bfec812..0000000
+--- a/components/map/SmartMap.tsx
++++ b/components/map/SmartMap.tsx
+@@@ -195,8 -178,126 +195,131 @@@ export default function SmartMap() 
+          }
+        }));
+  
+++<<<<<<< HEAD
+ +      // NOTE: We do not addSource('zone-grid-source') here because the main Grid logic is defined at line 629.
+ +      // This block is preserved purely to compute the features if needed, but the rendering is handled by 'zone-grid-poly' below securely.
+++=======
++       m.addSource('zone-grid-source', {
++         type: 'geojson',
++         data: { type: 'FeatureCollection', features: zoneFeatures }
++       });
++ 
++       m.addLayer({
++         id: 'zone-grid-fill',
++         type: 'fill',
++         source: 'zone-grid-source',
++         layout: { visibility: 'none' },
++         paint: {
++           'fill-color': [
++             'interpolate', ['linear'], ['get', 'waste_kg_day'],
++             0,   '#22c55e',   // green
++             100, '#f59e0b',   // amber
++             200, '#ef4444',   // red
++             400, '#7f1d1d'    // dark red
++           ],
++           'fill-opacity': 0.45
++         }
++       });
++ 
++       m.addLayer({
++         id: 'zone-grid-border',
++         type: 'line',
++         source: 'zone-grid-source',
++         layout: { visibility: 'none' },
++         paint: {
++           'line-color': '#ffffff',
++           'line-width': 1.5,
++           'line-opacity': 0.7,
++           'line-dasharray': [3, 2]
++         }
++       });
++ 
++       m.addLayer({
++         id: 'zone-grid-labels',
++         type: 'symbol',
++         source: 'zone-grid-source',
++         layout: {
++           visibility: 'none',
++           'text-field': [
++             'concat',
++             ['get', 'zone_id'],
++             '\n',
++             ['to-string', ['round', ['get', 'waste_kg_day']]],
++             ' kg'
++           ],
++           'text-size': 11,
++           'text-anchor': 'center',
++           'text-justify': 'center',
++           'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold']
++         },
++         paint: {
++           'text-color': '#ffffff',
++           'text-halo-color': '#000000',
++           'text-halo-width': 1.5
++         }
++       });
++ 
++       m.on('click', 'zone-grid-fill', (e) => {
++         const props = e.features?.[0]?.properties as any;
++         if (!props) return;
++         
++         const riskColor = { high: '#ef4444', medium: '#f59e0b', low: '#22c55e' }[props.risk as string] || '#6b7280';
++         const riskBadge = `<span style="background:${riskColor}22;color:${riskColor};border:1px solid ${riskColor};padding:2px 8px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;">${props.risk} risk</span>`;
++ 
++         const wkg = Math.round(props.waste_kg_day);
++         const wetT = (wkg * 0.61 / 1000).toFixed(2);
++         const dryT = (wkg * 0.30 / 1000).toFixed(2);
++         const hazT = (wkg * 0.05 / 1000).toFixed(2);
++ 
++         new maplibregl.Popup({ maxWidth: '300px', className: 'zone-popup' })
++           .setLngLat(e.lngLat)
++           .setHTML(`
++             <div style="background:#111827;color:white;padding:14px;border-radius:8px;font-family:sans-serif;width:265px;box-sizing:border-box;">
++               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
++                 <span style="font-size:16px;font-weight:bold;color:#00d4aa;text-shadow:none;">Zone ${props.zone_id}</span>${riskBadge}
++               </div>
++               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
++                 <div style="background:#1f2937;padding:8px;border-radius:6px;">
++                   <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Waste/Day</div>
++                   <div style="color:#f59e0b;font-size:16px;font-weight:bold;text-shadow:none;">${wkg} kg</div>
++                 </div>
++                 <div style="background:#1f2937;padding:8px;border-radius:6px;">
++                   <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Population</div>
++                   <div style="color:#00d4aa;font-size:16px;font-weight:bold;text-shadow:none;">${Number(props.population).toLocaleString()}</div>
++                 </div>
++                 <div style="background:#1f2937;padding:8px;border-radius:6px;">
++                   <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Residential</div>
++                   <div style="color:white;font-size:16px;font-weight:bold;text-shadow:none;">${props.residential} bldgs</div>
++                 </div>
++                 <div style="background:#1f2937;padding:8px;border-radius:6px;">
++                   <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Commercial</div>
++                   <div style="color:white;font-size:16px;font-weight:bold;text-shadow:none;">${props.commercial} bldgs</div>
++                 </div>
++               </div>
++               <div style="background:#0f172a;border:1px solid #1e3a5f;padding:10px;border-radius:8px;margin-bottom:8px;">
++                 <div style="color:#3b82f6;font-size:10px;font-weight:bold;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.06em;">WASTE JOURNEY (BBMP 2013)</div>
++                 <div style="display:grid;gap:4px;">
++                   <div style="color:#22c55e;font-size:11px;">≡ƒƒó ${Math.round(wkg*0.61)}kg ΓåÆ <span style="color:#94a3b8;">Bio-methanisation unit</span></div>
++                   <div style="color:#3b82f6;font-size:11px;">≡ƒö╡ ${Math.round(wkg*0.30)}kg ΓåÆ <span style="color:#94a3b8;">Nearest DWCC centre</span></div>
++                   <div style="color:#ef4444;font-size:11px;">≡ƒö┤ ${Math.round(wkg*0.05)}kg ΓåÆ <span style="color:#94a3b8;">Special contractor pickup</span></div>
++                 </div>
++               </div>
++               <div style="background:#1f2937;padding:8px;border-radius:6px;font-size:11px;color:#94a3b8;line-height:1.4;text-shadow:none;">
++                 ${props.risk === 'high' ? 'ΓÜá∩╕Å Priority collection zone ΓÇö schedule daily pickup' : props.risk === 'medium' ? '≡ƒôï Standard collection ΓÇö every 2 days' : 'Γ£à Low priority ΓÇö weekly collection sufficient'}
++               </div>
++               <div style="font-size:9px;color:#475569;margin-top:6px;text-align:center">
++                 Composition: BBMP Official 2013 ┬╖ Rate: CPCB 0.5kg/person/day
++               </div>
++             </div>
++           `)
++           .addTo(m);
++       });
++ 
++       m.on('mouseenter', 'zone-grid-fill', () => { m.getCanvas().style.cursor = 'pointer'; });
++       m.on('mouseleave', 'zone-grid-fill', () => { m.getCanvas().style.cursor = ''; });
++ 
++ 
+++>>>>>>> efac54e92f0ed07b70e2b1ecb70e90e30ba6ad11
+        // ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ Road Network ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+        m.addSource('roads-source', { type: 'geojson', data: roads });
+        m.addLayer({

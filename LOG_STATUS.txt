@@ -1,0 +1,107 @@
+﻿commit c414f3a271342dd32511daa25f320fc9969a652a
+Merge: 9547944 efac54e
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sun Mar 22 00:40:11 2026 +0530
+
+    Merge branch 'main' of https://github.com/karthik5033/AstraSky
+    
+    # Conflicts:
+    #       components/map/SmartMap.tsx
+
+commit 95479443f7e2d23600f55bdb9dd1c60527f8b224
+Merge: a56e992 b4d715e
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sun Mar 22 00:11:38 2026 +0530
+
+    Merged remote changes with algorithmic UI
+
+commit a56e9923d471b0d316d1690bc57ce3ae163a66a8
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sat Mar 21 23:56:18 2026 +0530
+
+    UI algorithmic components fully evaluated correctly with Math evaluation arrays mapped to real zones. Maps successfully rendered to correct constraints.
+
+M	app/routing/page.tsx
+M	components/map/SmartMap.tsx
+A	temp_smartmap.tsx
+A	temp_smartmap2.tsx
+
+commit ac3153153cbeaccdf7af4a40783725071da22b9d
+Merge: 18542d5 1376a72
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sat Mar 21 23:01:50 2026 +0530
+
+    Auto-resolved map bounds and accepted grid strategy changes
+
+commit 18542d51d4d50c4623ab38a39917f1ca3003a8bf
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sat Mar 21 22:57:28 2026 +0530
+
+    chore: save local routing before pull
+
+M	app/economics/page.tsx
+A	app/routing/page.tsx
+M	components/layout/Navbar.tsx
+M	components/map/SmartMap.tsx
+
+commit 98eb96ef196631cf73e256de0e3ad5af12072160
+Author: KishanSShetty <kishanshetty.udupika20@gmail.com>
+Date:   Sat Mar 21 22:41:28 2026 +0530
+
+    feat: sync live economic engine calculations and UI updates
+
+A	BBMP Vehicle System Analysis.md
+A	DS/Bengaluru_BBMP_Boundary/Bengaluru_BBMP_Boundary/BBMP_Boundary.cpg
+A	DS/Bengaluru_BBMP_Boundary/Bengaluru_BBMP_Boundary/BBMP_Boundary.dbf
+A	DS/Bengaluru_BBMP_Boundary/Bengaluru_BBMP_Boundary/BBMP_Boundary.prj
+A	DS/Bengaluru_BBMP_Boundary/Bengaluru_BBMP_Boundary/BBMP_Boundary.shp
+A	DS/Bengaluru_BBMP_Boundary/Bengaluru_BBMP_Boundary/BBMP_Boundary.shx
+A	DS/HSR_Layput/HSR Layout/HSR Layout Road Network/HSR Layout.cpg
+A	DS/HSR_Layput/HSR Layout/HSR Layout Road Network/HSR Layout.dbf
+A	DS/HSR_Layput/HSR Layout/HSR Layout Road Network/HSR Layout.prj
+A	DS/HSR_Layput/HSR Layout/HSR Layout Road Network/HSR Layout.shp
+A	DS/HSR_Layput/HSR Layout/HSR Layout Road Network/HSR Layout.shx
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_Layout.cpg
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_Layout.dbf
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_Layout.prj
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_Layout.shp
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_Layout.shx
+A	DS/HSR_Layput/HSR Layout/HSR Layout Ward Boundary/HSR_clipped.tif.aux.xml
+A	DS/HSR_Layput/HSR Layout/Satellite Data/HSR_Layout_SD.tif.aux.xml
+A	DS/HSR_Layput/HSR Layout/analyze_datasets.py
+A	DS/HSR_Layput/HSR Layout/output.txt
+A	DS/Road_Network/Bengaluru Road Network/Bengaluru Road Network R&U.cpg
+A	DS/Road_Network/Bengaluru Road Network/Bengaluru Road Network R&U.dbf
+A	DS/Road_Network/Bengaluru Road Network/Bengaluru Road Network R&U.prj
+A	DS/Road_Network/Bengaluru Road Network/Bengaluru Road Network R&U.shp
+A	DS/Road_Network/Bengaluru Road Network/Bengaluru Road Network R&U.shx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.cpg
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.dbf
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.prj
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.sbn
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.sbx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.shp
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_BIO-Methanisation.shx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.cpg
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.dbf
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.prj
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.sbn
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.sbx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.shp
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dry_Waste_Collection_Centres.shx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dumpyards.prj
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dumpyards.sbn
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dumpyards.sbx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dumpyards.shp
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Dumpyards.shx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.cpg
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.dbf
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.prj
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.sbn
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.sbx
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.shp
+A	DS/Waste methane dumpyards centers/Dry Waste Collection,Waste Processing & Landfill Locations/BBMP_Waste_Processing_Units.shx
+A	Data Analysis/BBMP_Ward_Level_Waste_Report.md
+A	Data Analysis/dataset_summary.md
+A	Data Analysis/generate_ward_report.py
+A	Data Analysis/hsr_layout_dataset_analysis.md
