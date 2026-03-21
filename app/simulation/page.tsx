@@ -66,7 +66,7 @@ export default function SimulationPanel() {
 
   const baselineValues = {
     wasteGenerated: HSR_DATA.daily_waste_tons || 23.11,
-    dumpsPredicted: HSR_DATA.dump_sites_detected || 29,
+    dumpsPredicted: HSR_DATA.dump_sites_detected || 4,
     landfillInflow: Math.round((HSR_DATA.daily_waste_tons || 23.11) * 0.65), // Estimate based on 110t
     methaneProjection: 420,
     subRoadCoverage: 89,
@@ -83,7 +83,7 @@ export default function SimulationPanel() {
     
     setTimeout(() => {
       const baseWaste = HSR_DATA.daily_waste_tons || 23.11;
-      const baseDumps = HSR_DATA.dump_sites_detected || 29;
+      const baseDumps = HSR_DATA.dump_sites_detected || 4;
       let newCoverage = 89;
       let newCost = 2100;
 

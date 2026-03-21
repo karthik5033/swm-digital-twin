@@ -2,10 +2,10 @@ import json
 import struct
 import os
 
-BASE_DIR = r'c:\Users\Kishan Shetty\Downloads\Spacetech'
-DATA_DIR = os.path.join(BASE_DIR, r'Waste methane dumpyards centers\Dry Waste Collection,Waste Processing & Landfill Locations')
-GEOJSON_PATH = r'c:\Users\Kishan Shetty\Downloads\AstraSky-main\AstraSky-main\astracity\data\bengaluru_wards.geojson'
-OUTPUT_MD = os.path.join(BASE_DIR, 'BBMP_Ward_Level_Waste_Report.md')
+BASE_DIR = r'c:\Users\Kishan Shetty\Downloads\AstraSky-maing'
+DATA_DIR = os.path.join(BASE_DIR, r'DS\Waste methane dumpyards centers\Dry Waste Collection,Waste Processing & Landfill Locations')
+GEOJSON_PATH = r'c:\Users\Kishan Shetty\Downloads\AstraSky-maing\public\data\bengaluru_wards.geojson'
+OUTPUT_MD = os.path.join(BASE_DIR, r'Data Analysis\BBMP_Ward_Level_Waste_Report.md')
 
 def read_shp_pointz(path):
     points = []
@@ -169,8 +169,8 @@ def main():
             land_c = stats['Dumpyards/Landfills']
             md.write(f"| Dumpyards/Landfills | **{land_c}** | {'🔴 CRITICAL METHANE EMITTER' if land_c > 0 else '⚪ None'} |\n\n")
             
-            # Coordinates list if they have any WPUs, Dumpyards or Bio
-            critical_points = [p for p in stats['Points'] if p[0] != 'Dry Waste Collection Centres']
+            # Coordinates list including DWCCs
+            critical_points = stats['Points']
             if critical_points:
                 md.write("**Critical Methane Infrastructure Locations:**\n")
                 for kind, lat, lon in critical_points:

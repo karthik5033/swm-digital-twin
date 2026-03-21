@@ -8,9 +8,10 @@ const LAYERS: { id: LayerId; label: string; color: string; glowColor: string }[]
   { id: 'mainRoute', label: 'Main Truck Route', color: '#22c55e', glowColor: 'rgba(34,197,94,0.35)' },
   { id: 'autoRoutes', label: 'Feeding Auto Routes', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
   { id: 'dumps', label: 'Dumpyards', color: '#ef4444', glowColor: 'rgba(239,68,68,0.35)' },
-  { id: 'dryWaste', label: 'Dry Waste Centres', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
+  { id: 'dryWaste', label: 'DWCC Centres', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
   { id: 'processing', label: 'Waste Processing Units', color: '#10b981', glowColor: 'rgba(16,185,129,0.35)' },
-  { id: 'methane', label: 'Bio Methanisation', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
+  { id: 'methane', label: 'Bio-meth Plant', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
+  { id: 'compost', label: 'Composting Centre', color: '#22c55e', glowColor: 'rgba(34,197,94,0.35)' },
   { id: 'density', label: 'Waste Zones', color: '#ef4444', glowColor: 'rgba(239,68,68,0.35)' },
   { id: 'openSpaces', label: 'Open Spaces', color: '#86efac', glowColor: 'rgba(134,239,172,0.35)' },
   { id: 'segregation', label: 'Segregation Zones', color: '#eab308', glowColor: 'rgba(234,179,8,0.35)' },
@@ -133,14 +134,19 @@ export default function LayerToggle() {
 
         {/* ---- Footer status ---- */}
         <div
-          className="px-4 py-2.5 text-[11px] font-medium tracking-wide uppercase"
+          className="px-4 py-2.5 text-[11px] font-medium tracking-wide uppercase flex flex-col gap-2"
           style={{
             color: 'rgba(255,255,255,0.25)',
             borderTop: '1px solid rgba(255,255,255,0.05)',
             letterSpacing: '0.05em',
           }}
         >
-          {Object.values(activeLayers).filter(Boolean).length} of {LAYERS.length} active
+          <span>{Object.values(activeLayers).filter(Boolean).length} of {LAYERS.length} active</span>
+          
+          <div className="bg-emerald-500/10 text-emerald-400/80 border border-emerald-500/20 p-2 rounded-lg text-[9px] normal-case tracking-normal">
+             <strong className="block mb-0.5 text-emerald-300">Infrastructure data: </strong>
+             BBMP Official Shapefiles (Hackathon Dataset 2026)
+          </div>
         </div>
       </div>
     </div>

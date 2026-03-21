@@ -41,9 +41,33 @@ export default function ImpactDashboard() {
   const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // States from Remote
+  const [totalBuildings, setTotalBuildings] = useState<number | string>("9,471");
+  const [dailyWaste, setDailyWaste] = useState<number | string>("19.78");
+  const [dumpSites, setDumpSites] = useState<number | string>("29");
+  const [routeSaving, setRouteSaving] = useState<number | string>("75.5");
+  const [apiStatus, setApiStatus] = useState<"connected" | "cached" | "loading">("loading");
+
   useEffect(() => {
     setMounted(true);
     const t = setTimeout(() => setIsLoading(false), 600);
+    
+    // Fetch Remote Real-time Data
+    fetch('http://localhost:8000/ward-stats')
+      .then(res => res.json())
+      .then(data => {
+        setTotalBuildings(data.buildings.toLocaleString())
+        setDailyWaste(data.daily_waste_tons)
+        setDumpSites(data.dump_sites)
+        setRouteSaving(data.route_saving_percent)
+        setApiStatus('connected');
+      })
+      .catch(() => {
+        setTotalBuildings("9,471")
+        setDailyWaste("19.78")
+        setApiStatus('cached');
+      });
+
     return () => clearTimeout(t);
   }, []);
 
@@ -134,7 +158,19 @@ export default function ImpactDashboard() {
         
         {/* SECTION 1: HSR Layout Overview Cards */}
         <section className="mb-12">
-          <h2 className="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">HSR Layout Overview</h2>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">HSR Layout Overview</h2>
+            {apiStatus !== 'loading' && (
+              <div className={`px-4 py-2 rounded-full border text-sm font-bold flex items-center gap-2 ${
+                apiStatus === 'connected' 
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                  : 'bg-rose-50 text-rose-700 border-rose-200'
+              }`}>
+                <span className={`w-2.5 h-2.5 rounded-full ${apiStatus === 'connected' ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                {apiStatus === 'connected' ? 'Backend Connected' : 'Using Cached Data'}
+              </div>
+            )}
+          </div>
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array.from({ length: 4 }).map((_, idx) => <Skeleton key={idx} className="h-[210px] w-full rounded-3xl" />)}

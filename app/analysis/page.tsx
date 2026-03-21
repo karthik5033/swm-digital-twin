@@ -52,6 +52,30 @@ const wasteData = [
 export default function AnalysisPage() {
   const [activeTab, setActiveTab] = useState<'hsr' | 'waste' | 'composition' | 'flow' | 'methane'>('hsr');
 
+  const [totalBuildings, setTotalBuildings] = useState(9471);
+  const [buildingTypes, setBuildingTypes] = useState<any>(roadTypes);
+  const [wasteByType, setWasteByType] = useState<any>(wasteData);
+  const [totalWaste, setTotalWaste] = useState(19.78);
+  const [zones, setZones] = useState<any[]>([]);
+  const [facilities, setFacilities] = useState<any>({});
+
+  React.useEffect(() => {
+    fetch('http://localhost:8000/building-analysis')
+      .then(res => res.json())
+      .then(data => {
+        setTotalBuildings(data.total_buildings)
+        setBuildingTypes(data.type_summary)
+        setWasteByType(data.waste_by_type)
+        setTotalWaste(data.total_daily_waste_tons)
+        setZones(data.zones)
+        setFacilities(data.key_facilities)
+      })
+      .catch(() => {
+        setTotalBuildings(9471)
+        setTotalWaste(19.78)
+      })
+  }, [])
+
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.1 } }
