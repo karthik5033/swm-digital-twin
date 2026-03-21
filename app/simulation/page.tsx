@@ -70,6 +70,9 @@ export default function SimulationPanel() {
     methaneProjection: 420,
     subRoadCoverage: 89,
     costPerDay: 2100,
+    riskLevel: 'LOW',
+    alert: null as string | null,
+    recommendation: null as string | null,
   };
 
   const [metrics, setMetrics] = useState({ ...baselineValues });
@@ -79,32 +82,44 @@ export default function SimulationPanel() {
     
     setTimeout(() => {
       const baseWaste = 54.0;
-      let newWaste = baseWaste;
-      let newDumps = 14;
-      let newLandfill = 35.0;
-      let newMethane = 420;
       let newCoverage = 89;
       let newCost = 2100;
 
+      let wasteMult = 1.0;
+      let dumpsAdd = 0;
+      let landfillMult = 1.0;
+      let methaneMult = 1.0;
+
       if (demolition) {
-        newWaste += baseWaste * 0.40;
-        newLandfill += (baseWaste * 0.40) * 0.9;
-        newDumps += 3;
+        wasteMult *= 1.40;
+        dumpsAdd += 6;
+        landfillMult *= 1.35;
+        methaneMult *= 1.15;
       }
       if (apartments) {
-        newWaste += 5.0;
-        newLandfill += 3.5;
-        newMethane += 40;
+        wasteMult *= 1.18;
+        dumpsAdd += 3;
+        landfillMult *= 1.20;
+        methaneMult *= 1.12;
       }
       if (encroachment) {
-        newDumps += 8;
-        newMethane += 20;
+        wasteMult *= 1.05;
+        dumpsAdd += 8;
+        landfillMult *= 1.08;
+        methaneMult *= 1.28;
       }
       if (extraAutos) {
+        dumpsAdd -= 4;
+        landfillMult *= 1.12;
+        methaneMult *= 0.92;
         newCoverage = 96;
         newCost += 800; // Rs 800/day
-        newWaste += 4.2; // 4.2 tons collected
       }
+
+      let newWaste = baseWaste * wasteMult;
+      let newLandfill = 35.0 * landfillMult;
+      let newMethane = 420 * methaneMult;
+      let newDumps = 14 + dumpsAdd;
 
       const reductionFactor = segregation * 0.008; 
       newWaste = newWaste - (baseWaste * reductionFactor);
@@ -112,18 +127,46 @@ export default function SimulationPanel() {
       newDumps = Math.max(0, newDumps - Math.floor(segregation / 5));
       newMethane = newMethane - (newMethane * (segregation * 0.01));
 
+      let riskLevel = "LOW";
+      if (newDumps > 25 || newMethane > 700) {
+        riskLevel = "CRITICAL";
+      } else if (newDumps >= 20 || newMethane >= 551) {
+        riskLevel = "HIGH";
+      } else if (newDumps >= 15 || newMethane >= 421) {
+        riskLevel = "MODERATE";
+      }
+
+      let alertMsg = null;
+      let recommendationMsg = null;
+      
+      if (riskLevel === "CRITICAL" || riskLevel === "HIGH") {
+        alertMsg = "The alarming surge in illegal dump sites indicates an imminent public health and environmental crisis.";
+        recommendationMsg = "Deploy immediate cleanup crews and enforce strict anti-dumping regulations around construction zones and wetland areas.";
+      } else if (riskLevel === "MODERATE") {
+        alertMsg = "Noticeable increase in waste disposal issues. Monitor areas closely.";
+        recommendationMsg = "Increase patrol frequency in vulnerable zones to prevent further dumping.";
+      }
+
       setMetrics({
         wasteGenerated: Math.max(0, newWaste),
-        dumpsPredicted: Math.max(0, newDumps),
+        dumpsPredicted: Math.round(Math.max(0, newDumps)),
         landfillInflow: Math.max(0, newLandfill),
         methaneProjection: Math.max(0, newMethane),
         subRoadCoverage: newCoverage,
-        costPerDay: newCost
+        costPerDay: newCost,
+        riskLevel,
+        alert: alertMsg,
+        recommendation: recommendationMsg
       });
 
       setIsRunning(false);
     }, 800);
   };
+
+  useEffect(() => {
+    handleRunSimulation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [demolition, apartments, encroachment, extraAutos, segregation]);
 
   const renderMetricDiff = (current: number, base: number) => {
     const diffNum = current - base;
@@ -370,6 +413,25 @@ export default function SimulationPanel() {
                 {extraAutos && <div className="text-rose-400 text-xs font-bold mt-2">+₹800/d constraint added</div>}
               </div>
             </div>
+
+            {/* ALERT SECTION */}
+            {metrics.riskLevel !== 'LOW' && (
+              <div className={`col-span-1 sm:col-span-2 rounded-2xl p-6 shadow-md border group hover:shadow-lg transition-all ${
+                metrics.riskLevel === 'CRITICAL' ? 'bg-rose-50 border-rose-200' : 
+                metrics.riskLevel === 'HIGH' ? 'bg-orange-50 border-orange-200' : 
+                'bg-amber-50 border-amber-200'
+              }`}>
+                 <h3 className={`text-sm font-extrabold uppercase tracking-wider mb-2 flex items-center gap-2 ${
+                    metrics.riskLevel === 'CRITICAL' ? 'text-rose-600' : 
+                    metrics.riskLevel === 'HIGH' ? 'text-orange-600' : 
+                    'text-amber-600'
+                 }`}>
+                    Risk Level: {metrics.riskLevel}
+                 </h3>
+                 {metrics.alert && <p className="text-slate-800 text-sm font-bold mb-1">{metrics.alert}</p>}
+                 {metrics.recommendation && <p className="text-slate-600 text-sm">{metrics.recommendation}</p>}
+              </div>
+            )}
 
             </motion.div>
           )}

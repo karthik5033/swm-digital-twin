@@ -15,6 +15,7 @@ const LINKS = [
   { href: '/impact', label: 'Impact' },
   { href: '/wards', label: 'Wards' },
   { href: '/report', label: 'Report' },
+  { href: '/economics', label: 'Economics' },
 ];
 
 export default function Navbar() {
