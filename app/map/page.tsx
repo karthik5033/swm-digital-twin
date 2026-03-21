@@ -9,7 +9,7 @@ const SmartMap = dynamic(() => import('@/components/map/SmartMap'), {
   loading: () => (
     <div className="w-full h-full flex flex-col items-center justify-center bg-[#0a0f1a] space-y-4">
       <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#00d4aa]" />
-      <p className="text-white/40 text-sm animate-pulse tracking-wide">Loading HSR Layout map…</p>
+      <p className="text-slate-900/40 text-sm animate-pulse tracking-wide">Loading HSR Layout map…</p>
     </div>
   ),
 });
@@ -19,7 +19,7 @@ const CityMap = dynamic(() => import('@/components/map/MapContainer'), {
   loading: () => (
     <div className="w-full h-full flex flex-col items-center justify-center bg-[#0a0f1a] space-y-4">
       <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-400" />
-      <p className="text-white/40 text-sm animate-pulse tracking-wide">Loading Bengaluru City map…</p>
+      <p className="text-slate-900/40 text-sm animate-pulse tracking-wide">Loading Bengaluru City map…</p>
     </div>
   ),
 });
@@ -40,7 +40,7 @@ export default function MapPage() {
           borderBottom: '1px solid rgba(255,255,255,0.07)',
         }}
       >
-        <span className="text-xs font-semibold text-slate-400 tracking-wide select-none">
+        <span className="text-xs font-semibold text-slate-600 tracking-wide select-none">
           Switch View:
         </span>
 
@@ -49,7 +49,7 @@ export default function MapPage() {
           className="relative flex items-center p-0.5 rounded-full"
           style={{
             background: 'rgba(255,255,255,0.07)',
-            border: '1px solid rgba(255,255,255,0.1)',
+            border: '1px solid rgba(0,0,0,0.1)',
           }}
         >
           {/* sliding highlight */}

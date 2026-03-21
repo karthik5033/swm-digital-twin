@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${spaceGrotesk.className} ${spaceMono.variable} bg-slate-50 text-slate-900 min-h-screen flex flex-col`}>
+    <html lang="en" className="dark">
+      <body className={`${spaceGrotesk.className} ${spaceMono.variable} bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-teal-500/30`}>
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>
         <AIQueryBar />

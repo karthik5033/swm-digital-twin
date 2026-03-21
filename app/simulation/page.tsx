@@ -199,20 +199,20 @@ export default function SimulationPanel() {
             </div>
             <div>
                 <h2 className="text-xl font-extrabold tracking-tight text-slate-800">HSR Layout Scenarios</h2>
-                <p className="text-xs font-bold text-slate-400 mt-1 uppercase">Predictive AI Model</p>
+                <p className="text-xs font-bold text-slate-600 mt-1 uppercase">Predictive AI Model</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-6">
 
             {/* REAL DATA BASELINE CARD */}
-            <div className="bg-slate-900 border border-slate-700 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
-              <div className="flex items-center gap-2 mb-3 text-white font-bold text-sm">
+            <div className="bg-slate-900 border border-slate-200 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
+              <div className="flex items-center gap-2 mb-3 text-slate-900 font-bold text-sm">
                 <span>📡</span> Verified Building-Based Data
               </div>
-              <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Population:</span> <span className="text-white font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-400">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
+              <div className="mb-2 border-b border-slate-200/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-600">Population:</span> <span className="text-slate-900 font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-300">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-300">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-300">39 × 15 = {HSR_DATA.population_offices}</span></div>
@@ -220,11 +220,11 @@ export default function SimulationPanel() {
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-300">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-300">30 × 3 = {HSR_DATA.population_others}</span></div>
               </div>
-              <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
-                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
+              <div className="mb-2 border-b border-slate-200/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-600">Per capita:</span> <span className="text-slate-900">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">Daily Waste:</span> <span className="text-slate-900 font-bold text-amber-400">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
               </div>
-              <div className="mb-3 border-b border-slate-700/50 pb-3">
+              <div className="mb-3 border-b border-slate-200/50 pb-3">
                 <div className="text-teal-500 font-bold mb-1">Composition (BBMP 2013 Official):</div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">🟢 Wet {HSR_DATA.waste_wet_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanisation</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">🔵 Dry {HSR_DATA.waste_dry_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → 16 DWCC centres</span></div>
@@ -238,10 +238,10 @@ export default function SimulationPanel() {
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.1 × 1.28 = 29.6T</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-300">23.1 × 1.49 = 34.4T</span></div>
               </div>
-              <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-800">Source: CPCB + Census 2011 Karnataka</div>
+              <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-200">Source: CPCB + Census 2011 Karnataka</div>
 
               {/* Climate block */}
-              <div className="mt-3 border-t border-slate-700/50 pt-3">
+              <div className="mt-3 border-t border-slate-200/50 pt-3">
                 <div className="text-emerald-500 font-bold mb-1 text-xs uppercase tracking-wider">Climate Impact (IPCC 2006)</div>
                 <div className="flex justify-between text-xs"><span className="text-slate-500">CH₄ produced:</span> <span className="text-teal-300">3,548 m³/day</span></div>
                 <div className="flex justify-between text-xs"><span className="text-slate-500">CO₂ equivalent:</span> <span className="text-blue-300">71.1 T/day captured</span></div>
@@ -255,7 +255,7 @@ export default function SimulationPanel() {
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
                 <span className="text-sm font-bold text-slate-700">Building Demolition Phase</span>
-                <span className="text-xs font-medium text-slate-400">Massive C&D waste spike (+40%) from BDA Complex rebuild</span>
+                <span className="text-xs font-medium text-slate-600">Massive C&D waste spike (+40%) from BDA Complex rebuild</span>
               </div>
               <button 
                 onClick={() => setDemolition(!demolition)}
@@ -269,7 +269,7 @@ export default function SimulationPanel() {
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
                 <span className="text-sm font-bold text-slate-700">New Apartment Complex</span>
-                <span className="text-xs font-medium text-slate-400">Addition of +500 units near Sector 2 borders</span>
+                <span className="text-xs font-medium text-slate-600">Addition of +500 units near Sector 2 borders</span>
               </div>
               <button 
                 onClick={() => setApartments(!apartments)}
@@ -283,7 +283,7 @@ export default function SimulationPanel() {
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
                 <span className="text-sm font-bold text-slate-700">Open Space Encroachment</span>
-                <span className="text-xs font-medium text-slate-400">Illegal dumping high risk simulation near Agara Lake</span>
+                <span className="text-xs font-medium text-slate-600">Illegal dumping high risk simulation near Agara Lake</span>
               </div>
               <button 
                 onClick={() => setEncroachment(!encroachment)}
@@ -297,7 +297,7 @@ export default function SimulationPanel() {
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
                 <span className="text-sm font-bold text-slate-700">Expand Collection Fleet</span>
-                <span className="text-xs font-medium text-slate-400">Add +2 extra auto vehicles to Sub Roads. Cost: ₹800/d</span>
+                <span className="text-xs font-medium text-slate-600">Add +2 extra auto vehicles to Sub Roads. Cost: ₹800/d</span>
               </div>
               <button 
                 onClick={() => setExtraAutos(!extraAutos)}
@@ -330,7 +330,7 @@ export default function SimulationPanel() {
           <button
             onClick={handleRunSimulation}
             disabled={isRunning}
-            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-white font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
+            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-slate-900 font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
           >
             {isRunning ? (
               <>
@@ -369,7 +369,7 @@ export default function SimulationPanel() {
                   <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
                     <AnimatedNumber value={metrics.wasteGenerated} />
                   </span>
-                  <span className="text-slate-400 text-sm font-bold">tons/day</span>
+                  <span className="text-slate-600 text-sm font-bold">tons/day</span>
                 </div>
               </div>
             </div>
@@ -389,7 +389,7 @@ export default function SimulationPanel() {
                   <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
                     <AnimatedNumber value={metrics.dumpsPredicted} />
                   </span>
-                  <span className="text-slate-400 text-sm font-bold">sites</span>
+                  <span className="text-slate-600 text-sm font-bold">sites</span>
                 </div>
               </div>
             </div>
@@ -409,7 +409,7 @@ export default function SimulationPanel() {
                   <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
                     <AnimatedNumber value={metrics.landfillInflow} />
                   </span>
-                  <span className="text-slate-400 text-sm font-bold">tons/day</span>
+                  <span className="text-slate-600 text-sm font-bold">tons/day</span>
                 </div>
                 <div className="text-xs text-slate-500 mt-2 font-bold bg-slate-50 inline-block px-2 py-1 rounded-md border border-slate-200">
                   {((metrics.landfillInflow / metrics.wasteGenerated) * 100).toFixed(1)}% of total generated waste
@@ -432,29 +432,29 @@ export default function SimulationPanel() {
                   <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
                     <AnimatedNumber value={metrics.methaneProjection} />
                   </span>
-                  <span className="text-slate-400 text-sm font-bold">tons/month</span>
+                  <span className="text-slate-600 text-sm font-bold">tons/month</span>
                 </div>
               </div>
             </div>
 
             {/* TWO-TIER METRICS (Fleet Coverage) */}
             <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-6">
-              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-700 flex flex-col justify-between">
+              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-200 flex flex-col justify-between">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/20 blur-[80px] rounded-full pointer-events-none" />
-                <h3 className="text-slate-400 text-xs font-extrabold uppercase tracking-wider mb-2">Sub Road Coverage</h3>
+                <h3 className="text-slate-600 text-xs font-extrabold uppercase tracking-wider mb-2">Sub Road Coverage</h3>
                 <div className="flex items-baseline gap-2 mt-auto">
-                  <span className="text-4xl font-black text-white tracking-tighter">
+                  <span className="text-4xl font-black text-slate-900 tracking-tighter">
                     <AnimatedNumber value={metrics.subRoadCoverage} />%
                   </span>
                 </div>
                 {extraAutos && <div className="text-teal-400 text-xs font-bold mt-2">Coverage improved from 89%</div>}
               </div>
               
-              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-700 flex flex-col justify-between">
+              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-200 flex flex-col justify-between">
                 <div className="absolute bottom-0 right-0 w-32 h-32 bg-rose-500/20 blur-[80px] rounded-full pointer-events-none" />
-                <h3 className="text-slate-400 text-xs font-extrabold uppercase tracking-wider mb-2">Daily Fleet Cost</h3>
+                <h3 className="text-slate-600 text-xs font-extrabold uppercase tracking-wider mb-2">Daily Fleet Cost</h3>
                 <div className="flex items-baseline gap-2 mt-auto">
-                  <span className="text-4xl font-black text-white tracking-tighter">
+                  <span className="text-4xl font-black text-slate-900 tracking-tighter">
                     ₹<AnimatedNumber value={metrics.costPerDay} />
                   </span>
                 </div>

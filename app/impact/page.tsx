@@ -98,43 +98,43 @@ export default function ImpactDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans pb-24 transition-colors relative">
-      <div className="fixed top-0 left-0 w-[80%] h-[600px] bg-teal-100/50 rounded-full blur-[150px] pointer-events-none -z-10" />
-      <div className="fixed bottom-0 right-0 w-[80%] h-[600px] bg-emerald-100/50 rounded-full blur-[150px] pointer-events-none -z-10" />
+    <div className="min-h-[calc(100vh-65px)] bg-slate-50 text-slate-900 font-sans pb-24 transition-colors relative">
+      <div className="fixed top-0 left-0 w-[80%] h-[600px] bg-teal-100/40 rounded-full blur-[150px] pointer-events-none -z-10 mix-blend-multiply" />
+      <div className="fixed bottom-0 right-0 w-[80%] h-[600px] bg-indigo-100/40 rounded-full blur-[150px] pointer-events-none -z-10 mix-blend-multiply" />
 
       {/* PART 3: Warning System */}
       {showWarningBanner && (
-        <div className="w-full bg-red-600 text-white font-medium text-center py-3 px-4 flex items-center justify-center gap-2 shadow-md sticky top-0 z-50">
+        <div className="w-full bg-rose-50 border-b border-rose-200 text-rose-700 font-bold text-center py-3 px-4 flex items-center justify-center gap-2 shadow-sm sticky top-[73px] z-40">
           <span>⚠️ HSR Main Zone at critical segregation — only 25% waste being segregated</span>
         </div>
       )}
 
       {/* Agara Lake Alert Card */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
-        <div className="flex items-start gap-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-300 dark:border-blue-700 rounded-2xl p-5 shadow-sm">
+        <div className="flex items-start gap-4 bg-white border border-blue-200 rounded-2xl p-5 shadow-sm">
           <div className="text-3xl mt-0.5">🌊</div>
           <div className="flex-1">
-            <h3 className="font-extrabold text-blue-800 dark:text-blue-300 text-base mb-1">
+            <h3 className="font-extrabold text-slate-900 text-base mb-1">
               ⚠️ AGARA LAKE POLLUTION RISK
             </h3>
-            <p className="text-blue-700 dark:text-blue-400 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed">
               <strong>3 illegal dump sites detected</strong> within 500m of Agara Lake buffer zone.<br />
-              Leachate contamination risk: <span className="font-black text-red-600 dark:text-red-400">HIGH</span> — 
+              Leachate contamination risk: <span className="font-black text-rose-600">HIGH</span> — 
               Plastic waste &amp; chemical runoff threatens the protected water body.<br />
               Immediate action required to prevent further contamination &amp; protect biodiversity.
             </p>
           </div>
-          <span className="shrink-0 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 text-xs font-black px-3 py-1.5 rounded-full border border-red-300 dark:border-red-700">
+          <span className="shrink-0 bg-red-50 text-red-700 text-xs font-black px-3 py-1.5 rounded-full border border-red-200">
             CRITICAL
           </span>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-6 pt-16 mt-4">
+      <main className="max-w-7xl mx-auto px-6 pt-12 mt-4">
         
         {/* SECTION 1: HSR Layout Overview Cards */}
         <section className="mb-12">
-          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white mb-6">HSR Layout Overview</h2>
+          <h2 className="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">HSR Layout Overview</h2>
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array.from({ length: 4 }).map((_, idx) => <Skeleton key={idx} className="h-[210px] w-full rounded-3xl" />)}
@@ -152,21 +152,21 @@ export default function ImpactDashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
+                  className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
                 >
-                  <div className="absolute -right-4 -top-4 opacity-[0.03] text-8xl group-hover:scale-110 transition-transform duration-500 pointer-events-none">
+                  <div className="absolute -right-4 -top-4 opacity-[0.03] text-8xl group-hover:scale-110 transition-transform duration-500 pointer-events-none text-slate-900">
                     {card.icon}
                   </div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 bg-teal-50 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400 rounded-xl">
+                    <div className="p-3 bg-teal-50 text-teal-600 rounded-xl">
                       {card.icon}
                     </div>
-                    <h3 className="font-bold text-slate-600 dark:text-slate-300">{card.title}</h3>
+                    <h3 className="font-bold text-slate-500 uppercase tracking-widest text-xs">{card.title}</h3>
                   </div>
-                  <div className="text-4xl font-extrabold text-slate-800 dark:text-white tracking-tight mb-2">
-                    {card.value}<span className="text-lg text-slate-500 dark:text-slate-400 font-bold">{card.unit}</span>
+                  <div className="text-4xl font-black text-slate-900 tracking-tight mb-2">
+                    {card.value}<span className="text-lg text-slate-400 font-bold">{card.unit}</span>
                   </div>
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm font-medium text-slate-500 leading-relaxed">
                     {card.desc}
                   </p>
                 </motion.div>
@@ -178,60 +178,60 @@ export default function ImpactDashboard() {
         {/* NEW REAL DATA FOUNDATION CARD */}
         <section className="mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm h-full flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
               <div>
-                <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
-                <div className="grid grid-cols-1 gap-y-3 pl-2">
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{(HSR_DATA.population || 46219).toLocaleString()}</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.daily_waste_tons || 23.11} tons</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Area:</span> <span className="text-white">{HSR_DATA.area_sq_km || 18.5} sq km</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Buildings:</span> <span className="text-white">{(HSR_DATA.buildings_total || 9471).toLocaleString()} ({HSR_DATA.buildings_density || 512}/sq km)</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road density:</span> <span className="text-white">{HSR_DATA.roads_density || 110}/sq km</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck roads:</span> <span className="text-white">{HSR_DATA.truck_roads_pct || 17.4}%</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto roads:</span> <span className="text-white">{HSR_DATA.auto_roads_pct || 77.9}%</span></div>
+                <h3 className="text-slate-900 font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
+                <div className="grid grid-cols-1 gap-y-3 pl-2 text-sm text-slate-600">
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Population:</span> <span className="text-slate-900 font-bold">{(HSR_DATA.population || 46219).toLocaleString()}</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Daily waste:</span> <span className="text-slate-900 font-bold">{HSR_DATA.daily_waste_tons || 23.11} tons</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Area:</span> <span className="text-slate-900 font-bold">{HSR_DATA.area_sq_km || 18.5} sq km</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Buildings:</span> <span className="text-slate-900 font-bold">{(HSR_DATA.buildings_total || 9471).toLocaleString()} ({HSR_DATA.buildings_density || 512}/sq km)</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Road density:</span> <span className="text-slate-900 font-bold">{HSR_DATA.roads_density || 110}/sq km</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Truck roads:</span> <span className="text-slate-900 font-bold">{HSR_DATA.truck_roads_pct || 17.4}%</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Auto roads:</span> <span className="text-slate-900 font-bold">{HSR_DATA.auto_roads_pct || 77.9}%</span></div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm h-full flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
               <div>
-                <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
-                <div className="grid grid-cols-1 gap-y-3 pl-2">
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck routes:</span> <span className="text-white">{HSR_DATA.truck_roads || 352} segments ({HSR_DATA.truck_roads_pct || 17.4}%)</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto routes:</span> <span className="text-white">{HSR_DATA.auto_roads || 1579} segments ({HSR_DATA.auto_roads_pct || 77.9}%)</span></div>
-                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Total Coverage:</span> <span className="text-white">{HSR_DATA.total_coverage_pct || 95.3}%</span></div>
+                <h3 className="text-slate-900 font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
+                <div className="grid grid-cols-1 gap-y-3 pl-2 text-sm text-slate-600">
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Truck routes:</span> <span className="text-slate-900 font-bold">{HSR_DATA.truck_roads || 352} segments ({HSR_DATA.truck_roads_pct || 17.4}%)</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Auto routes:</span> <span className="text-slate-900 font-bold">{HSR_DATA.auto_roads || 1579} segments ({HSR_DATA.auto_roads_pct || 77.9}%)</span></div>
+                  <div className="flex justify-between border-b border-slate-100 pb-1"><span>Total Coverage:</span> <span className="text-emerald-600 font-bold">{HSR_DATA.total_coverage_pct || 95.3}%</span></div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* NEW CITY CONTEXT CARD */}
-          <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-md">
+          <div className="bg-white border border-slate-200 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-md">
              <div className="flex-1 w-full">
-               <div className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-4">BBMP WASTE INFRASTRUCTURE</div>
+               <div className="text-teal-600 font-bold text-xs uppercase tracking-widest mb-4">BBMP WASTE INFRASTRUCTURE</div>
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                  <div>
-                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_wet_plants || 7} Wet Processing Plants</div>
-                   <div className="text-slate-400">Capacity: {(HSR_DATA.bbmp_wet_capacity_tpd || 1570).toLocaleString()} TPD</div>
+                   <div className="text-slate-900 font-bold mb-1">{HSR_DATA.bbmp_wet_plants || 7} Wet Processing Plants</div>
+                   <div className="text-slate-500 font-medium">Capacity: {(HSR_DATA.bbmp_wet_capacity_tpd || 1570).toLocaleString()} TPD</div>
                  </div>
                  <div>
-                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_bio_plants || 13} Bio-Methanation Plants</div>
-                   <div className="text-slate-400">Capacity: {(HSR_DATA.bbmp_bio_capacity_tpd || 65).toLocaleString()} TPD</div>
+                   <div className="text-slate-900 font-bold mb-1">{HSR_DATA.bbmp_bio_plants || 13} Bio-Methanation Plants</div>
+                   <div className="text-slate-500 font-medium">Capacity: {(HSR_DATA.bbmp_bio_capacity_tpd || 65).toLocaleString()} TPD</div>
                  </div>
-                 <div className="sm:col-span-2 pt-2 mt-2 border-t border-slate-600/50">
+                 <div className="sm:col-span-2 pt-2 mt-2 border-t border-slate-100">
                    <div className="flex justify-between items-center text-sm md:text-base">
-                     <span className="text-slate-400">Bengaluru total:</span>
-                     <span className="font-bold text-white">{HSR_DATA.bengaluru_total_tpd || "3000-3500"} TPD</span>
+                     <span className="text-slate-500 font-medium">Bengaluru total:</span>
+                     <span className="font-bold text-slate-900">{HSR_DATA.bengaluru_total_tpd || "3000-3500"} TPD</span>
                    </div>
                    <div className="flex justify-between items-center text-sm md:text-base mt-2">
-                     <span className="text-slate-400">HSR Layout share:</span>
-                     <span className="font-bold text-teal-400">~1.5%</span>
+                     <span className="text-slate-500 font-medium">HSR Layout share:</span>
+                     <span className="font-bold text-teal-600">~1.5%</span>
                    </div>
                  </div>
                </div>
              </div>
              
-             <div className="flex-1 md:border-l border-slate-600/50 md:pl-8 text-lg font-medium text-slate-300 italic leading-relaxed w-full">
+             <div className="flex-1 md:border-l border-slate-100 md:pl-8 text-lg font-medium text-slate-600 italic leading-relaxed w-full">
                "{(HSR_DATA.population || 46219).toLocaleString()} residents across {(HSR_DATA.buildings_total || 9471).toLocaleString()} buildings generating {HSR_DATA.daily_waste_tons || 23.11} tons/day — AstraCity's optimization identifies ₹{HSR_DATA.savings_total_cr || 9.42} Cr/year total value for this ward."
              </div>
           </div>
@@ -241,65 +241,65 @@ export default function ImpactDashboard() {
          {/* BBMP Composition Context Box */}
          <section className="mb-12">
            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-             <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-700/50 rounded-2xl p-6 flex flex-col gap-3">
-               <h3 className="text-emerald-700 dark:text-emerald-400 font-bold text-base">Wet Waste (61%)</h3>
-               <div className="text-3xl font-black text-slate-800 dark:text-white">{HSR_DATA.waste_wet_tons || 14.1}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
-               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Routes to 2 Bio-methanisation units. Methane captured = carbon credits. BBMP: wet rose from 42% (1999) to 61% (2013).</p>
-               <div className="text-xs text-emerald-600 dark:text-emerald-500 italic mt-auto pt-2">Source: BBMP Official Reports 1999-2013</div>
+             <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-emerald-700 font-bold text-base">Wet Waste (61%)</h3>
+               <div className="text-3xl font-black text-slate-900">{HSR_DATA.waste_wet_tons || 14.1}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
+               <p className="text-slate-600 text-sm leading-relaxed">Routes to 2 Bio-methanisation units. Methane captured = carbon credits. BBMP: wet rose from 42% (1999) to 61% (2013).</p>
+               <div className="text-xs text-emerald-600 italic mt-auto pt-2">Source: BBMP Official Reports 1999-2013</div>
              </div>
-             <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-700/50 rounded-2xl p-6 flex flex-col gap-3">
-               <h3 className="text-blue-700 dark:text-blue-400 font-bold text-base">Dry Waste (30%)</h3>
-               <div className="text-3xl font-black text-slate-800 dark:text-white">{HSR_DATA.waste_dry_tons || 6.93}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
-               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Routes to 16 DWCC centres for recycling. Dry fell from 41% (1999) to 25% (2013). Projected 30% by 2026.</p>
-               <div className="text-xs text-blue-700 italic">Source: CPCB + BBMP combined</div>
+             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-blue-700 font-bold text-base">Dry Waste (30%)</h3>
+               <div className="text-3xl font-black text-slate-900">{HSR_DATA.waste_dry_tons || 6.93}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
+               <p className="text-slate-600 text-sm leading-relaxed">Routes to 16 DWCC centres for recycling. Dry fell from 41% (1999) to 25% (2013). Projected 30% by 2026.</p>
+               <div className="text-xs text-blue-600 italic">Source: CPCB + BBMP combined</div>
              </div>
-             <div className="bg-slate-900/60 border border-slate-600/40 rounded-2xl p-6 flex flex-col gap-3">
-               <h3 className="text-gray-300 font-bold text-base">Haz + Other (9%)</h3>
-               <div className="text-3xl font-black text-white">{(HSR_DATA.waste_hazardous_tons + HSR_DATA.waste_other_tons).toFixed(2)}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
-               <p className="text-gray-300 text-sm leading-relaxed">{HSR_DATA.waste_hazardous_pct}% Hazardous to special contractor. {HSR_DATA.waste_other_pct}% Other to street sweep.</p>
-               <div className="text-xs text-gray-500 italic">Source: BBMP SWM Rules 2023</div>
+             <div className="bg-slate-100 border border-slate-200 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-slate-600 font-bold text-base">Haz + Other (9%)</h3>
+               <div className="text-3xl font-black text-slate-900">{(HSR_DATA.waste_hazardous_tons + HSR_DATA.waste_other_tons).toFixed(2)}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
+               <p className="text-slate-600 text-sm leading-relaxed">{HSR_DATA.waste_hazardous_pct}% Hazardous to special contractor. {HSR_DATA.waste_other_pct}% Other to street sweep.</p>
+               <div className="text-xs text-slate-400 italic">Source: BBMP SWM Rules 2023</div>
              </div>
            </div>
-           <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-2xl px-5 py-3 text-xs text-amber-300 italic">
+           <div className="mt-4 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3 text-xs text-amber-700 font-medium italic">
              This composition data justifies AstraCity routing: wet to BMU, dry to DWCC, hazardous to contractor. Source: BBMP Official Publications.
            </div>
          </section>
 
                 {/* Special Building Alerts */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-3xl p-5 shadow-sm">
-            <h4 className="font-extrabold text-red-800 dark:text-red-300 mb-2 flex items-center gap-2">🏥 Hospital Alert</h4>
-            <p className="text-sm text-red-700 dark:text-red-400 font-medium">{HSR_DATA.population_breakdown.hospitals.count} medical facilities in HSR Layout generating ~{(HSR_DATA.population_breakdown.hospitals.total * 0.5).toFixed(0)} kg/day bio-medical waste. Both located in zones B2 and C1.</p>
+          <div className="bg-red-50 border border-red-200 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-red-800 mb-2 flex items-center gap-2">🏥 Hospital Alert</h4>
+            <p className="text-sm text-red-700 font-medium">{HSR_DATA.population_breakdown.hospitals.count} medical facilities in HSR Layout generating ~{(HSR_DATA.population_breakdown.hospitals.total * 0.5).toFixed(0)} kg/day bio-medical waste. Both located in zones B2 and C1.</p>
           </div>
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 shadow-sm">
-            <h4 className="font-extrabold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-2">📚 Schools Alert</h4>
-            <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">{HSR_DATA.population_breakdown.schools.count} educational institutions detected generating ~{(HSR_DATA.population_breakdown.schools.total * 0.1).toFixed(0)} kg/day paper/dry waste. Peak waste: exam seasons.</p>
+          <div className="bg-amber-50 border border-amber-200 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-amber-800 mb-2 flex items-center gap-2">📚 Schools Alert</h4>
+            <p className="text-sm text-amber-700 font-medium">{HSR_DATA.population_breakdown.schools.count} educational institutions detected generating ~{(HSR_DATA.population_breakdown.schools.total * 0.1).toFixed(0)} kg/day paper/dry waste. Peak waste: exam seasons.</p>
           </div>
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-3xl p-5 shadow-sm">
-            <h4 className="font-extrabold text-blue-800 dark:text-blue-300 mb-2 flex items-center gap-2">🏪 Commercial Alert</h4>
-            <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">~137 commercial units on main roads generating ~340 kg/day dry/plastic waste. Concentrated in zones B2 and C3.</p>
+          <div className="bg-blue-50 border border-blue-200 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-blue-800 mb-2 flex items-center gap-2">🏪 Commercial Alert</h4>
+            <p className="text-sm text-blue-700 font-medium">~137 commercial units on main roads generating ~340 kg/day dry/plastic waste. Concentrated in zones B2 and C3.</p>
           </div>
-          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-3xl p-5 shadow-sm">
-            <h4 className="font-extrabold text-emerald-800 dark:text-emerald-300 mb-2 flex items-center gap-2">💻 IT Office Alert</h4>
-            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">{HSR_DATA.population_breakdown.offices.count} IT offices detected generating ~{(HSR_DATA.population_breakdown.offices.total * 0.2).toFixed(0)} kg/day e-waste + dry waste. Dedicated e-waste collection recommended.</p>
+          <div className="bg-emerald-50 border border-emerald-200 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-emerald-800 mb-2 flex items-center gap-2">💻 IT Office Alert</h4>
+            <p className="text-sm text-emerald-700 font-medium">{HSR_DATA.population_breakdown.offices.count} IT offices detected generating ~{(HSR_DATA.population_breakdown.offices.total * 0.2).toFixed(0)} kg/day e-waste + dry waste. Dedicated e-waste collection recommended.</p>
           </div>
         </div>
 
         {/* NEW SECTION: Growth Analysis & Insights */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm">
-            <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">HSR Population vs Waste Growth (2001 - 2026)</h2>
+          <div className="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-4">HSR Population vs Waste Growth (2001 - 2026)</h2>
             <div className="h-72 w-full">
               {mounted && (
                 <ResponsiveContainer>
                   <LineChart data={populationData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                     <XAxis dataKey="year" tick={{ fill: '#64748b', fontWeight: 600 }} />
-                    <YAxis yAxisId="left" tickFormatter={(val: any) => `${(val/1000).toFixed(0)}k`} tick={{ fill: '#94a3b8', fontWeight: 600 }} />
-                    <YAxis yAxisId="right" orientation="right" tickFormatter={(val: any) => `${val}t`} tick={{ fill: '#94a3b8', fontWeight: 600 }} />
+                    <YAxis yAxisId="left" tickFormatter={(val: any) => `${(val/1000).toFixed(0)}k`} tick={{ fill: '#64748b', fontWeight: 600 }} />
+                    <YAxis yAxisId="right" orientation="right" tickFormatter={(val: any) => `${val}t`} tick={{ fill: '#64748b', fontWeight: 600 }} />
                     <Tooltip 
                       cursor={{ stroke: '#cbd5e1', strokeWidth: 2 }} 
-                      contentStyle={{ borderRadius: '12px', padding: '12px', color: '#0f172a' }} 
+                      contentStyle={{ borderRadius: '12px', padding: '12px', color: '#0f172a', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} 
                     />
                     <Legend wrapperStyle={{ fontWeight: 600 }} />
                     <Line yAxisId="left" name="Population" type="monotone" dataKey="population" stroke="#3b82f6" strokeWidth={4} dot={{ r: 6, strokeWidth: 2 }} activeDot={{ r: 8 }} />
@@ -312,28 +312,28 @@ export default function ImpactDashboard() {
 
           {/* INSIGHTS COLUMN */}
           <div className="flex flex-col gap-6">
-            <div className="bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-indigo-950/30 dark:to-rose-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-3xl p-6 shadow-sm flex-1">
-              <h3 className="text-indigo-800 dark:text-indigo-300 font-extrabold text-lg mb-3">Growth Discrepancy Insight</h3>
-              <ul className="space-y-3 text-slate-700 dark:text-slate-300 font-medium text-sm">
+            <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 shadow-sm flex-1">
+              <h3 className="text-indigo-700 font-extrabold text-lg mb-3">Growth Discrepancy Insight</h3>
+              <ul className="space-y-3 text-slate-700 font-medium text-sm">
                 <li className="flex gap-2"><span>📈</span> HSR Layout population grew <b>389%</b> since 2001.</li>
                 <li className="flex gap-2"><span>🗑️</span> Waste generation grew <b>530%</b> in the same period.</li>
-                <li className="flex gap-2 bg-white/50 dark:bg-slate-900/50 p-2 rounded-lg text-rose-600 dark:text-rose-400 font-bold border border-rose-100 dark:border-rose-900">⚠️ Waste grows FASTER than population.</li>
+                <li className="flex gap-2 bg-white p-2 rounded-lg text-rose-600 font-bold border border-rose-100">⚠️ Waste grows FASTER than population.</li>
               </ul>
             </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 shadow-sm text-white flex-1 flex flex-col justify-center">
-              <h3 className="text-emerald-400 font-extrabold text-lg mb-3">2030 Projection Alert</h3>
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm text-slate-900 flex-1 flex flex-col justify-center">
+              <h3 className="text-emerald-600 font-extrabold text-lg mb-3">2030 Projection Alert</h3>
               <ul className="space-y-3 font-medium text-sm">
-                <li className="flex justify-between border-b border-slate-800 pb-2">
-                  <span className="text-slate-400">Target Population</span>
+                <li className="flex justify-between border-b border-slate-100 pb-2">
+                  <span className="text-slate-500">Target Population</span>
                   <span className="font-bold">2,80,000</span>
                 </li>
-                <li className="flex justify-between border-b border-slate-800 pb-2">
-                  <span className="text-slate-400">Expected Waste</span>
-                  <span className="font-bold text-rose-400">126 tons/day</span>
+                <li className="flex justify-between border-b border-slate-100 pb-2">
+                  <span className="text-slate-500">Expected Waste</span>
+                  <span className="font-bold text-rose-500">126 tons/day</span>
                 </li>
               </ul>
-              <div className="mt-4 py-2 px-3 bg-rose-500/20 text-rose-300 border border-rose-500/30 rounded-xl text-center text-xs font-black uppercase tracking-widest">
+              <div className="mt-4 py-2 px-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-center text-xs font-black uppercase tracking-widest">
                 Current Infrastructure: NOT Sufficient
               </div>
             </div>
@@ -342,8 +342,8 @@ export default function ImpactDashboard() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* SECTION 2: Building Type Breakdown */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
-            <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white mb-2">Building Type Breakdown</h2>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Building Type Breakdown</h2>
             <p className="text-sm text-slate-500 mb-6">Distribution of {HSR_DATA.buildings_total.toLocaleString()} structures in HSR</p>
             <div className="h-64 w-full">
               {mounted && (
@@ -352,8 +352,8 @@ export default function ImpactDashboard() {
                     <Pie data={buildingTypeData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value" stroke="none">
                       {buildingTypeData.map((e, i) => <Cell key={i} fill={e.color} />)}
                     </Pie>
-                    <Tooltip formatter={(value) => [`${value}%`, 'Share']} contentStyle={{ borderRadius: '12px' }} />
-                    <Legend wrapperStyle={{ fontWeight: 600, fontSize: '13px' }} formatter={(value, entry: any) => <span className="text-slate-700 dark:text-slate-300">{value} ({entry.payload.value === 64.1 ? '8,998' : entry.payload.value === 17.6 ? '3.2 km²' : 'Area'})</span>} />
+                    <Tooltip formatter={(value) => [`${value}%`, 'Share']} contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', color: '#0f172a' }} />
+                    <Legend wrapperStyle={{ fontWeight: 600, fontSize: '13px' }} formatter={(value, entry: any) => <span className="text-slate-700">{value} ({entry.payload.value === 64.1 ? '8,998' : entry.payload.value === 17.6 ? '3.2 km²' : 'Area'})</span>} />
                   </PieChart>
                 </ResponsiveContainer>
               )}
@@ -361,8 +361,8 @@ export default function ImpactDashboard() {
           </motion.div>
 
           {/* SECTION 5: Dumpyard Capacity Chart */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
-            <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white mb-2">Current Dumpyard Capacity</h2>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Current Dumpyard Capacity</h2>
             <p className="text-sm text-slate-500 mb-6">Real-time fill percentage across locations</p>
             <div className="h-64 w-full">
               {mounted && (
@@ -371,7 +371,7 @@ export default function ImpactDashboard() {
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
                     <XAxis type="number" domain={[0, 100]} tickFormatter={(v) => `${v}%`} tick={{ fill: '#64748b', fontWeight: 600 }} />
                     <YAxis type="category" dataKey="name" tick={{ fill: '#475569', fontWeight: 600 }} width={110} />
-                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} formatter={(val) => [`${val}%`, 'Capacity Filled']} contentStyle={{ borderRadius: '12px' }} />
+                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} formatter={(val) => [`${val}%`, 'Capacity Filled']} contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', color: '#0f172a' }} />
                     <ReferenceLine x={80} stroke="#ef4444" strokeDasharray="4 4" label={{ position: 'insideTopLeft', value: '80% Threshold', fill: '#ef4444', fontWeight: 'bold' }} />
                     <Bar dataKey="fill" radius={[0, 4, 4, 0]} barSize={24}>
                       {dumpyardCapacityData.map((e, i) => <Cell key={i} fill={e.fillHex} />)}
@@ -385,10 +385,10 @@ export default function ImpactDashboard() {
 
         {/* SECTION 6: 30 Day Fill Projection */}
         <section className="mb-16">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
               <div className="mb-6">
-                <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white">30 Day Fill Projection</h2>
-                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">D2 crosses 80% on Day 4. D1 crosses 80% on Day 18.</p>
+                <h2 className="text-2xl font-extrabold text-slate-900">30 Day Fill Projection</h2>
+                <p className="text-sm font-medium text-slate-500">D2 crosses 80% on Day 4. D1 crosses 80% on Day 18.</p>
               </div>
               <div className="h-96 w-full">
                 {mounted && (
@@ -396,8 +396,8 @@ export default function ImpactDashboard() {
                     <LineChart data={projectionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                       <XAxis dataKey="day" tick={{ fill: '#64748b', fontWeight: 600 }} minTickGap={20} />
-                      <YAxis domain={[0, 100]} tick={{ fill: '#94a3b8', fontWeight: 600 }} tickFormatter={(val) => `${val}%`} />
-                      <Tooltip contentStyle={{ borderRadius: '12px' }} labelStyle={{ color: '#0f172a', fontWeight: 'bold' }} formatter={(val: any) => [`${Number(val).toFixed(1)}%`, 'Fill Level']} />
+                      <YAxis domain={[0, 100]} tick={{ fill: '#64748b', fontWeight: 600 }} tickFormatter={(val) => `${val}%`} />
+                      <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', color: '#0f172a' }} labelStyle={{ color: '#0f172a', fontWeight: 'bold' }} formatter={(val: any) => [`${Number(val).toFixed(1)}%`, 'Fill Level']} />
                       <Legend wrapperStyle={{ fontWeight: 600 }} />
                       <ReferenceLine y={80} stroke="#ef4444" strokeDasharray="4 4" />
                       <Line name="Main Dump (D1)" type="monotone" dataKey="D1" stroke="#f97316" strokeWidth={3} dot={false} />
@@ -415,13 +415,13 @@ export default function ImpactDashboard() {
         {/* SECTION 3 & 4: Tables */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* SECTION 3: Waste Segregation Status */}
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm overflow-x-auto">
-            <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Zone Breakdown</h2>
-            <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-x-auto">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-4">Zone Breakdown</h2>
+            <table className="w-full text-left text-sm text-slate-600">
+              <thead className="bg-slate-50 border-b border-slate-200">
                 <tr><th className="px-4 py-3">Zone</th><th className="px-4 py-3">Buildings</th><th className="px-4 py-3">Waste/day</th><th className="px-4 py-3">Dominant Type</th><th className="px-4 py-3">Status</th></tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+              <tbody className="divide-y divide-slate-100">
                 {[
                   { z: "B2", b: "2,189", w: "5.1t", sp: "Residential (146 sqm avg)", s: "High", c: "bg-rose-100 text-rose-700" },
                   { z: "C3", b: "2,082", w: "4.8t", sp: "Residential (131 sqm avg)", s: "High", c: "bg-rose-100 text-rose-700" },
@@ -433,8 +433,8 @@ export default function ImpactDashboard() {
                   { z: "C4", b: "158", w: "0.4t", sp: "Residential (146 sqm avg)", s: "Low", c: "bg-green-100 text-green-700" },
                   { z: "Total", b: "9,471", w: "19.78t", sp: "City Overlap", s: "Warning", c: "bg-orange-100 text-orange-700" }
                 ].map((r, i) => (
-                  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-3 font-bold text-slate-800 dark:text-white">{r.z}</td>
+                  <tr key={i} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 font-bold text-slate-800">{r.z}</td>
                     <td className="px-4 py-3">{r.b}</td>
                     <td className="px-4 py-3 font-semibold">{r.w}</td>
                     <td className="px-4 py-3">{r.sp}</td>
@@ -446,16 +446,16 @@ export default function ImpactDashboard() {
           </div>
 
           {/* Stacked BarChart */}
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm">
-            <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Waste Composition per Zone</h2>
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-4">Waste Composition per Zone</h2>
             <div className="h-64 w-full">
               {mounted && (
                 <ResponsiveContainer>
                   <BarChart data={zoneWasteData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                     <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }} />
-                    <YAxis tick={{ fill: '#94a3b8', fontWeight: 600 }} />
-                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '12px' }} />
+                    <YAxis tick={{ fill: '#64748b', fontWeight: 600 }} />
+                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', color: '#0f172a' }} />
                     <Legend wrapperStyle={{ fontWeight: 600, fontSize: '13px' }} />
                     <Bar name="Organic Waste" dataKey="Organic" stackId="a" fill="#22c55e" radius={[0, 0, 4, 4]} />
                     <Bar name="Dry Waste" dataKey="Dry" stackId="a" fill="#3b82f6" />
@@ -469,21 +469,21 @@ export default function ImpactDashboard() {
 
         {/* SECTION 4b: Open Space Risk */}
         <div className="mb-16">
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm overflow-x-auto">
-            <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Open Space Risk Analysis</h2>
-            <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-x-auto">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-4">Open Space Risk Analysis</h2>
+            <table className="w-full text-left text-sm text-slate-600">
+              <thead className="bg-slate-50 border-b border-slate-200">
                 <tr><th className="px-4 py-3">Location</th><th className="px-4 py-3">Area sqm</th><th className="px-4 py-3">Distance</th><th className="px-4 py-3">Risk Level</th></tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+              <tbody className="divide-y divide-slate-100">
                 {[
                   { l: "Agara Lake surf.", a: "5,200", d: "120m", r: "High", c: "bg-red-100 text-red-700" },
                   { l: "BDA Complex", a: "3,800", d: "85m", r: "Medium", c: "bg-amber-100 text-amber-700" },
                   { l: "HSR 27th Main", a: "2,100", d: "45m", r: "High", c: "bg-red-100 text-red-700" },
                   { l: "Sector 2 Park", a: "1,500", d: "200m", r: "Low", c: "bg-green-100 text-green-700" }
                 ].map((r, i) => (
-                  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-3 font-bold text-slate-800 dark:text-white">{r.l}</td>
+                  <tr key={i} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 font-bold text-slate-800">{r.l}</td>
                     <td className="px-4 py-3">{r.a}</td>
                     <td className="px-4 py-3">{r.d}</td>
                     <td className="px-4 py-3"><span className={`px-2 py-1 rounded text-xs font-bold ${r.c}`}>{r.r}</span></td>
@@ -496,12 +496,12 @@ export default function ImpactDashboard() {
 
         {/* SECTION 5: Two-Tier Collection System */}
         <section className="mb-20">
-          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white mb-6">Two-Tier Collection System — HSR Layout</h2>
+          <h2 className="text-3xl font-extrabold text-slate-900 mb-6">Two-Tier Collection System — HSR Layout</h2>
           
           {/* Flow Diagram */}
-          <div className="w-full bg-slate-900 border border-slate-700 rounded-3xl p-8 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between text-center gap-4">
+          <div className="w-full bg-slate-900 border border-slate-200 rounded-3xl p-8 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between text-center gap-4">
              <div className="flex flex-col items-center">
-               <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-2xl border border-slate-600 mb-2">🏠</div>
+               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl border border-slate-200 mb-2 shadow-inner">🏠</div>
                <span className="text-white font-bold text-sm">Houses</span>
              </div>
              <span className="text-teal-400 font-extrabold text-xl">→</span>
@@ -522,53 +522,53 @@ export default function ImpactDashboard() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm text-center">
-              <div className="text-2xl font-black text-slate-800 dark:text-white mb-1">4</div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-center">
+              <div className="text-2xl font-black text-slate-900 mb-1">4</div>
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Truck Hubs</div>
             </div>
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm text-center">
-              <div className="text-2xl font-black text-slate-800 dark:text-white mb-1">12</div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-center">
+              <div className="text-2xl font-black text-slate-900 mb-1">12</div>
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Auto Vehicles</div>
             </div>
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm text-center">
-              <div className="text-2xl font-black text-emerald-500 mb-1">89%</div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-center">
+              <div className="text-2xl font-black text-emerald-600 mb-1">89%</div>
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Sub Rds Covered</div>
             </div>
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm text-center">
-              <div className="text-2xl font-black text-emerald-500 mb-1">100%</div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-center">
+              <div className="text-2xl font-black text-emerald-600 mb-1">100%</div>
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Main Rds</div>
             </div>
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm text-center">
-              <div className="text-2xl font-black text-slate-800 dark:text-white mb-1">3</div>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-center">
+              <div className="text-2xl font-black text-slate-900 mb-1">3</div>
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Daily Rounds</div>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm overflow-x-auto">
-            <h3 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Collection System Impact</h3>
-            <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-x-auto">
+            <h3 className="text-xl font-extrabold text-slate-900 mb-4">Collection System Impact</h3>
+            <table className="w-full text-left text-sm text-slate-600">
+              <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
                    <th className="px-4 py-3">Metric</th>
                    <th className="px-4 py-3">Before</th>
-                   <th className="px-4 py-3 text-teal-600 dark:text-teal-400 font-extrabold">After Two-Tier</th>
+                   <th className="px-4 py-3 text-teal-600 font-extrabold">After Two-Tier</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-700 font-medium">
-                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                   <td className="px-4 py-3 text-slate-800 dark:text-white font-bold">Roads covered</td><td className="px-4 py-3 opacity-60">45%</td><td className="px-4 py-3 text-emerald-500 font-bold bg-emerald-50/50 dark:bg-emerald-900/10">89%</td>
+              <tbody className="divide-y divide-slate-100 font-medium">
+                <tr className="hover:bg-slate-50">
+                   <td className="px-4 py-3 text-slate-900 font-bold">Roads covered</td><td className="px-4 py-3 opacity-60">45%</td><td className="px-4 py-3 text-emerald-600 font-bold bg-emerald-50">89%</td>
                 </tr>
-                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                   <td className="px-4 py-3 text-slate-800 dark:text-white font-bold">Collection time</td><td className="px-4 py-3 opacity-60">6 hrs</td><td className="px-4 py-3 text-emerald-500 font-bold bg-emerald-50/50 dark:bg-emerald-900/10">3.5 hrs</td>
+                <tr className="hover:bg-slate-50">
+                   <td className="px-4 py-3 text-slate-900 font-bold">Collection time</td><td className="px-4 py-3 opacity-60">6 hrs</td><td className="px-4 py-3 text-emerald-600 font-bold bg-emerald-50">3.5 hrs</td>
                 </tr>
-                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                   <td className="px-4 py-3 text-slate-800 dark:text-white font-bold">Fuel cost/day</td><td className="px-4 py-3 opacity-60">₹4,200</td><td className="px-4 py-3 text-emerald-500 font-bold bg-emerald-50/50 dark:bg-emerald-900/10">₹2,100</td>
+                <tr className="hover:bg-slate-50">
+                   <td className="px-4 py-3 text-slate-900 font-bold">Fuel cost/day</td><td className="px-4 py-3 opacity-60">₹4,200</td><td className="px-4 py-3 text-emerald-600 font-bold bg-emerald-50">₹2,100</td>
                 </tr>
-                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                   <td className="px-4 py-3 text-slate-800 dark:text-white font-bold">Missed pickups</td><td className="px-4 py-3 opacity-60">35%</td><td className="px-4 py-3 text-emerald-500 font-bold bg-emerald-50/50 dark:bg-emerald-900/10">8%</td>
+                <tr className="hover:bg-slate-50">
+                   <td className="px-4 py-3 text-slate-900 font-bold">Missed pickups</td><td className="px-4 py-3 opacity-60">35%</td><td className="px-4 py-3 text-emerald-600 font-bold bg-emerald-50">8%</td>
                 </tr>
-                <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                   <td className="px-4 py-3 text-slate-800 dark:text-white font-bold">Resident complaints</td><td className="px-4 py-3 opacity-60 text-rose-400">High</td><td className="px-4 py-3 text-emerald-500 font-bold bg-emerald-50/50 dark:bg-emerald-900/10">Low</td>
+                <tr className="hover:bg-slate-50">
+                   <td className="px-4 py-3 text-slate-900 font-bold">Resident complaints</td><td className="px-4 py-3 opacity-60 text-rose-500">High</td><td className="px-4 py-3 text-emerald-600 font-bold bg-emerald-50">Low</td>
                 </tr>
               </tbody>
             </table>
@@ -579,59 +579,59 @@ export default function ImpactDashboard() {
         <section className="mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Infrastructure Efficiency */}
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 text-sm font-mono text-teal-400">
+            <div className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 text-sm font-mono text-emerald-100 shadow-sm">
               <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>⚡</span> Infrastructure Efficiency</h3>
               <div className="grid grid-cols-1 gap-y-3">
-                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">DWCC Utilisation:</span><span className="text-white font-bold">17.5% (16 DWCCs)</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Bio-meth load:</span><span className="text-amber-400 font-bold">14.2T / 65T capacity = 21.8%</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Landfill diversion:</span><span className="text-green-400 font-bold">80%</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Open dumpyards:</span><span className="text-green-400 font-bold">0 ✔</span></div>
-                <div className="flex justify-between pb-2"><span className="text-slate-400">Methane risk:</span><span className="text-green-400 font-bold">LOW ✅</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">DWCC Utilisation:</span><span className="text-white font-bold">17.5% (16 DWCCs)</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Bio-meth load:</span><span className="text-amber-400 font-bold">14.2T / 65T capacity = 21.8%</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Landfill diversion:</span><span className="text-emerald-300 font-bold">80%</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Open dumpyards:</span><span className="text-emerald-300 font-bold">0 ✔</span></div>
+                <div className="flex justify-between pb-2"><span className="text-emerald-200">Methane risk:</span><span className="text-emerald-300 font-bold">LOW ✅</span></div>
               </div>
-              <div className="mt-4 bg-teal-500/10 border border-teal-500/20 rounded-xl p-3 text-xs text-teal-300 leading-relaxed">
+              <div className="mt-4 bg-emerald-800/50 border border-emerald-700/50 rounded-xl p-3 text-xs text-emerald-100 leading-relaxed">
                 Current infrastructure is under-utilised. AstraCity&apos;s routing optimization ensures waste reaches the <strong>RIGHT</strong> facility — wet to bio-meth, dry to DWCC.
               </div>
             </div>
 
             {/* Annual Savings & Carbon Revenue Breakdown */}
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6">
-              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>💰</span> Annual Value identified: <span className="text-emerald-400">₹9.42 Crores</span></h3>
-              <p className="text-slate-400 text-xs mb-4">₹4.23Cr operational + ₹5.19Cr carbon</p>
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-slate-900 font-bold text-base mb-4 flex items-center gap-2"><span>💰</span> Annual Value identified: <span className="text-teal-600 font-black">₹9.42 Crores</span></h3>
+              <p className="text-slate-500 text-xs mb-4">₹4.23Cr operational + ₹5.19Cr carbon</p>
               
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
                   <div className="text-lg">🌿</div>
-                  <div className="text-emerald-400 font-black text-lg">₹5.19 Cr</div>
-                  <div className="text-white font-bold text-xs">Carbon Credits</div>
-                  <div className="text-emerald-200/50 text-[10px] mt-1 leading-tight">25,959 tons CO₂e/yr<br/>× ₹2,000/ton India market</div>
+                  <div className="text-emerald-600 font-black text-lg">₹5.19 Cr</div>
+                  <div className="text-slate-900 font-bold text-xs">Carbon Credits</div>
+                  <div className="text-emerald-700/60 text-[10px] mt-1 leading-tight">25,959 tons CO₂e/yr<br/>× ₹2,000/ton India market</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-3">
                   <div className="text-lg">🚛</div>
-                  <div className="text-teal-400 font-black text-lg">₹3.28 Cr</div>
-                  <div className="text-white font-bold text-xs">Route opt</div>
+                  <div className="text-teal-600 font-black text-lg">₹3.28 Cr</div>
+                  <div className="text-slate-900 font-bold text-xs">Route opt</div>
                   <div className="text-slate-500 text-[10px] mt-1 leading-tight">VRP dynamic routing fuel savings</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-3">
                   <div className="text-lg">🧹</div>
-                  <div className="text-teal-400 font-black text-lg">₹0.45 Cr</div>
-                  <div className="text-white font-bold text-xs">Cleanup</div>
+                  <div className="text-teal-600 font-black text-lg">₹0.45 Cr</div>
+                  <div className="text-slate-900 font-bold text-xs">Cleanup</div>
                   <div className="text-slate-500 text-[10px] mt-1 leading-tight">Prevented illegal dump cleanups</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-3">
                   <div className="text-lg">⚡</div>
-                  <div className="text-teal-400 font-black text-lg">₹0.38 Cr</div>
-                  <div className="text-white font-bold text-xs">Efficiency</div>
+                  <div className="text-teal-600 font-black text-lg">₹0.38 Cr</div>
+                  <div className="text-slate-900 font-bold text-xs">Efficiency</div>
                   <div className="text-slate-500 text-[10px] mt-1 leading-tight">Labor & time utilization gain</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-3">
                   <div className="text-lg">➕</div>
-                  <div className="text-teal-400 font-black text-lg">₹0.12 Cr</div>
-                  <div className="text-white font-bold text-xs">Other</div>
+                  <div className="text-teal-600 font-black text-lg">₹0.12 Cr</div>
+                  <div className="text-slate-900 font-bold text-xs">Other</div>
                   <div className="text-slate-500 text-[10px] mt-1 leading-tight">Fleet maintenance reduction</div>
                 </div>
               </div>
 
-              <div className="mt-4 bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs text-slate-400 leading-relaxed italic">
+              <div className="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-500 leading-relaxed italic">
                 Note: Carbon credit revenue requires CDM/VCS registration. Operational savings of ₹4.23Cr are immediate.
               </div>
             </div>
@@ -640,10 +640,10 @@ export default function ImpactDashboard() {
 
         {/* PART 6: LULC Dashboard Section */}
         <section className="mb-20">
-          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white mb-6">Land Use Analysis — Sentinel-2 Classification</h2>
+          <h2 className="text-3xl font-extrabold text-slate-900 mb-6">Land Use Analysis — Sentinel-2 Classification</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center">
-              <h3 className="font-bold text-lg mb-2 self-start text-slate-800 dark:text-white">LULC Breakdown</h3>
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center">
+              <h3 className="font-bold text-lg mb-2 self-start text-slate-900">LULC Breakdown</h3>
               <div className="h-48 w-full mt-2">
                 {mounted && (
                   <ResponsiveContainer>
@@ -651,8 +651,8 @@ export default function ImpactDashboard() {
                       <Pie data={lulcData} innerRadius={40} outerRadius={65} paddingAngle={5} dataKey="value" stroke="none">
                         {lulcData.map((e, i) => <Cell key={i} fill={e.color} />)}
                       </Pie>
-                      <Tooltip formatter={(value) => [`${value}%`, 'Area']} contentStyle={{ borderRadius: '12px' }}/>
-                      <Legend wrapperStyle={{ fontSize: '13px', fontWeight: 600 }} />
+                      <Tooltip formatter={(value) => [`${value}%`, 'Area']} contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', color: '#0f172a' }}/>
+                      <Legend wrapperStyle={{ fontSize: '13px', fontWeight: 600 }} formatter={(value) => <span className="text-slate-700">{value}</span>} />
                     </PieChart>
                   </ResponsiveContainer>
                 )}
@@ -660,37 +660,37 @@ export default function ImpactDashboard() {
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
-              <div className="bg-rose-50 border border-rose-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
+              <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
                 <p className="text-rose-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_builtup}% built-up area generates 35kg waste per 100sqm daily</p>
               </div>
-              <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
+              <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
                 <p className="text-orange-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_open}% open land =<br/>8 potential illegal dump sites</p>
               </div>
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
+              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
                 <p className="text-blue-800 font-bold text-lg leading-snug">Agara Lake buffer zone at high contamination risk</p>
               </div>
-              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
                 <p className="text-emerald-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_vegetation}% green cover helps reduce organic waste by 12%</p>
               </div>
             </div>
             
-            <div className="lg:col-span-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300 relative top-2">
-                <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+            <div className="lg:col-span-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-600 relative top-2">
+                <thead className="bg-slate-50 border-b border-slate-200">
                   <tr><th className="px-4 py-4">Land Type</th><th className="px-4 py-4">Area sqkm</th><th className="px-4 py-4">Waste Impact</th><th className="px-4 py-4">Dump Risk</th></tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-rose-500"></span>Built-up</td><td className="px-4 py-4">11.85</td><td className="px-4 py-4 text-rose-600 font-bold">Very High</td><td className="px-4 py-4 text-amber-600 font-bold">Medium</td>
+                <tbody className="divide-y divide-slate-100">
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-900"><span className="block w-3 h-3 rounded-sm bg-rose-500"></span>Built-up</td><td className="px-4 py-4">11.85</td><td className="px-4 py-4 text-rose-600 font-bold">Very High</td><td className="px-4 py-4 text-amber-600 font-bold">Medium</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-orange-500"></span>Open Land</td><td className="px-4 py-4">2.83</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-600 font-bold">Very High</td>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-900"><span className="block w-3 h-3 rounded-sm bg-orange-500"></span>Open Land</td><td className="px-4 py-4">2.83</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-600 font-bold">Very High</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-emerald-600"></span>Vegetation</td><td className="px-4 py-4">3.26</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-900"><span className="block w-3 h-3 rounded-sm bg-emerald-600"></span>Vegetation</td><td className="px-4 py-4">3.26</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-rose-500 font-bold">High</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-blue-500"></span>Water</td><td className="px-4 py-4">0.56</td><td className="px-4 py-4 text-slate-400 font-bold">None</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-900"><span className="block w-3 h-3 rounded-sm bg-blue-500"></span>Water</td><td className="px-4 py-4">0.56</td><td className="px-4 py-4 text-slate-600 font-bold">None</td><td className="px-4 py-4 text-rose-500 font-bold">High</td>
                   </tr>
                 </tbody>
               </table>
@@ -700,23 +700,24 @@ export default function ImpactDashboard() {
 
         {/* SECTION 7: SCALE-UP IMPLICATIONS */}
         <section className="mb-20">
-          <div className="bg-gradient-to-r from-teal-900 to-slate-900 border border-teal-500/20 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-900 border border-slate-200 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
             <h2 className="text-3xl font-extrabold text-white mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
-            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.42Cr total value/year · 198 wards × ₹9.42Cr = ₹1,865 Crores</p>
+            <p className="text-center font-medium text-emerald-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.42Cr total value/year · 198 wards × ₹9.42Cr = ₹1,865 Crores</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
-                <div className="text-xs font-bold text-teal-500 uppercase tracking-widest mb-1">Total Population</div>
+              <div className="bg-white/10 border border-white/20 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
+                <div className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-1">Total Population</div>
                 <div className="text-4xl font-black text-white">~1.4 Crores</div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
-                <div className="text-xs font-bold text-teal-500 uppercase tracking-widest mb-1">Daily Waste</div>
+              <div className="bg-white/10 border border-white/20 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
+                <div className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-1">Daily Waste</div>
                 <div className="text-4xl font-black text-white">~6,500 Tons</div>
               </div>
-              <div className="bg-white/5 border border-teal-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2">
-                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Potential Annual Value</div>
-                <div className="text-4xl font-black text-[#00d4aa]">₹1,865 Cr</div>
+              <div className="bg-emerald-600 border border-emerald-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2 relative">
+                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-700 opacity-50 rounded-2xl -z-10"></div>
+                <div className="text-xs font-bold text-white/80 uppercase tracking-widest mb-1">Potential Annual Value</div>
+                <div className="text-4xl font-black text-white">₹1,865 Cr</div>
               </div>
             </div>
           </div>
