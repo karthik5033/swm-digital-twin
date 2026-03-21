@@ -244,13 +244,13 @@ export default function Navbar() {
               animate={{ opacity: 1 }} 
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-slate-100/60 backdrop-blur-sm cursor-pointer"
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-slate-100 border border-slate-300 rounded-3xl shadow-lg z-10 p-6 sm:p-8"
+              className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-white border border-slate-200 rounded-3xl shadow-2xl z-10 p-6 sm:p-8"
             >
               <button 
                 onClick={() => setIsModalOpen(false)}
@@ -270,7 +270,7 @@ export default function Navbar() {
                       <th className="px-5 py-3 font-extrabold uppercase tracking-widest text-[11px]">Source</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800 font-medium text-slate-500">
+                  <tbody className="divide-y divide-slate-100 font-medium text-slate-600">
                     {[
                       { point: 'Area', val: '18.5 sq km', src: 'OSM boundary' },
                       { point: 'Buildings', val: '9,471', src: 'OpenStreetMap' },
@@ -290,7 +290,7 @@ export default function Navbar() {
                       { point: 'Wet routing', val: '→ Bio-meth', src: 'ceeindia.org/hsr-swm' },
                     ].map((row, i) => (
                       <tr key={i} className="hover:bg-slate-100/30">
-                        <td className="px-5 py-3 text-slate-200 font-semibold">{row.point}</td>
+                        <td className="px-5 py-3 text-slate-800 font-semibold">{row.point}</td>
                         <td className="px-5 py-3 font-mono text-teal-600">{row.val}</td>
                         <td className="px-5 py-3">{row.src}</td>
                       </tr>
