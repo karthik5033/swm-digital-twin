@@ -1,0 +1,25 @@
+﻿diff --cc components/map/SmartMap.tsx
+index 21f03b4,e75c02e..0000000
+--- a/components/map/SmartMap.tsx
++++ b/components/map/SmartMap.tsx
+@@@ -616,12 -759,11 +759,20 @@@ export default function SmartMap() 
+        {/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */}
+        <div className="shrink-0 bg-[#0a0f1a] border-b border-white/10 px-6 py-2 flex items-center justify-center gap-0 text-xs font-semibold tracking-wide">
+          {[
+++<<<<<<< HEAD
+ +          { label: 'mapped', value: '704 ha', warn: false },
+ +          { label: 'buildings analyzed', value: '9,471', warn: false },
+ +          { label: 'DWCC detected', value: '29', warn: false },
+ +          { label: 'waste/day', value: '19.78T', warn: false },
+ +          { label: 'route saving', value: '75.5%', warn: false },
+ +          { label: 'lake at risk', value: '1', warn: true },
+++=======
++           { label: 'mapped', value: `${HSR_DATA.area_hectares} ha`, warn: false },
++           { label: 'population', value: HSR_DATA.population_2026.toLocaleString(), warn: false },
++           { label: 'waste/day', value: `${HSR_DATA.daily_waste_tons}T`, warn: false },
++           { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
++           { label: 'dumps detected', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
+++>>>>>>> 1376a72b494bae17225ce0c9d9974f2bc648f193
+          ].map(({ label, value, warn }, i) => (
+            <React.Fragment key={label}>
+              {i > 0 && <span className="text-white/15 mx-4 select-none">|</span>}

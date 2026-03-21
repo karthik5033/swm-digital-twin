@@ -1,0 +1,4 @@
+﻿C:\Users\Kishan Shetty\Downloads\AstraSky-maing\astracity\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node (129.5703125 MB)
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\DS\HSR_Layput\HSR Layout\Satellite Data\BBMP_BOUNDARY_SD.tif (275.988676071167 MB)
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\DS\Road_Network\Bengaluru Road Network\Bengaluru Road Network R&U.dbf (259.930781364441 MB)
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node (129.5703125 MB)
