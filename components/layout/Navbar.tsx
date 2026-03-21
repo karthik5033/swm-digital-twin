@@ -11,7 +11,7 @@ const LINKS = [
   { href: '/analysis', label: 'Analysis' },
   { href: '/osm', label: 'OSM' },
   { href: '/simulation', label: 'Simulation' },
-  { href: '/engine', label: 'Engine' },
+  { href: '/methodology', label: 'Methodology' },
   { href: '/routes', label: 'Routes' },
   { href: '/impact', label: 'Impact' },
   { href: '/wards', label: 'Wards' },
