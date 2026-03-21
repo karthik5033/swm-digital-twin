@@ -226,15 +226,27 @@ export default function SimulationPanel() {
         riskScore > 0.65 ? 'HIGH' :
         riskScore > 0.45 ? 'MEDIUM' : 'LOW';
 
-      let cost = 2100;
+      // Round to 2 decimals
+      waste = Math.round(waste * 100) / 100;
+
+      // Wet/dry split
+      // Source: BBMP 2013 chemical analysis
+      const wet = Math.round(waste * 0.61 * 100) / 100;
+      const dry = Math.round(waste * 0.30 * 100) / 100;
+
+      // Cost calculation
+      let cost = Math.round(31 * 20 * 10); // distance x fuel x trucks
       if (extraAutos) cost += 800;
+
+      const dateStr = new Date(Date.now() + day.day * 86400000).toLocaleDateString('en-IN');
 
       return {
         ...day,
         dayLabel: `Day ${day.day}`,
-        waste: Number(waste.toFixed(2)),
-        wet: Number((waste * 0.6).toFixed(2)),
-        dry: Number((waste * 0.4).toFixed(2)),
+        date: dateStr,
+        waste,
+        wet,
+        dry,
         risk,
         riskScore,
         cost,
@@ -272,6 +284,36 @@ export default function SimulationPanel() {
                 <p className="text-xs font-bold text-slate-400 mt-1 uppercase">Predictive AI Model</p>
             </div>
           </div>
+
+          {weatherData && weatherData.length > 0 && (
+            <div className="bg-slate-800 text-white rounded-xl p-4 shadow-md flex flex-col justify-center relative overflow-hidden border border-slate-700">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[40px] rounded-full pointer-events-none" />
+              <h3 className="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest mb-3 z-10">Current Bengaluru Weather</h3>
+              <div className="flex items-center justify-between z-10 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🌡️</span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase">Temp</span>
+                    <span className="font-black leading-none">{Math.round(weatherData[0].temp)}°C</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🌧️</span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase">Rain</span>
+                    <span className="font-black leading-none">{weatherData[0].rainfall} mm</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">💧</span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase">Humidity</span>
+                    <span className="font-black leading-none">{weatherData[0].humidity}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-col gap-6">
 
@@ -524,6 +566,7 @@ export default function SimulationPanel() {
                     <thead>
                       <tr className="bg-slate-50 text-slate-500 text-[10px] uppercase tracking-wider">
                         <th className="p-3 font-bold border-b">Day</th>
+                        <th className="p-3 font-bold border-b">Date</th>
                         <th className="p-3 font-bold border-b">Temp</th>
                         <th className="p-3 font-bold border-b">Rain</th>
                         <th className="p-3 font-bold border-b">Waste (T)</th>
@@ -538,6 +581,7 @@ export default function SimulationPanel() {
                       {forecast.map((d: any, i: number) => (
                         <tr key={i} className="hover:bg-slate-50/50 transition-colors">
                           <td className="p-3 font-bold text-slate-700">{d.dayLabel}</td>
+                          <td className="p-3 text-slate-500 font-medium whitespace-nowrap">{d.date}</td>
                           <td className="p-3 text-slate-600">{Math.round(d.temp)}°C</td>
                           <td className="p-3 text-slate-600">{d.rainfall}mm</td>
                           <td className="p-3 font-black text-slate-800">{d.waste}</td>
