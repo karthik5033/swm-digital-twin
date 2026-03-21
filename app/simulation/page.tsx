@@ -208,26 +208,46 @@ export default function SimulationPanel() {
             {/* REAL DATA BASELINE CARD */}
             <div className="bg-slate-900 border border-slate-700 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
               <div className="flex items-center gap-2 mb-3 text-white font-bold text-sm">
-                <span>📡</span> Real Data — HSR Layout
+                <span>📡</span> Verified Building-Based Data
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Ward Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
-                <div className="flex justify-between"><span className="text-slate-400">Population (2025):</span> <span className="text-white">{HSR_DATA.population_2025.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Census 2011:</span> <span className="text-slate-300">{HSR_DATA.population_2011.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Growth rate:</span> <span className="text-slate-300">{HSR_DATA.growth_rate_pct}%/year</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Projection year:</span> <span className="text-slate-300">2025</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Population:</span> <span className="text-white font-bold">{HSR_DATA.population_building_based.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.houses.count.toLocaleString()} × {HSR_DATA.population_breakdown.houses.per_unit} = {HSR_DATA.population_breakdown.houses.total.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.apartments.count} × {HSR_DATA.population_breakdown.apartments.per_unit} = {HSR_DATA.population_breakdown.apartments.total.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.offices.count} × {HSR_DATA.population_breakdown.offices.per_unit} = {HSR_DATA.population_breakdown.offices.total}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.schools.count} × {HSR_DATA.population_breakdown.schools.per_unit} = {HSR_DATA.population_breakdown.schools.total.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.others.count} × {HSR_DATA.population_breakdown.others.per_unit} = {HSR_DATA.population_breakdown.others.total}</span></div>
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">{HSR_DATA.daily_waste_tons} tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Wet (60%):</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons} tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Dry (35%):</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons} tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Other (5%):</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons} tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
               </div>
-              <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Waste rate:</span> <span className="text-white">0.5 kg/person/day</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4"></span> <span className="text-slate-500">(CPCB standard)</span></div>
+              <div className="mb-3 border-b border-slate-700/50 pb-3">
+                <div className="text-teal-500 font-bold mb-1">Composition (BBMP 2013 Official):</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🟢 Wet {HSR_DATA.waste_wet_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanisation</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔵 Dry {HSR_DATA.waste_dry_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → 16 DWCC centres</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔴 Haz {HSR_DATA.waste_hazardous_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_hazardous_tons}T → Special contractor</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">⚪ Other {HSR_DATA.waste_other_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons}T → Street sweep</span></div>
+                <div className="text-slate-600 ml-2 mt-1 text-[9px] italic">BBMP data: wet rose 42% (1999) → 61% (2013). Bio-meth critical.</div>
               </div>
-              <div className="text-[10px] text-slate-500 text-right mt-1">Source: Census 2011 + geoiq.io</div>
+              <div className="mb-2">
+                <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.daily_waste_display} base:</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-300">23.3 × 1.15 = 26.8T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.3 × 1.28 = 29.8T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-300">23.3 × 1.49 = 34.7T</span></div>
+              </div>
+              <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-800">Source: CPCB + Census 2011 Karnataka</div>
+
+              {/* Climate block */}
+              <div className="mt-3 border-t border-slate-700/50 pt-3">
+                <div className="text-emerald-500 font-bold mb-1 text-xs uppercase tracking-wider">Climate Impact (IPCC 2006)</div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CH₄ produced:</span> <span className="text-teal-300">3,548 m³/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CO₂ equivalent:</span> <span className="text-blue-300">71.1 T/day captured</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Energy output:</span> <span className="text-amber-300">21,285 kWh/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Methane risk:</span> <span className="text-green-400 font-bold">LOW ✅ (0 dumps)</span></div>
+                <div className="text-[9px] text-slate-600 mt-1 italic">CH₄ GWP = 28× CO₂ (IPCC AR5) · 6 kWh/m³</div>
+              </div>
             </div>
 
             {/* HSR Scenario: Demolition Spikes */}

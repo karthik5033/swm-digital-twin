@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HSR_DATA } from '@/lib/constants';
 
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/map', label: 'Map' },
-  { href: '/satellite', label: 'Satellite' },
   { href: '/analysis', label: 'Analysis' },
   { href: '/osm', label: 'OSM' },
   { href: '/simulation', label: 'Simulation' },
@@ -176,12 +176,24 @@ export default function Navbar() {
                       { point: 'Road density', val: '110/sq km', src: 'Calculated' },
                       { point: 'Truck roads', val: '352 (17.4%)', src: 'OSM road types' },
                       { point: 'Auto roads', val: '1,579 (77.9%)', src: 'OSM road types' },
-                      { point: 'Population 2011', val: '63,033', src: 'Census 2011' },
-                      { point: 'Population 2025', val: '1,15,000', src: '4.5%/yr proj.' },
-                      { point: 'Waste rate', val: '0.5 kg/day', src: 'CPCB standard' },
-                      { point: 'Daily waste', val: '57.5 tons', src: 'Calculated' },
-                      { point: 'Dump sites', val: '29', src: 'Satellite AI' },
+                      { point: 'Population', val: '46,219', src: 'Buildings×Census 2011 Karnataka' },
+                      { point: 'Per capita', val: '0.5 kg/day', src: 'CPCB large city official' },
+                      { point: 'Daily waste', val: '23.1 Tons', src: '46,219 × 0.5kg' },
+                      { point: `Wet ${HSR_DATA.waste_wet_pct}%`, val: `${HSR_DATA.waste_wet_tons}T`, src: 'BBMP Chemical Analysis' },
+                      { point: `Dry ${HSR_DATA.waste_dry_pct}%`, val: `${HSR_DATA.waste_dry_tons}T`, src: 'CPCB 59-cities' },
+                      { point: `Hazardous ${HSR_DATA.waste_hazardous_pct}%`, val: `${HSR_DATA.waste_hazardous_tons}T`, src: 'BBMP guidelines' },
                       { point: 'Route saving', val: '75.5%', src: 'NetworkX VRP' },
+                      { point: 'Collection schedule', val: 'Daily/2×wk', src: 'hsrcitizenforum.in' },
+                      { point: 'Wet routing', val: '→ Bio-meth', src: 'ceeindia.org/hsr-swm' },
+                      { point: 'DWCC utilisation', val: '17.5%', src: 'bbmp.gov.in' },
+                      { point: 'City diversion', val: '80% vs 47%', src: 'Deccan Herald + BBMP NGT' },
+                      { point: 'Landfill diverted', val: '80%', src: 'data.opencity.in' },
+                      { point: 'IPCC CH₄ factor', val: '0.25 m³/kg', src: 'IPCC 2006' },
+                      { point: 'CH₄ GWP', val: '28× CO₂', src: 'IPCC AR5' },
+                      { point: 'Energy conv.', val: '6 kWh/m³', src: 'Standard' },
+                      { point: 'Carbon price', val: '₹2,000/ton', src: 'India market 2024' },
+                      { point: 'Kudlu plant', val: 'Under const.', src: 'Deccan Herald' },
+                      { point: 'Swachagraha', val: 'Sector 4', src: 'Wikipedia + OpenCity' },
                     ].map((row, i) => (
                       <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30">
                         <td className="px-5 py-3 text-slate-800 dark:text-slate-200 font-semibold">{row.point}</td>
@@ -193,9 +205,32 @@ export default function Navbar() {
                 </table>
               </div>
 
-              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-5 text-sm text-amber-800 dark:text-amber-400 font-medium leading-relaxed">
-                <span className="font-extrabold block mb-2">All data derived from real sources. No synthetic or estimated data used without explicit labeling.</span>
-                <span className="opacity-80 leading-normal block">Sources: Census 2011, OpenStreetMap, CPCB Guidelines, Beegru.com 2025, geoiq.io, HSR_Layout_SD.tif satellite.</span>
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-5 flex flex-col gap-4 text-sm text-amber-800 dark:text-amber-400 font-medium leading-relaxed">
+                <div>
+                  <span className="font-extrabold block mb-3 text-base">All data derived from real official documents.</span>
+                  <div className="opacity-90 leading-normal flex flex-col gap-1.5 ml-1">
+                    <div><span className="font-bold text-amber-900 dark:text-amber-300">📄 bbc.csv</span> — BBMP official waste composition data</div>
+                    <div><span className="font-bold text-amber-900 dark:text-amber-300">📄 xxm.pdf</span> — CPCB Annual Report 2021-2022 on Solid Waste</div>
+                    <div><span className="font-bold text-amber-900 dark:text-amber-300">Geospatial</span> — OpenStreetMap, Census 2011, geoiq.io, HSR_Layout_SD.tif</div>
+                  </div>
+                </div>
+
+                <div className="bg-amber-100/60 dark:bg-amber-950/40 rounded-xl p-3 text-xs leading-relaxed">
+                  <div className="font-bold text-amber-900 dark:text-amber-300 mb-1">BBMP Historical Composition Trend:</div>
+                  <div className="text-amber-800 dark:text-amber-400">1999: Wet 42%, Dry 41%, Other 17%</div>
+                  <div className="text-amber-800 dark:text-amber-400">2013: Wet 61%, Dry 25%, Other 14%</div>
+                  <div className="text-amber-700 dark:text-amber-500 mt-1 italic">Trend: organic increasing yearly — validates bio-meth demand</div>
+                  <div className="text-amber-600 dark:text-amber-600 mt-0.5">Source: BBMP Official Publications</div>
+                </div>
+                
+                <div className="flex gap-4 pt-4 border-t border-amber-200 dark:border-amber-800/50">
+                  <a href="/data/sources/bbc.csv" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-amber-100 hover:bg-amber-200 dark:bg-amber-800/40 dark:hover:bg-amber-700/60 transition-colors px-4 py-2 rounded-xl text-amber-900 dark:text-amber-200 font-bold shadow-sm">
+                    ↓ Download BBMP Data
+                  </a>
+                  <a href="/data/sources/xxm.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-amber-100 hover:bg-amber-200 dark:bg-amber-800/40 dark:hover:bg-amber-700/60 transition-colors px-4 py-2 rounded-xl text-amber-900 dark:text-amber-200 font-bold shadow-sm">
+                    ↓ Download CPCB Study
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>

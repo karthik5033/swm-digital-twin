@@ -129,10 +129,10 @@ const FEATURES = [
 ];
 
 export default function Home() {
-  const population = useCounter(HSR_DATA.population_2025, 2.4, 0);
+  const population = useCounter(HSR_DATA.population_building_based, 2.4, 0);
   const totalWaste = useCounter(HSR_DATA.daily_waste_tons, 2.6, 1); 
   const routeSaving = useCounter(HSR_DATA.route_improvement_pct, 2.0, 1);
-  const savedCrores = useCounter(HSR_DATA.annual_savings_cr, 2.0, 2);
+  const savedCrores = useCounter(HSR_DATA.annual_savings_total_cr, 2.0, 1);
 
   return (
     <div className="bg-slate-50 dark:bg-[#03080f] text-slate-900 dark:text-slate-200 min-h-screen relative overflow-hidden flex flex-col font-sans transition-colors">
@@ -178,14 +178,14 @@ export default function Home() {
            transition={{ duration: 0.8, delay: 0.6 }}
            className="text-base md:text-xl max-w-3xl mb-14 leading-relaxed text-slate-600 dark:text-slate-400"
         >
-          Real intelligence for HSR Layout's {HSR_DATA.population_2025.toLocaleString()} residents and {HSR_DATA.daily_waste_tons} tons of daily waste.
+          Real intelligence for HSR Layout's {HSR_DATA.population_building_based.toLocaleString()} residents across {HSR_DATA.total_buildings.toLocaleString()} buildings, generating {HSR_DATA.daily_waste_display} of waste.
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
-          <StatCard value={population} label="Population 2025" subtext={`Census 2011: ${HSR_DATA.population_2011.toLocaleString()} · ${HSR_DATA.growth_rate_pct}%/yr`} delay={0.8} />
-          <StatCard value={totalWaste} suffix=" Tons" label="Daily waste" subtext={`CPCB ${HSR_DATA.waste_per_capita_kg}kg/person · ${HSR_DATA.area_sq_km} sq km`} delay={0.9} />
+          <StatCard value={population} label="Residents (Building-Based)" subtext={`8,998 houses × 4 + apartments & more`} delay={0.8} />
+          <StatCard value={totalWaste} suffix=" Tons" label="Daily waste generated" subtext={`CPCB 0.5kg/day · ${HSR_DATA.population_building_based.toLocaleString()} people`} delay={0.9} />
           <StatCard value={routeSaving} suffix="%" label="Route optimization" subtext={`${Math.round(HSR_DATA.baseline_route_km)}km → ${Math.round(HSR_DATA.optimized_route_km)}km · Real road data`} delay={1.0} />
-          <StatCard value={savedCrores} prefix="₹" suffix="Cr" label="Annual savings" delay={1.1} />
+          <StatCard value={savedCrores} prefix="₹" suffix=" Crores" label="Annual value identified" subtext="Ops savings + carbon credits" delay={1.1} />
         </div>
       </section>
 

@@ -19,13 +19,39 @@
     "source": "Census 2011 Ward 174 + 4.5% growth"
   },
   "waste": {
-    "per_capita_kg_day": 0.5,
-    "total_kg_day": 57500.0,
-    "total_tons_day": 57.5,
-    "wet_kg_day": 34500.0,
-    "dry_kg_day": 20125.0,
-    "other_kg_day": 2875.0,
-    "standard": "CPCB Municipal Solid Waste"
+    "per_capita_kg_day": 0.45,
+    "total_kg_day": 51750.0,
+    "total_tons_day": 51.75,
+    "wet_compostable_kg": 28462.500000000004,
+    "wet_compostable_tons": 28.462500000000002,
+    "wet_pct": 55.00000000000001,
+    "dry_recyclable_kg": 18112.5,
+    "dry_recyclable_tons": 18.1125,
+    "dry_pct": 35.0,
+    "hazardous_kg": 2587.5,
+    "hazardous_tons": 2.5875,
+    "hazardous_pct": 5.0,
+    "other_street_kg": 2587.5,
+    "other_street_tons": 2.5875,
+    "other_pct": 5.0,
+    "sources": {
+      "bbmp_official": {
+        "url": "bbmp.gov.in",
+        "rate_g_per_household": 309,
+        "household_pct": 58.5,
+        "commercial_pct": 49.7,
+        "street_sweeping_pct": 6.8
+      },
+      "cpcb_59_cities": {
+        "wet_pct_range": "40-60%",
+        "dry_pct_range": "10-25%",
+        "rate_range_kg": "0.12-0.60"
+      },
+      "cpcb_south_india": {
+        "rate_g_per_capita": 560
+      },
+      "methodology": "Conservative average of BBMP (309g) and CPCB South India (560g) = 435g, rounded to 450g for conservative estimate"
+    }
   },
   "buildings": {
     "total": 9471,
@@ -157,5 +183,14 @@
     "size_pixels": "1002x740",
     "bands": 3,
     "size_mb": 4.25
+  },
+  "bbmp_city_context": {
+    "bengaluru_total_tpd_min": 3000,
+    "bengaluru_total_tpd_max": 3500,
+    "wet_processing_plants": 7,
+    "wet_processing_capacity_tpd": 1570,
+    "bio_methanation_plants": 13,
+    "bio_methanation_capacity_tpd": 65,
+    "hsr_as_pct_of_city": 1.73
   }
 }

@@ -165,7 +165,7 @@ export default function ReportPage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-800 uppercase tracking-wider border-b border-slate-200 pb-2 mb-4">1. Executive Summary</h2>
                 <p className="font-medium text-slate-600 leading-relaxed text-justify">
-                  HSR Layout Ward Analysis reveals a population base of {HSR_DATA.population_2025.toLocaleString()} generating {HSR_DATA.daily_waste_tons} tons of aggregate daily waste. Using GEOIQ.IO boundaries paired with OpenStreetMap extracts and Census 2011 calibrators, we have mapped localized waste generation hotspots and optimized collection routing algorithms to reduce daily required travel. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
+                  HSR Layout Ward Analysis reveals a population base of {HSR_DATA.population_building_based.toLocaleString()} (building-based, Census 2011 Karnataka method) generating {HSR_DATA.daily_waste_display} of aggregate daily waste. Using GEOIQ.IO boundaries paired with OpenStreetMap extracts and Census 2011 calibrators, we have mapped localized waste generation hotspots and optimized collection routing algorithms to reduce daily required travel. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
                 </p>
               </section>
             )}

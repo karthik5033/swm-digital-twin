@@ -317,7 +317,7 @@ export default function MapContainer() {
               }
             };
           });
-          const wastePointGeojson = { type: 'FeatureCollection', features };
+          const wastePointGeojson: any = { type: 'FeatureCollection', features };
           map.current.addSource('buildings-source', { type: 'geojson', data: wastePointGeojson });
           // Add heatmap layer
           map.current.addLayer({
@@ -416,7 +416,7 @@ export default function MapContainer() {
             geometry: { type: 'Point', coordinates: z.center },
             properties: { label: z.label }
           }));
-          map.current.addSource('zone-labels', { type: 'geojson', data: { type: 'FeatureCollection', features } });
+          map.current.addSource('zone-labels', { type: 'geojson', data: { type: 'FeatureCollection', features } as any });
           map.current.addLayer({
             id: 'zone-labels',
             type: 'symbol',

@@ -66,7 +66,7 @@ export default function ImpactDashboard() {
   
   // Calculate dynamic values from HSR dataset
   const totalWaste = HSR_DATA.daily_waste_tons;
-  const estimatedPop = HSR_DATA.population_2025;
+  const estimatedPop = HSR_DATA.population_building_based;
   const estimatedHouseholds = Math.round(estimatedPop / 4);
 
   const dumpyardCapacityData = [
@@ -177,19 +177,21 @@ export default function ImpactDashboard() {
 
         {/* NEW REAL DATA FOUNDATION CARD */}
         <section className="mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm">
-              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Data Foundation: GEOIQ.IO + Census</h3>
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
               <div className="grid grid-cols-1 gap-y-3 pl-2">
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Target Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population_2025.toLocaleString()}</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Building Density:</span> <span className="text-white">{HSR_DATA.building_density_per_sqkm} / sq km</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road Density:</span> <span className="text-white">{HSR_DATA.road_density_per_sqkm} / sq km</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily Waste Output:</span> <span className="text-white">{HSR_DATA.daily_waste_tons} tons</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population_building_based.toLocaleString()}</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1 mt-2"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.daily_waste_display}</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Wet ({HSR_DATA.waste_wet_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanation</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Dry ({HSR_DATA.waste_dry_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → DWCC recycling</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Haz ({HSR_DATA.waste_hazardous_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_hazardous_tons}T → Special handling</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Street ({HSR_DATA.waste_other_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons}T → Landfill</span></div>
               </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm h-fit">
               <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
               <div className="grid grid-cols-1 gap-y-3 pl-2">
                 <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck routes:</span> <span className="text-white">{HSR_DATA.truck_roads} segments ({HSR_DATA.truck_roads_pct}%)</span></div>
@@ -199,9 +201,68 @@ export default function ImpactDashboard() {
               </div>
             </div>
           </div>
+
+          {/* NEW CITY CONTEXT CARD */}
+          <div className="bg-indigo-950/30 border border-indigo-500/30 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
+             <div className="flex-1">
+               <div className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-4">BBMP WASTE INFRASTRUCTURE</div>
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+                 <div>
+                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_wet_plants} Wet Processing Plants</div>
+                   <div className="text-indigo-300">Capacity: {HSR_DATA.bbmp_wet_capacity_tpd.toLocaleString()} TPD</div>
+                 </div>
+                 <div>
+                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_bio_plants} Bio-Methanation Plants</div>
+                   <div className="text-indigo-300">Capacity: {HSR_DATA.bbmp_bio_capacity_tpd.toLocaleString()} TPD</div>
+                 </div>
+                 <div className="sm:col-span-2 pt-2 mt-2 border-t border-indigo-500/20">
+                   <div className="flex justify-between items-center text-sm md:text-base">
+                     <span className="text-indigo-200">Bengaluru total:</span>
+                     <span className="font-bold text-white">{HSR_DATA.bengaluru_total_tpd} TPD</span>
+                   </div>
+                   <div className="flex justify-between items-center text-sm md:text-base mt-2">
+                     <span className="text-indigo-200">HSR Layout share:</span>
+                     <span className="font-bold text-indigo-400">~1.5%</span>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             
+             <div className="flex-1 md:border-l border-indigo-500/20 md:pl-8 text-lg font-medium text-indigo-100 italic leading-relaxed">
+               "{HSR_DATA.population_building_based.toLocaleString()} residents across {HSR_DATA.total_buildings.toLocaleString()} buildings generating {HSR_DATA.daily_waste_display} — AstraCity's optimization reduces collection cost by ₹{HSR_DATA.annual_savings_cr}Cr/year for this ward alone."
+             </div>
+          </div>
         </section>
 
-        {/* Special Building Alerts */}
+        
+         {/* BBMP Composition Context Box */}
+         <section className="mb-12">
+           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+             <div className="bg-gradient-to-br from-green-900/20 to-teal-900/20 border border-green-500/30 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-green-400 font-bold text-base">Wet Waste (61%)</h3>
+               <div className="text-3xl font-black text-white">{HSR_DATA.waste_wet_tons}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
+               <p className="text-gray-300 text-sm leading-relaxed">Routes to 2 Bio-methanisation units. Methane captured = carbon credits. BBMP: wet rose from 42% (1999) to 61% (2013).</p>
+               <div className="text-xs text-green-700 italic">Source: BBMP Official Reports 1999-2013</div>
+             </div>
+             <div className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-500/30 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-blue-400 font-bold text-base">Dry Waste (30%)</h3>
+               <div className="text-3xl font-black text-white">{HSR_DATA.waste_dry_tons}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
+               <p className="text-gray-300 text-sm leading-relaxed">Routes to 16 DWCC centres for recycling. Dry fell from 41% (1999) to 25% (2013). Projected 30% by 2026.</p>
+               <div className="text-xs text-blue-700 italic">Source: CPCB + BBMP combined</div>
+             </div>
+             <div className="bg-slate-900/60 border border-slate-600/40 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-gray-300 font-bold text-base">Haz + Other (9%)</h3>
+               <div className="text-3xl font-black text-white">{(HSR_DATA.waste_hazardous_tons + HSR_DATA.waste_other_tons).toFixed(2)}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
+               <p className="text-gray-300 text-sm leading-relaxed">{HSR_DATA.waste_hazardous_pct}% Hazardous to special contractor. {HSR_DATA.waste_other_pct}% Other to street sweep.</p>
+               <div className="text-xs text-gray-500 italic">Source: BBMP SWM Rules 2023</div>
+             </div>
+           </div>
+           <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-2xl px-5 py-3 text-xs text-amber-300 italic">
+             This composition data justifies AstraCity routing: wet to BMU, dry to DWCC, hazardous to contractor. Source: BBMP Official Publications.
+           </div>
+         </section>
+
+                {/* Special Building Alerts */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-3xl p-5 shadow-sm">
             <h4 className="font-extrabold text-red-800 dark:text-red-300 mb-2 flex items-center gap-2">🏥 Hospital Alert</h4>
@@ -511,6 +572,69 @@ export default function ImpactDashboard() {
           </div>
         </section>
 
+        {/* Infrastructure Efficiency + Carbon Credits */}
+        <section className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Infrastructure Efficiency */}
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 text-sm font-mono text-teal-400">
+              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>⚡</span> Infrastructure Efficiency</h3>
+              <div className="grid grid-cols-1 gap-y-3">
+                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">DWCC Utilisation:</span><span className="text-white font-bold">17.5% (16 DWCCs)</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Bio-meth load:</span><span className="text-amber-400 font-bold">14.2T / 65T capacity = 21.8%</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Landfill diversion:</span><span className="text-green-400 font-bold">80%</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-2"><span className="text-slate-400">Open dumpyards:</span><span className="text-green-400 font-bold">0 ✔</span></div>
+                <div className="flex justify-between pb-2"><span className="text-slate-400">Methane risk:</span><span className="text-green-400 font-bold">LOW ✅</span></div>
+              </div>
+              <div className="mt-4 bg-teal-500/10 border border-teal-500/20 rounded-xl p-3 text-xs text-teal-300 leading-relaxed">
+                Current infrastructure is under-utilised. AstraCity&apos;s routing optimization ensures waste reaches the <strong>RIGHT</strong> facility — wet to bio-meth, dry to DWCC.
+              </div>
+            </div>
+
+            {/* Annual Savings & Carbon Revenue Breakdown */}
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>💰</span> Annual Value identified: <span className="text-emerald-400">₹9.4 Crores</span></h3>
+              <p className="text-slate-400 text-xs mb-4">₹4.2Cr operational savings + ₹5.2Cr carbon credit value</p>
+              
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
+                  <div className="text-lg">🌿</div>
+                  <div className="text-emerald-400 font-black text-lg">₹5.19 Cr</div>
+                  <div className="text-white font-bold text-xs">Carbon Credits</div>
+                  <div className="text-emerald-200/50 text-[10px] mt-1 leading-tight">25,959 tons CO₂e/yr<br/>× ₹2,000/ton India market</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                  <div className="text-lg">🚛</div>
+                  <div className="text-teal-400 font-black text-lg">₹3.28 Cr</div>
+                  <div className="text-white font-bold text-xs">Route opt</div>
+                  <div className="text-slate-500 text-[10px] mt-1 leading-tight">VRP dynamic routing fuel savings</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                  <div className="text-lg">🧹</div>
+                  <div className="text-teal-400 font-black text-lg">₹0.45 Cr</div>
+                  <div className="text-white font-bold text-xs">Cleanup</div>
+                  <div className="text-slate-500 text-[10px] mt-1 leading-tight">Prevented illegal dump cleanups</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                  <div className="text-lg">⚡</div>
+                  <div className="text-teal-400 font-black text-lg">₹0.38 Cr</div>
+                  <div className="text-white font-bold text-xs">Efficiency</div>
+                  <div className="text-slate-500 text-[10px] mt-1 leading-tight">Labor & time utilization gain</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                  <div className="text-lg">➕</div>
+                  <div className="text-teal-400 font-black text-lg">₹0.12 Cr</div>
+                  <div className="text-white font-bold text-xs">Other</div>
+                  <div className="text-slate-500 text-[10px] mt-1 leading-tight">Fleet maintenance reduction</div>
+                </div>
+              </div>
+
+              <div className="mt-4 bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs text-slate-400 leading-relaxed italic">
+                Note: Carbon credit revenue requires CDM/VCS registration. Operational savings of ₹4.2Cr are immediate.
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* PART 6: LULC Dashboard Section */}
         <section className="mb-20">
           <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white mb-6">Land Use Analysis — Sentinel-2 Classification</h2>
@@ -576,7 +700,7 @@ export default function ImpactDashboard() {
           <div className="bg-gradient-to-r from-teal-900 to-slate-900 border border-teal-500/20 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
             <h2 className="text-3xl font-extrabold text-white mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
-            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">Extrapolating HSR Layout model to all 198 BBMP Wards</p>
+            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.4Cr total value/year · 198 wards × avg ₹9.4Cr = city-wide potential</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
@@ -588,8 +712,8 @@ export default function ImpactDashboard() {
                 <div className="text-4xl font-black text-white">~6,500 Tons</div>
               </div>
               <div className="bg-white/5 border border-teal-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2">
-                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Expected Savings</div>
-                <div className="text-4xl font-black text-[#00d4aa]">₹830 Cr / year</div>
+                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Potential Annual Value</div>
+                <div className="text-4xl font-black text-[#00d4aa]">₹1,861 Cr</div>
               </div>
             </div>
           </div>

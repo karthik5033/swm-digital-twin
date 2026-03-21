@@ -63,9 +63,10 @@ const facilities = [
 ];
 
 const wasteTable = [
-  { type: "Wet/Organic Waste", count: "-", waste: (HSR_DATA.waste_wet_tons * 1000).toLocaleString(), pct: "60%" },
-  { type: "Dry/Recyclable", count: "-", waste: (HSR_DATA.waste_dry_tons * 1000).toLocaleString(), pct: "35%" },
-  { type: "Hazardous/Other", count: "-", waste: (HSR_DATA.waste_other_tons * 1000).toLocaleString(), pct: "5%" },
+  { type: "Wet/Organic Waste (BBMP)", count: "-", waste: HSR_DATA.waste_wet_kg.toLocaleString(), pct: `${HSR_DATA.waste_wet_pct}%` },
+  { type: "Dry/Recyclable (CPCB)", count: "-", waste: HSR_DATA.waste_dry_kg.toLocaleString(), pct: `${HSR_DATA.waste_dry_pct}%` },
+  { type: "Hazardous", count: "-", waste: HSR_DATA.waste_hazardous_kg.toLocaleString(), pct: `${HSR_DATA.waste_hazardous_pct}%` },
+  { type: "Street Sweeping", count: "-", waste: HSR_DATA.waste_other_kg.toLocaleString(), pct: `${HSR_DATA.waste_other_pct}%` },
 ];
 
 export default function OsmAnalysisPage() {
@@ -161,20 +162,20 @@ export default function OsmAnalysisPage() {
             >
               <h2 className="text-xl font-bold mb-4 text-[#00d4aa]">City View Context</h2>
               <p className="text-gray-300 text-lg leading-relaxed font-light mb-6">
-                HSR Layout contains <strong className="text-white">{HSR_DATA.total_buildings.toLocaleString()} mapped structures</strong> covering <strong className="text-white">{HSR_DATA.area_sq_km} sq km ({HSR_DATA.area_hectares} hectares)</strong> — serving a projected population of <strong className="text-white">{HSR_DATA.population_2025.toLocaleString()} residents</strong>.
+                HSR Layout has <strong className="text-white">{HSR_DATA.total_buildings.toLocaleString()} mapped buildings</strong> across <strong className="text-white">{HSR_DATA.area_sq_km} sq km</strong>, housing <strong className="text-white">{HSR_DATA.population_building_based.toLocaleString()} residents</strong> — calculated from Census 2011 Karnataka household sizes applied to each building type. Daily waste: <strong className="text-[#00d4aa]">{HSR_DATA.daily_waste_display}</strong>.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
                   <div className="text-[#f59e0b] font-black text-xl mb-1">{HSR_DATA.building_density_per_sqkm} /km²</div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Density</div>
+                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Building Density</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-[#00d4aa] font-black text-xl mb-1">60/30/10</div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Res/Com/Mix</div>
+                  <div className="text-[#00d4aa] font-black text-xl mb-1">94.8% Residential</div>
+                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Ward Character</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-white font-black text-xl mb-1">{HSR_DATA.daily_waste_tons} Tons</div>
+                  <div className="text-white font-black text-xl mb-1">{HSR_DATA.daily_waste_display}</div>
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Daily Waste</div>
                 </div>
               </div>

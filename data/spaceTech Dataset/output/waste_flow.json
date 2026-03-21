@@ -1,0 +1,69 @@
+{
+  "ward": "HSR Layout",
+  "infrastructure": {
+    "dwcc_count": 16,
+    "dwcc_capacity_tpd_each": 2.5,
+    "dwcc_total_capacity_tpd": 40.0,
+    "bio_meth_units": 2,
+    "dumpyards": 0,
+    "source": "Hackathon dataset + BBMP"
+  },
+  "generation": {
+    "population": 46219,
+    "per_capita_kg": 0.5,
+    "total_tons_day": 23.11,
+    "source": "CPCB official"
+  },
+  "composition": {
+    "wet_pct": 61,
+    "wet_tons": 14.1,
+    "wet_destination": "Bio-methanisation + KCDC",
+    "dry_pct": 30,
+    "dry_tons": 6.93,
+    "dry_to_dwcc_tons": 5.55,
+    "dry_to_recyclers_tons": 1.39,
+    "dry_destination": "16 DWCCs + recyclers",
+    "haz_pct": 5,
+    "haz_tons": 1.16,
+    "haz_destination": "Special contractor",
+    "other_pct": 4,
+    "other_tons": 0.92,
+    "source": "BBMP 2013 Chemical Analysis"
+  },
+  "collection_schedule": {
+    "wet_kitchen_waste": {
+      "frequency": "Daily (7 days/week)",
+      "vehicle": "Auto tipper",
+      "source": "hsrcitizenforum.in"
+    },
+    "dry_recyclables": {
+      "frequency": "Twice weekly",
+      "vehicle": "Auto tipper",
+      "source": "hsrcitizenforum.in"
+    },
+    "reject_sanitary": {
+      "frequency": "Daily (7 days/week)",
+      "vehicle": "Auto tipper",
+      "source": "hsrcitizenforum.in"
+    }
+  },
+  "capacity_analysis": {
+    "dwcc_utilisation_pct": 17.3,
+    "status": "Within capacity",
+    "surplus_capacity_tpd": 33.07
+  },
+  "landfill_diversion_pct": 91.0,
+  "city_context": {
+    "bengaluru_dwcc_count": 164,
+    "bengaluru_recyclables_tpd": 130,
+    "bengaluru_total_waste_tpd": 3250,
+    "bengaluru_segregated_tpd": 1530,
+    "segregation_rate_pct": 47.1,
+    "hsr_as_pct_of_city": 0.7,
+    "sources": [
+      "Deccan Herald",
+      "BBMP NGT report",
+      "bbmp.gov.in"
+    ]
+  }
+}
