@@ -34,7 +34,7 @@ export default function AIQueryBar() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           systemInstruction: {
-            parts: [{ text: "You are AstraCity's spatial intelligence assistant for Bengaluru waste management. Always respond with JSON only in this format: { \"text\": \"your 1-2 sentence answer here\", \"action\": \"highlightWards\" | \"filterWards\" | \"showLayer\" | \"none\", \"wardIds\": [1, 2, 3], \"layer\": \"dumps\" | \"methane\" | \"waste\" | \"routes\" }" }]
+            parts: [{ text: "You are AstraCity's spatial intelligence assistant for Bengaluru waste management. Always respond with JSON only in this format: { \"text\": \"your 1-2 sentence answer here\", \"action\": \"highlightWards\" | \"filterWards\" | \"showLayer\" | \"none\", \"wardIds\": [1, 2, 3], \"layer\": \"dumps\" | \"dryWaste\" | \"processing\" | \"methane\" | \"density\" | \"openSpaces\" | \"segregation\" | \"lulc\" }" }]
           },
           contents: [{ parts: [{ text: query }] }]
         })
@@ -61,7 +61,7 @@ export default function AIQueryBar() {
                useStore.getState().setFilteredWards(names);
              } else if (parsed.action === 'showLayer' && parsed.layer) {
                const layerMap: Record<string, LayerId> = {
-                 'dumps': 'dumps', 'methane': 'methane', 'waste': 'waste', 'routes': 'routes'
+                 'dumps': 'dumps', 'dryWaste': 'dryWaste', 'processing': 'processing', 'methane': 'methane', 'density': 'density', 'openSpaces': 'openSpaces', 'segregation': 'segregation', 'lulc': 'lulc'
                };
                const target = layerMap[parsed.layer];
                if (target) {

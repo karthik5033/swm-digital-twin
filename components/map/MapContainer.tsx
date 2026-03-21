@@ -1,356 +1,456 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useStore } from '@/lib/store';
 import LayerToggle from './LayerToggle';
 import WardSidebar from './WardSidebar';
 
-import dumpSites from '@/data/dump_sites.json';
-import wardScores from '@/data/ward_scores.json';
+/* --- MOCK HSR LAYOUT DATA --- */
+const DUMPS_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6410, 12.9116] }, properties: { name: 'D1 HSR Main', capacity: '65% full', status: 'Warning' } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6380, 12.9180] }, properties: { name: 'D2 Agara', capacity: '78% full', status: 'Critical' } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6450, 12.9050] }, properties: { name: 'D3 BDA Complex', capacity: '45% full', status: 'Normal' } }
+  ]
+};
 
-/* ------------------------------------------------------------------ */
-/* helper: build a GeoJSON FeatureCollection from dump_sites.json      */
-/* ------------------------------------------------------------------ */
-function buildDumpGeoJSON(syntheticDumps: any[]) {
-  const baseDumps = dumpSites.map((site) => ({
-    type: 'Feature' as const,
-    geometry: { type: 'Point' as const, coordinates: [site.lon, site.lat] },
-    properties: { ...site },
-  }));
-  const synFeatures = syntheticDumps.map(d => ({
-    type: 'Feature' as const,
-    geometry: { type: 'Point' as const, coordinates: [d.lon, d.lat] },
-    properties: { ward: "Unknown (New Analysis)", ...d }
-  }));
-  return {
-    type: 'FeatureCollection' as const,
-    features: [...baseDumps, ...synFeatures],
-  };
-}
+const DRY_WASTE_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6390, 12.9150] }, properties: { name: 'Centre 1', capacity: '2 tons/day' } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6420, 12.9200] }, properties: { name: 'Centre 2', capacity: '1.5 tons/day' } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6440, 12.9080] }, properties: { name: 'Centre 3', capacity: '3 tons/day' } }
+  ]
+};
 
-/* ------------------------------------------------------------------ */
-/* helper: build a heatmap-ready GeoJSON from ward_scores.json         */
-/* (methane / waste / dumpProbability all use ward centroids)           */
-/* ------------------------------------------------------------------ */
-function buildHeatGeoJSON(key: 'methaneIntensity' | 'dumpRisk' | 'wasteTons') {
-  return {
-    type: 'FeatureCollection' as const,
-    features: wardScores.map((w) => {
-      const ward = wardsLookup[w.name];
-      const coords = ward
-        ? getCentroid(ward.geometry.coordinates[0])
-        : [77.5946, 12.9716]; // fallback
-      const weight = key === 'wasteTons' ? w[key] / 300 : w[key];
-      return {
-        type: 'Feature' as const,
-        geometry: { type: 'Point' as const, coordinates: coords },
-        properties: { weight },
-      };
-    }),
-  };
-}
+const PROCESSING_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6460, 12.9130] }, properties: { type: 'Composting', capacity: '5 tons/day' } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6380, 12.9090] }, properties: { type: 'Material Recovery', capacity: '8 tons/day' } }
+  ]
+};
 
-/* fast ward lookup (populated after geojson fetch) */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const wardsLookup: Record<string, any> = {};
+const METHANE_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6400, 12.9160] }, properties: { name: 'HSR Bio Plant', output: '500 kg methane/day' } }
+  ]
+};
 
-function getCentroid(ring: number[][]) {
-  let x = 0, y = 0;
-  for (const p of ring) {
-    x += p[0];
-    y += p[1];
+const OPEN_SPACES_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.635, 12.920], [77.645, 12.920], [77.645, 12.925], [77.635, 12.925], [77.635, 12.920]]] }, properties: { name: 'Agara Lake Area' } },
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.640, 12.905], [77.644, 12.905], [77.644, 12.908], [77.640, 12.908], [77.640, 12.905]]] }, properties: { name: 'BDA Complex' } }
+  ]
+};
+
+const SEGREGATION_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.630, 12.915], [77.638, 12.915], [77.638, 12.925], [77.630, 12.925], [77.630, 12.915]]] }, properties: { zone: 'Zone A', color: '#8b0000' } }, 
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.638, 12.915], [77.646, 12.915], [77.646, 12.925], [77.638, 12.925], [77.638, 12.915]]] }, properties: { zone: 'Zone B', color: '#f97316' } }, 
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.646, 12.915], [77.655, 12.915], [77.655, 12.925], [77.646, 12.925], [77.646, 12.915]]] }, properties: { zone: 'Zone C', color: '#eab308' } }, 
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.630, 12.900], [77.640, 12.900], [77.640, 12.915], [77.630, 12.915], [77.630, 12.900]]] }, properties: { zone: 'Zone D', color: '#86efac' } }, 
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.640, 12.900], [77.655, 12.900], [77.655, 12.915], [77.640, 12.915], [77.640, 12.900]]] }, properties: { zone: 'Zone E', color: '#22c55e' } }  
+  ]
+};
+
+const DENSITY_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: Array.from({ length: 200 }).map(() => ({
+    type: 'Feature',
+    geometry: { 
+      type: 'Point', 
+      coordinates: [77.630 + Math.random() * 0.025, 12.900 + Math.random() * 0.025] 
+    },
+    properties: { weight: Math.random() }
+  }))
+};
+
+const LULC_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.641, 12.909], [77.650, 12.909], [77.650, 12.914], [77.641, 12.914], [77.641, 12.909]]] }, properties: { type: 'Built-up', color: '#e74c3c' } },
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.635, 12.920], [77.645, 12.920], [77.645, 12.925], [77.635, 12.925], [77.635, 12.920]]] }, properties: { type: 'Vegetation', color: '#27ae60' } },
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.631, 12.910], [77.636, 12.910], [77.636, 12.918], [77.631, 12.918], [77.631, 12.910]]] }, properties: { type: 'Open Bare Land', color: '#f39c12' } },
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.635, 12.921], [77.644, 12.921], [77.644, 12.924], [77.635, 12.924], [77.635, 12.921]]] }, properties: { type: 'Water Bodies', color: '#3498db' } },
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.630, 12.900], [77.640, 12.900], [77.640, 12.905], [77.630, 12.905], [77.630, 12.900]]] }, properties: { type: 'Mixed Use', color: '#9b59b6' } }
+  ]
+};
+
+const HSR_BOUNDARY_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[77.630, 12.900], [77.655, 12.900], [77.655, 12.925], [77.630, 12.925], [77.630, 12.900]]] }, properties: { name: 'HSR Layout Boundary' } }
+  ]
+};
+
+const TRUCK_HUBS_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6410, 12.9116] }, properties: { name: '27th Main Hub', limit: '8 tons', load: '6.5 tons', status: 'Available', autos: 3 } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6380, 12.9180] }, properties: { name: '19th Main Hub', limit: '8 tons', load: '8.0 tons', status: 'Full', autos: 3 } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6450, 12.9050] }, properties: { name: 'ORR Junction Hub', limit: '8 tons', load: '4.2 tons', status: 'Available', autos: 3 } },
+    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6460, 12.9130] }, properties: { name: 'BDA Complex Hub', limit: '8 tons', load: '7.1 tons', status: 'Available', autos: 3 } }
+  ]
+};
+
+const MAIN_ROUTE_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature', 
+    geometry: {
+      type: 'LineString',
+      coordinates: [
+        // T1 to T2
+        [77.6410, 12.9116],
+        [77.6395, 12.9130],
+        [77.6382, 12.9155],
+        [77.6380, 12.9180],
+        // T2 to T3
+        [77.6360, 12.9160],
+        [77.6390, 12.9100],
+        [77.6450, 12.9050],
+        // T3 to T4
+        [77.6455, 12.9080],
+        [77.6458, 12.9110],
+        [77.6460, 12.9130],
+        // T4 to Processing Unit
+        [77.6420, 12.9100],
+        [77.6350, 12.9080]
+      ]
+    }
+  }]
+};
+
+const AUTO_ROUTES_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    // Hub 1 - Auto A
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6410, 12.9116], [77.6430, 12.9120], [77.6445, 12.9125], [77.6410, 12.9116]] } },
+    // Hub 1 - Auto B
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6410, 12.9116], [77.6415, 12.9100], [77.6425, 12.9095], [77.6410, 12.9116]] } },
+    // Hub 2 - Auto A
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6380, 12.9180], [77.6395, 12.9190], [77.6410, 12.9195], [77.6380, 12.9180]] } },
+    // Hub 2 - Auto B
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6380, 12.9180], [77.6370, 12.9165], [77.6355, 12.9160], [77.6380, 12.9180]] } },
+    // Hub 3 - Simulated Auto
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6450, 12.9050], [77.6470, 12.9040], [77.6450, 12.9050]] } },
+    // Hub 4 - Simulated Auto
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6460, 12.9130], [77.6480, 12.9140], [77.6460, 12.9130]] } },
+  ]
+};
+
+function interpolatePoint(line: number[][], fraction: number) {
+  let totalDist = 0;
+  const dists = [];
+  for (let i = 0; i < line.length - 1; i++) {
+    const dx = line[i+1][0] - line[i][0];
+    const dy = line[i+1][1] - line[i][1];
+    const d = Math.sqrt(dx*dx + dy*dy);
+    totalDist += d;
+    dists.push(d);
   }
-  return [x / ring.length, y / ring.length];
+  const targetDist = totalDist * (fraction % 1);
+  let runDist = 0;
+  for (let i = 0; i < dists.length; i++) {
+    if (runDist + dists[i] >= targetDist || i === dists.length - 1) {
+      const segFraction = (targetDist - runDist) / (dists[i] || 1);
+      const x = line[i][0] + (line[i+1][0] - line[i][0]) * segFraction;
+      const y = line[i][1] + (line[i+1][1] - line[i][1]) * segFraction;
+      return [x, y];
+    }
+    runDist += dists[i];
+  }
+  return line[line.length - 1]; // Fallback
 }
 
-/* ------------------------------------------------------------------ */
-/* MapContainer Component                                              */
-/* ------------------------------------------------------------------ */
 export default function MapContainer() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
+  const hubMarkers = useRef<maplibregl.Marker[]>([]);
+  const animationRef = useRef<number | null>(null);
   const activeLayers = useStore((s) => s.activeLayers);
-  const setSelectedWardId = useStore((s) => s.setSelectedWardId);
-  const highlightedWards = useStore((s) => s.highlightedWards);
-  const newSyntheticDumps = useStore((s) => s.newSyntheticDumps);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    if (map.current || !mapContainer.current) return; // initialize map only once
+    if (map.current || !mapContainer.current) return;
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: 'https://tiles.openfreemap.org/styles/positron',
-      center: [77.5946, 12.9716],
-      zoom: 11,
+      center: [77.6410, 12.9116], // Centered on HSR
+      zoom: 14,
       pitch: 40,
     });
 
     map.current.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
-    map.current.on('load', async () => {
-      map.current?.resize(); // <--- Forces MapLibre to read the actual screen dimensions
+    map.current.on('load', () => {
+      map.current?.resize();
 
-      try {
-        const res = await fetch('/api/geojson');
-        const geojson = await res.json();
+      // HSR boundary
+      map.current!.addSource('hsr-boundary-source', { type: 'geojson', data: HSR_BOUNDARY_GEOJSON });
+      map.current!.addLayer({
+        id: 'hsr-boundary',
+        type: 'line',
+        source: 'hsr-boundary-source',
+        paint: {
+          'line-color': '#0d9488', // Teal
+          'line-width': 4,
+          'line-opacity': 0.8,
+        },
+      });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        geojson.features.forEach((f: any) => {
-          wardsLookup[f.properties.name] = f;
-        });
+      // Add sources
+      map.current!.addSource('dumps-source', { type: 'geojson', data: DUMPS_GEOJSON });
+      map.current!.addSource('dryWaste-source', { type: 'geojson', data: DRY_WASTE_GEOJSON });
+      map.current!.addSource('processing-source', { type: 'geojson', data: PROCESSING_GEOJSON });
+      map.current!.addSource('methane-source', { type: 'geojson', data: METHANE_GEOJSON });
+      map.current!.addSource('density-source', { type: 'geojson', data: DENSITY_GEOJSON });
+      map.current!.addSource('openSpaces-source', { type: 'geojson', data: OPEN_SPACES_GEOJSON });
+      map.current!.addSource('segregation-source', { type: 'geojson', data: SEGREGATION_GEOJSON });
+      map.current!.addSource('lulc-source', { type: 'geojson', data: LULC_GEOJSON });
+      
+      map.current!.addSource('mainRoute-source', { type: 'geojson', data: MAIN_ROUTE_GEOJSON });
+      map.current!.addSource('autoRoutes-source', { type: 'geojson', data: AUTO_ROUTES_GEOJSON });
+      map.current!.addSource('auto-dots', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+      map.current!.addSource('main-dot', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 
-        const enriched = {
-          ...geojson,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          features: geojson.features.map((f: any) => {
-            const s = wardScores.find((w) => w.name === f.properties.name);
-            return {
-              ...f,
-              properties: {
-                ...f.properties,
-                score: s?.score ?? 50,
-                dumpRisk: s?.dumpRisk ?? 0.5,
-              },
-            };
-          }),
-        };
+      // Add Layers
+      // 1. Dumpyards (red circles)
+      map.current!.addLayer({
+        id: 'dumps',
+        type: 'circle',
+        source: 'dumps-source',
+        paint: { 'circle-radius': 10, 'circle-color': '#ef4444', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+        layout: { visibility: 'visible' }
+      });
 
-        map.current!.addSource('wards-source', { type: 'geojson', data: enriched });
-        map.current!.addSource('dumps-source', { type: 'geojson', data: buildDumpGeoJSON(useStore.getState().newSyntheticDumps) as GeoJSON.FeatureCollection });
-        map.current!.addSource('methane-source', { type: 'geojson', data: buildHeatGeoJSON('methaneIntensity') as GeoJSON.FeatureCollection });
-        map.current!.addSource('waste-source', { type: 'geojson', data: buildHeatGeoJSON('wasteTons') as GeoJSON.FeatureCollection });
-        map.current!.addSource('dumpprob-source', { type: 'geojson', data: buildHeatGeoJSON('dumpRisk') as GeoJSON.FeatureCollection });
-        map.current!.addSource('routes-source', { type: 'geojson', data: buildRouteGeoJSON() });
+      // 2. Dry Waste Centres (blue circles)
+      map.current!.addLayer({
+        id: 'dryWaste',
+        type: 'circle',
+        source: 'dryWaste-source',
+        paint: { 'circle-radius': 8, 'circle-color': '#3b82f6', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+        layout: { visibility: 'visible' }
+      });
 
-        map.current!.addLayer({
-          id: 'wardVulnerability',
-          type: 'fill',
-          source: 'wards-source',
-          paint: {
-            'fill-color': [
-              'interpolate', ['linear'], ['get', 'score'],
-              0,  '#ef4444',
-              30, '#f97316',
-              50, '#f59e0b',
-              70, '#84cc16',
-              100,'#10b981',
-            ],
-            'fill-opacity': 0.3,
-          },
-          layout: { visibility: 'visible' },
-        });
+      // 3. Processing Units (green circles)
+      map.current!.addLayer({
+        id: 'processing',
+        type: 'circle',
+        source: 'processing-source',
+        paint: { 'circle-radius': 8, 'circle-color': '#10b981', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+        layout: { visibility: 'visible' }
+      });
 
-        map.current!.addLayer({
-          id: 'ward-lines',
-          type: 'line',
-          source: 'wards-source',
-          paint: {
-            'line-color': '#475569',
-            'line-opacity': 0.15,
-            'line-width': 1.5,
-          },
-        });
+      // 4. Methane Plants (orange circles)
+      map.current!.addLayer({
+        id: 'methane',
+        type: 'circle',
+        source: 'methane-source',
+        paint: { 'circle-radius': 8, 'circle-color': '#f97316', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+        layout: { visibility: 'visible' }
+      });
 
-        map.current!.addLayer({
-          id: 'dumps',
-          type: 'circle',
-          source: 'dumps-source',
-          paint: {
-            'circle-radius': 8,
-            'circle-color': [
-              'match', ['get', 'risk'],
-              'high',   '#ef4444',
-              'medium', '#f59e0b',
-              'low',    '#10b981',
-              '#ffffff',
-            ],
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#ffffff',
-            'circle-opacity': 0.9,
-          },
-          layout: { visibility: 'visible' },
-        });
+      // 5. Density Heatmap (purple)
+      map.current!.addLayer({
+        id: 'density',
+        type: 'heatmap',
+        source: 'density-source',
+        paint: {
+          'heatmap-weight': ['get', 'weight'],
+          'heatmap-intensity': 1.5,
+          'heatmap-radius': 40,
+          'heatmap-color': [
+            'interpolate', ['linear'], ['heatmap-density'],
+            0, 'rgba(168,85,247,0)',
+            0.5, 'rgba(168,85,247,0.5)',
+            1, 'rgba(107,33,168,1)'
+          ],
+        },
+        layout: { visibility: 'none' }
+      });
 
-        map.current!.addLayer({
-          id: 'methane',
-          type: 'heatmap',
-          source: 'methane-source',
-          paint: {
-            'heatmap-weight': ['get', 'weight'],
-            'heatmap-intensity': 1.4,
-            'heatmap-radius': 60,
-            'heatmap-color': [
-              'interpolate', ['linear'], ['heatmap-density'],
-              0,   'rgba(255,255,255,0)',
-              0.2, '#7f1d1d',
-              0.4, '#b91c1c',
-              0.6, '#ef4444',
-              0.8, '#f87171',
-              1,   '#fca5a5',
-            ],
-            'heatmap-opacity': 0.7,
-          },
-          layout: { visibility: 'none' },
-        });
+      // 6. Open Spaces (light green polygons)
+      map.current!.addLayer({
+        id: 'openSpaces',
+        type: 'fill',
+        source: 'openSpaces-source',
+        paint: { 'fill-color': '#86efac', 'fill-opacity': 0.6 },
+        layout: { visibility: 'none' }
+      });
 
-        map.current!.addLayer({
-          id: 'waste',
-          type: 'heatmap',
-          source: 'waste-source',
-          paint: {
-            'heatmap-weight': ['get', 'weight'],
-            'heatmap-intensity': 1.2,
-            'heatmap-radius': 55,
-            'heatmap-color': [
-              'interpolate', ['linear'], ['heatmap-density'],
-              0,   'rgba(255,255,255,0)',
-              0.2, '#713f12',
-              0.4, '#a16207',
-              0.6, '#eab308',
-              0.8, '#facc15',
-              1,   '#fef08a',
-            ],
-            'heatmap-opacity': 0.65,
-          },
-          layout: { visibility: 'none' },
-        });
+      // 7. Segregation Zones (colored polygons)
+      map.current!.addLayer({
+        id: 'segregation',
+        type: 'fill',
+        source: 'segregation-source',
+        paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.4 },
+        layout: { visibility: 'none' }
+      });
 
-        map.current!.addLayer({
-          id: 'dumpProbability',
-          type: 'heatmap',
-          source: 'dumpprob-source',
-          paint: {
-            'heatmap-weight': ['get', 'weight'],
-            'heatmap-intensity': 1.3,
-            'heatmap-radius': 50,
-            'heatmap-color': [
-              'interpolate', ['linear'], ['heatmap-density'],
-              0,   'rgba(255,255,255,0)',
-              0.2, '#1e3a5f',
-              0.4, '#1d4ed8',
-              0.6, '#3b82f6',
-              0.8, '#60a5fa',
-              1,   '#93c5fd',
-            ],
-            'heatmap-opacity': 0.65,
-          },
-          layout: { visibility: 'none' },
-        });
+      // 8. LULC (colored polygons)
+      map.current!.addLayer({
+        id: 'lulc',
+        type: 'fill',
+        source: 'lulc-source',
+        paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.6 },
+        layout: { visibility: 'none' }
+      });
 
-        map.current!.addLayer({
-          id: 'routes',
-          type: 'line',
-          source: 'routes-source',
-          paint: {
-            'line-color': '#10b981',
-            'line-width': 3,
-            'line-opacity': 0.8,
-            'line-dasharray': [2, 1.5],
-          },
-          layout: { visibility: 'none' },
-        });
+      // 9. Main Truck Route
+      map.current!.addLayer({
+        id: 'mainRoute',
+        type: 'line',
+        source: 'mainRoute-source',
+        paint: { 'line-color': '#22c55e', 'line-width': 4 },
+        layout: { visibility: 'visible' }
+      });
 
-        map.current!.on('click', 'dumps', (e) => {
+      // 10. Auto Routes
+      map.current!.addLayer({
+        id: 'autoRoutes',
+        type: 'line',
+        source: 'autoRoutes-source',
+        paint: { 'line-color': '#f97316', 'line-width': 2, 'line-dasharray': [2, 2] },
+        layout: { visibility: 'visible' }
+      });
+
+      // 11. Animated Auto Dots
+      map.current!.addLayer({
+        id: 'autoRoutes-dots',
+        type: 'circle',
+        source: 'auto-dots',
+        paint: { 'circle-radius': 5, 'circle-color': '#f97316', 'circle-stroke-width': 1.5, 'circle-stroke-color': '#fff' },
+        layout: { visibility: 'visible' } // same group as autoRoutes
+      });
+
+      // 12. Animated Main Truck Dot
+      map.current!.addLayer({
+        id: 'mainRoute-dot',
+        type: 'circle',
+        source: 'main-dot',
+        paint: { 'circle-radius': 9, 'circle-color': '#3b82f6', 'circle-stroke-width': 2, 'circle-stroke-color': '#fff', 'circle-pitch-alignment':'map' },
+        layout: { visibility: 'visible' } // same group as mainRoute
+      });
+
+      // Add HTML Markers for Truck Hubs
+      TRUCK_HUBS_GEOJSON.features.forEach((feature: any) => {
+        const el = document.createElement('div');
+        // Simple CSS animation via tailwind: animate-pulse, blue square
+        el.className = 'w-6 h-6 bg-blue-600 border-2 border-white rounded-md shadow-[0_0_15px_rgba(37,99,235,0.8)] cursor-pointer hover:bg-blue-500 transition-colors duration-300';
+        
+        // Inline styles for extra pulse effect
+        el.style.animation = 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite';
+
+        const p = feature.properties;
+        const popupHtml = `<div style="font-family:Inter,sans-serif;color:#0f172a;padding:4px">
+            <strong>🚛 ${p.name}</strong><br/>
+            Capacity: ${p.limit}<br/>
+            Load: <span style="color:${p.status === 'Full' ? '#ef4444' : '#10b981'}">${p.load}</span><br/>
+            Status: <b>${p.status}</b><br/>
+            Autos Feeding: <b>${p.autos}</b>
+          </div>`;
+          
+        const popup = new maplibregl.Popup({ closeButton: true, offset: 15 }).setHTML(popupHtml);
+        const marker = new maplibregl.Marker(el)
+          .setLngLat(feature.geometry.coordinates)
+          .setPopup(popup)
+          .addTo(map.current!);
+          
+        hubMarkers.current.push(marker);
+      });
+      
+      // Setup Popups
+      const setupPopup = (layerId: string, getHtml: (p: any) => string) => {
+        map.current!.on('click', layerId, (e) => {
           if (!e.features?.length) return;
-          const p = e.features[0].properties!;
+          const p = e.features[0].properties;
           new maplibregl.Popup({ closeButton: true })
             .setLngLat(e.lngLat)
-            .setHTML(
-              `<div style="font-family:Inter,sans-serif;color:#0f172a;padding:4px 0">
-                <strong style="font-size:13px">🗑️ ${p.ward}</strong>
-                <div style="margin-top:4px;font-size:12px;color:#64748b">
-                  Risk: <span style="color:${p.risk === 'high' ? '#ef4444' : p.risk === 'medium' ? '#f59e0b' : '#10b981'};font-weight:600;text-transform:uppercase">${p.risk}</span>
-                </div>
-                <div style="font-size:12px;color:#64748b">Area: ${p.area_sqm} m²</div>
-                <div style="font-size:12px;color:#64748b">Detected: ${p.detected}</div>
-              </div>`
-            )
+            .setHTML(`<div style="font-family:Inter,sans-serif;color:#0f172a;padding:4px">` + getHtml(p) + `</div>`)
             .addTo(map.current!);
         });
+        map.current!.on('mouseenter', layerId, () => { if (map.current) map.current.getCanvas().style.cursor = 'pointer'; });
+        map.current!.on('mouseleave', layerId, () => { if (map.current) map.current.getCanvas().style.cursor = ''; });
+      };
 
-        map.current!.on('click', 'wardVulnerability', (e) => {
-          if (e.features?.length) {
-            const wardId = e.features[0].properties?.id;
-            if (wardId) setSelectedWardId(wardId);
-          }
+      setupPopup('dumps', p => `<strong>🔴 ${p.name}</strong><br/>Capacity: ${p.capacity}<br/>Status: <b>${p.status}</b>`);
+      setupPopup('dryWaste', p => `<strong>🔵 ${p.name}</strong><br/>Capacity: ${p.capacity}`);
+      setupPopup('processing', p => `<strong>🟢 ${p.type}</strong><br/>Capacity: ${p.capacity}`);
+      setupPopup('methane', p => `<strong>🟠 ${p.name}</strong><br/>Output: ${p.output}`);
+      setupPopup('lulc', p => `<strong>📡 LULC Analysis</strong><br/>Classification: <b>${p.type}</b>${p.type === 'Open Bare Land' ? '<br/><span style="color:#f39c12">⚠️ High illegal dump risk</span>' : ''}`);
+
+      let t = 0;
+      const animateFlow = () => {
+        t += 0.003; 
+        if (!map.current) return;
+        
+        const autoFeatures = AUTO_ROUTES_GEOJSON.features.map((f: any, i: number) => {
+           // The routes are now full circular polygons spanning outwards and tracking back to the hub.
+           const pt = interpolatePoint(f.geometry.coordinates, (t * 2 + (i * 0.15)));
+           return { type: 'Feature', geometry: { type: 'Point', coordinates: pt }, properties: {} };
         });
+        
+        const mainLine = MAIN_ROUTE_GEOJSON.features[0].geometry.coordinates;
+        const mainTruckDot = interpolatePoint(mainLine, (t * 0.5));
 
-        map.current!.on('mouseenter', 'wardVulnerability', () => { if (map.current) map.current.getCanvas().style.cursor = 'pointer'; });
-        map.current!.on('mouseleave', 'wardVulnerability', () => { if (map.current) map.current.getCanvas().style.cursor = ''; });
-        map.current!.on('mouseenter', 'dumps', () => { if (map.current) map.current.getCanvas().style.cursor = 'pointer'; });
-        map.current!.on('mouseleave', 'dumps', () => { if (map.current) map.current.getCanvas().style.cursor = ''; });
+        const adSource = map.current.getSource('auto-dots') as maplibregl.GeoJSONSource;
+        if (adSource) adSource.setData({ type: 'FeatureCollection', features: autoFeatures });
+        
+        const mdSource = map.current.getSource('main-dot') as maplibregl.GeoJSONSource;
+        if (mdSource) mdSource.setData({ type: 'FeatureCollection', features: [ { type: 'Feature', geometry: { type: 'Point', coordinates: mainTruckDot }, properties: {} } ] });
+        
+        animationRef.current = requestAnimationFrame(animateFlow);
+      };
+      animateFlow();
 
-        setMapLoaded(true);
-      } catch (err) {
-        console.error('Failed to load map data', err);
-      }
+      setMapLoaded(true);
     });
 
     return () => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      hubMarkers.current.forEach(m => m.remove());
       if (map.current) {
         map.current.remove();
         map.current = null;
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!map.current || !mapLoaded) return;
-    const managedLayers = ['dumps', 'methane', 'waste', 'dumpProbability', 'routes', 'wardVulnerability'];
+    const managedLayers = ['dumps', 'dryWaste', 'processing', 'methane', 'density', 'openSpaces', 'segregation', 'lulc', 'mainRoute', 'autoRoutes'];
     Object.entries(activeLayers).forEach(([layerId, isVisible]) => {
       if (managedLayers.includes(layerId) && map.current?.getLayer(layerId)) {
         map.current.setLayoutProperty(layerId, 'visibility', isVisible ? 'visible' : 'none');
+        // Also toggle the animated dots for those routes
+        if (layerId === 'mainRoute' && map.current.getLayer('mainRoute-dot')) {
+          map.current.setLayoutProperty('mainRoute-dot', 'visibility', isVisible ? 'visible' : 'none');
+        }
+        if (layerId === 'autoRoutes' && map.current.getLayer('autoRoutes-dots')) {
+          map.current.setLayoutProperty('autoRoutes-dots', 'visibility', isVisible ? 'visible' : 'none');
+        }
+      }
+      
+      // Toggle custom DOM markers for truckHubs
+      if (layerId === 'truckHubs') {
+        const displayVal = isVisible ? 'block' : 'none';
+        hubMarkers.current.forEach(m => {
+          m.getElement().style.display = displayVal;
+        });
       }
     });
   }, [activeLayers, mapLoaded]);
-
-  // Sync synthetic dumps when satellite page runs
-  useEffect(() => {
-    if (mapLoaded && map.current?.getSource('dumps-source')) {
-      const source = map.current.getSource('dumps-source') as maplibregl.GeoJSONSource;
-      source.setData(buildDumpGeoJSON(newSyntheticDumps) as GeoJSON.FeatureCollection);
-    }
-  }, [newSyntheticDumps, mapLoaded]);
-
-  useEffect(() => {
-    if (!map.current || !mapLoaded || !map.current.getLayer('wardVulnerability')) return;
-    
-    if (highlightedWards.length > 0) {
-      map.current.setPaintProperty('wardVulnerability', 'fill-color', [
-        'case',
-        ['in', ['get', 'name'], ['literal', highlightedWards]],
-        '#0d9488', // Teal 600
-        [
-          'interpolate', ['linear'], ['get', 'score'],
-          0,  '#ef4444',
-          30, '#f97316',
-          50, '#f59e0b',
-          70, '#84cc16',
-          100,'#10b981',
-        ]
-      ]);
-      map.current.setPaintProperty('wardVulnerability', 'fill-opacity', [
-        'case',
-        ['in', ['get', 'name'], ['literal', highlightedWards]],
-        0.8,
-        0.3
-      ]);
-    } else {
-      map.current.setPaintProperty('wardVulnerability', 'fill-color', [
-        'interpolate', ['linear'], ['get', 'score'],
-        0,  '#ef4444',
-        30, '#f97316',
-        50, '#f59e0b',
-        70, '#84cc16',
-        100,'#10b981',
-      ]);
-      map.current.setPaintProperty('wardVulnerability', 'fill-opacity', 0.3);
-    }
-  }, [highlightedWards, mapLoaded]);
 
   return (
     <div id="map-page" className="relative w-full bg-slate-100" style={{ height: 'calc(100vh - 65px)' }}>
@@ -361,26 +461,4 @@ export default function MapContainer() {
       <WardSidebar />
     </div>
   );
-}
-
-function buildRouteGeoJSON(): GeoJSON.FeatureCollection {
-  const highRisk = [...wardScores].sort((a, b) => a.score - b.score).slice(0, 8);
-  const coordinates: number[][][] = [];
-  for (let i = 0; i < highRisk.length - 1; i++) {
-    const wardA = wardsLookup[highRisk[i].name];
-    const wardB = wardsLookup[highRisk[i + 1].name];
-    if (wardA && wardB) {
-      const cA = getCentroid(wardA.geometry.coordinates[0]);
-      const cB = getCentroid(wardB.geometry.coordinates[0]);
-      coordinates.push([cA, cB]);
-    }
-  }
-  return {
-    type: 'FeatureCollection',
-    features: coordinates.map((coords, i) => ({
-      type: 'Feature',
-      geometry: { type: 'LineString', coordinates: coords },
-      properties: { id: i },
-    })),
-  };
 }

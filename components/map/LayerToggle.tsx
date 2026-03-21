@@ -4,12 +4,17 @@ import { useStore, LayerId } from '@/lib/store';
 import { useState } from 'react';
 
 const LAYERS: { id: LayerId; label: string; color: string; glowColor: string }[] = [
-  { id: 'dumps',             label: 'Illegal dump sites',       color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
-  { id: 'methane',           label: 'Methane heatmap',          color: '#ef4444', glowColor: 'rgba(239,68,68,0.35)' },
-  { id: 'waste',             label: 'Waste generation heatmap', color: '#eab308', glowColor: 'rgba(234,179,8,0.35)' },
-  { id: 'dumpProbability',   label: 'Dumping probability',      color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
-  { id: 'routes',            label: 'Optimized truck routes',   color: '#10b981', glowColor: 'rgba(16,185,129,0.35)' },
-  { id: 'wardVulnerability', label: 'Ward vulnerability',       color: '#e2e8f0', glowColor: 'rgba(226,232,240,0.25)' },
+  { id: 'truckHubs', label: 'Truck Hubs', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
+  { id: 'mainRoute', label: 'Main Truck Route', color: '#22c55e', glowColor: 'rgba(34,197,94,0.35)' },
+  { id: 'autoRoutes', label: 'Feeding Auto Routes', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
+  { id: 'dumps', label: 'Dumpyards', color: '#ef4444', glowColor: 'rgba(239,68,68,0.35)' },
+  { id: 'dryWaste', label: 'Dry Waste Centres', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
+  { id: 'processing', label: 'Waste Processing Units', color: '#10b981', glowColor: 'rgba(16,185,129,0.35)' },
+  { id: 'methane', label: 'Bio Methanisation', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
+  { id: 'density', label: 'Building Density', color: '#a855f7', glowColor: 'rgba(168,85,247,0.35)' },
+  { id: 'openSpaces', label: 'Open Spaces', color: '#86efac', glowColor: 'rgba(134,239,172,0.35)' },
+  { id: 'segregation', label: 'Segregation Zones', color: '#eab308', glowColor: 'rgba(234,179,8,0.35)' },
+  { id: 'lulc', label: 'LULC Analysis', color: '#06b6d4', glowColor: 'rgba(6,182,212,0.35)' },
 ];
 
 export default function LayerToggle() {

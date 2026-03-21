@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type LayerId = 'dumps' | 'methane' | 'waste' | 'dumpProbability' | 'routes' | 'wardVulnerability';
+export type LayerId = 'dumps' | 'dryWaste' | 'processing' | 'methane' | 'density' | 'openSpaces' | 'segregation' | 'lulc' | 'truckHubs' | 'autoRoutes' | 'mainRoute';
 
 interface AppState {
   activeLayers: Record<LayerId, boolean>;
@@ -20,11 +20,16 @@ interface AppState {
 export const useStore = create<AppState>((set) => ({
   activeLayers: {
     dumps: true,
-    methane: false,
-    waste: false,
-    dumpProbability: false,
-    routes: false,
-    wardVulnerability: true,
+    dryWaste: true,
+    processing: true,
+    methane: true,
+    density: false,
+    openSpaces: false,
+    segregation: false,
+    lulc: false,
+    truckHubs: true,
+    autoRoutes: true,
+    mainRoute: true,
   },
   toggleLayer: (layer) => set((state) => ({
     activeLayers: { ...state.activeLayers, [layer]: !state.activeLayers[layer] }
