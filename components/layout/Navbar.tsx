@@ -16,7 +16,6 @@ const MAIN_LINKS = [
   { href: '/methodology', label: 'Methodology' },
   { href: '/impact', label: 'Impact' },
   { href: '/wards', label: 'Wards' },
-  { href: '/report', label: 'Report' },
 ];
 
 const FEATURES_LINKS = [
