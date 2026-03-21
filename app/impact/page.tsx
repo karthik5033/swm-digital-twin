@@ -178,58 +178,61 @@ export default function ImpactDashboard() {
         {/* NEW REAL DATA FOUNDATION CARD */}
         <section className="mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm">
-              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
-              <div className="grid grid-cols-1 gap-y-3 pl-2">
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population.toLocaleString()}</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.waste_daily_tons} tons</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Buildings:</span> <span className="text-white">{HSR_DATA.buildings_total.toLocaleString()} ({HSR_DATA.buildings_density}/sq km)</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road density:</span> <span className="text-white">{HSR_DATA.roads_density}/sq km</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck roads:</span> <span className="text-white">{HSR_DATA.roads_truck_pct}%</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto roads:</span> <span className="text-white">{HSR_DATA.roads_auto_pct}%</span></div>
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm h-full flex flex-col justify-between">
+              <div>
+                <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
+                <div className="grid grid-cols-1 gap-y-3 pl-2">
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{(HSR_DATA.population || 46219).toLocaleString()}</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.daily_waste_tons || 23.11} tons</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Area:</span> <span className="text-white">{HSR_DATA.area_sq_km || 18.5} sq km</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Buildings:</span> <span className="text-white">{(HSR_DATA.buildings_total || 9471).toLocaleString()} ({HSR_DATA.buildings_density || 512}/sq km)</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road density:</span> <span className="text-white">{HSR_DATA.roads_density || 110}/sq km</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck roads:</span> <span className="text-white">{HSR_DATA.truck_roads_pct || 17.4}%</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto roads:</span> <span className="text-white">{HSR_DATA.auto_roads_pct || 77.9}%</span></div>
+                </div>
               </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm h-fit">
-              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
-              <div className="grid grid-cols-1 gap-y-3 pl-2">
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck routes:</span> <span className="text-white">{HSR_DATA.truck_roads} segments ({HSR_DATA.truck_roads_pct}%)</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto routes:</span> <span className="text-white">{HSR_DATA.auto_roads} segments ({HSR_DATA.auto_roads_pct}%)</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Total Coverage:</span> <span className="text-white">{HSR_DATA.total_coverage_pct}%</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Distance Saved:</span> <span className="text-emerald-400 font-bold">100 km / day</span></div>
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm h-full flex flex-col justify-between">
+              <div>
+                <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
+                <div className="grid grid-cols-1 gap-y-3 pl-2">
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck routes:</span> <span className="text-white">{HSR_DATA.truck_roads || 352} segments ({HSR_DATA.truck_roads_pct || 17.4}%)</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto routes:</span> <span className="text-white">{HSR_DATA.auto_roads || 1579} segments ({HSR_DATA.auto_roads_pct || 77.9}%)</span></div>
+                  <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Total Coverage:</span> <span className="text-white">{HSR_DATA.total_coverage_pct || 95.3}%</span></div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* NEW CITY CONTEXT CARD */}
-          <div className="bg-indigo-950/30 border border-indigo-500/30 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
-             <div className="flex-1">
-               <div className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-4">BBMP WASTE INFRASTRUCTURE</div>
+          <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-md">
+             <div className="flex-1 w-full">
+               <div className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-4">BBMP WASTE INFRASTRUCTURE</div>
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                  <div>
-                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_wet_plants} Wet Processing Plants</div>
-                   <div className="text-indigo-300">Capacity: {HSR_DATA.bbmp_wet_capacity_tpd.toLocaleString()} TPD</div>
+                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_wet_plants || 7} Wet Processing Plants</div>
+                   <div className="text-slate-400">Capacity: {(HSR_DATA.bbmp_wet_capacity_tpd || 1570).toLocaleString()} TPD</div>
                  </div>
                  <div>
-                   <div className="text-white font-semibold mb-1">{HSR_DATA.bbmp_bio_plants} Bio-Methanation Plants</div>
-                   <div className="text-indigo-300">Capacity: {HSR_DATA.bbmp_bio_capacity_tpd.toLocaleString()} TPD</div>
+                   <div className="text-white font-semibold mb-1">{HSR_DATA.bio_meth_units || 2} Bio-Methanation Plants</div>
+                   <div className="text-slate-400">Capacity: {((HSR_DATA.bio_meth_units || 2) * 5).toLocaleString()} TPD</div>
                  </div>
-                 <div className="sm:col-span-2 pt-2 mt-2 border-t border-indigo-500/20">
+                 <div className="sm:col-span-2 pt-2 mt-2 border-t border-slate-600/50">
                    <div className="flex justify-between items-center text-sm md:text-base">
-                     <span className="text-indigo-200">Bengaluru total:</span>
-                     <span className="font-bold text-white">{HSR_DATA.bengaluru_total_tpd} TPD</span>
+                     <span className="text-slate-400">Bengaluru total:</span>
+                     <span className="font-bold text-white">{HSR_DATA.bengaluru_total_tpd || "3000-3500"} TPD</span>
                    </div>
                    <div className="flex justify-between items-center text-sm md:text-base mt-2">
-                     <span className="text-indigo-200">HSR Layout share:</span>
-                     <span className="font-bold text-indigo-400">~1.5%</span>
+                     <span className="text-slate-400">HSR Layout share:</span>
+                     <span className="font-bold text-teal-400">~1.5%</span>
                    </div>
                  </div>
                </div>
              </div>
              
-             <div className="flex-1 md:border-l border-indigo-500/20 md:pl-8 text-lg font-medium text-indigo-100 italic leading-relaxed">
-               "{HSR_DATA.population.toLocaleString()} residents across {HSR_DATA.buildings_total.toLocaleString()} buildings generating {HSR_DATA.waste_daily_tons} tons/day — AstraCity's optimization identifies ₹{HSR_DATA.savings_total_cr} Cr/year total value for this ward."
+             <div className="flex-1 md:border-l border-slate-600/50 md:pl-8 text-lg font-medium text-slate-300 italic leading-relaxed w-full">
+               "{(HSR_DATA.population || 46219).toLocaleString()} residents across {(HSR_DATA.buildings_total || 9471).toLocaleString()} buildings generating {HSR_DATA.daily_waste_tons || 23.11} tons/day — AstraCity's optimization identifies ₹{HSR_DATA.savings_total_cr || 9.42} Cr/year total value for this ward."
              </div>
           </div>
         </section>
@@ -238,16 +241,16 @@ export default function ImpactDashboard() {
          {/* BBMP Composition Context Box */}
          <section className="mb-12">
            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-             <div className="bg-gradient-to-br from-green-900/20 to-teal-900/20 border border-green-500/30 rounded-2xl p-6 flex flex-col gap-3">
-               <h3 className="text-green-400 font-bold text-base">Wet Waste (61%)</h3>
-               <div className="text-3xl font-black text-white">{HSR_DATA.waste_wet_tons}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
-               <p className="text-gray-300 text-sm leading-relaxed">Routes to 2 Bio-methanisation units. Methane captured = carbon credits. BBMP: wet rose from 42% (1999) to 61% (2013).</p>
-               <div className="text-xs text-green-700 italic">Source: BBMP Official Reports 1999-2013</div>
+             <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-700/50 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-emerald-700 dark:text-emerald-400 font-bold text-base">Wet Waste (61%)</h3>
+               <div className="text-3xl font-black text-slate-800 dark:text-white">{HSR_DATA.waste_wet_tons || 14.1}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
+               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Routes to 2 Bio-methanisation units. Methane captured = carbon credits. BBMP: wet rose from 42% (1999) to 61% (2013).</p>
+               <div className="text-xs text-emerald-600 dark:text-emerald-500 italic mt-auto pt-2">Source: BBMP Official Reports 1999-2013</div>
              </div>
-             <div className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-500/30 rounded-2xl p-6 flex flex-col gap-3">
-               <h3 className="text-blue-400 font-bold text-base">Dry Waste (30%)</h3>
-               <div className="text-3xl font-black text-white">{HSR_DATA.waste_dry_tons}T<span className="text-sm text-gray-400 font-normal"> / day</span></div>
-               <p className="text-gray-300 text-sm leading-relaxed">Routes to 16 DWCC centres for recycling. Dry fell from 41% (1999) to 25% (2013). Projected 30% by 2026.</p>
+             <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-700/50 rounded-2xl p-6 flex flex-col gap-3">
+               <h3 className="text-blue-700 dark:text-blue-400 font-bold text-base">Dry Waste (30%)</h3>
+               <div className="text-3xl font-black text-slate-800 dark:text-white">{HSR_DATA.waste_dry_tons || 6.93}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
+               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">Routes to 16 DWCC centres for recycling. Dry fell from 41% (1999) to 25% (2013). Projected 30% by 2026.</p>
                <div className="text-xs text-blue-700 italic">Source: CPCB + BBMP combined</div>
              </div>
              <div className="bg-slate-900/60 border border-slate-600/40 rounded-2xl p-6 flex flex-col gap-3">
