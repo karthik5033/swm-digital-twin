@@ -1,0 +1,26 @@
+
+=== HSR LAYOUT LULC ANALYSIS ===
+Total ward area: 704.2 hectares
+
+LAND COVER:
+  Rooftop: 147.5 ha (20.9%)
+  Road / Paved: 220.5 ha (31.3%)
+  Vegetation: 28.5 ha (4.0%)
+  Bare Soil: 11.6 ha (1.6%)
+  Water: 22.2 ha (3.2%)
+  Shadow: 3.0 ha (0.4%)
+  Mixed: 271.1 ha (38.5%)
+
+ROOFTOPS:
+Total rooftops: 760
+Large flat (commercial): 566 — 74.5%
+Medium (apartment): 194 — 25.5%
+Small (house): 0 — 0.0%
+Total rooftop area: 92.9 hectares
+Avg rooftop size: 1222.8 sqm
+
+OPEN SPACES:
+Total green spaces: 11 (17.8 hectares)
+Total bare/open land: 0 (0.0 hectares)
+Water bodies: 25 (1.6 hectares)
+High-risk open spaces (future dumps): 0

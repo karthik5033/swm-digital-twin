@@ -1,0 +1,43 @@
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..335.6717948717949].
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..335.6717948717949].
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..335.6717948717949].
+-- PART 1: Shapefiles -> GeoJSON --
+
+Ward Boundary Info:
+CRS: EPSG:4326 -> EPSG:4326
+Bounds: [77.622725 12.897941 77.66935  12.931065]
+Number of features: 1
+Column names: ['OID_', 'Name', 'FolderPath', 'SymbolID', 'AltMode', 'Base', 'Clamped', 'Extruded', 'Snippet', 'PopupInfo', 'Shape_Leng', 'Shape_Area', 'geometry']
+
+Road Network Info:
+Number of road segments: 2027
+Road type columns: ['osm_type']
+Total length: 221.60 km
+
+-- PART 2: Satellite Image Analysis --
+
+Satellite Image Info:
+Number of bands: 3
+CRS: EPSG:4326
+Bounds: BoundingBox(left=77.62273054557916, bottom=12.897951683328532, right=77.66931327493812, top=12.931055328036145)
+Resolution: (4.648974985924131e-05, 4.473465501028688e-05)
+Nodata value: 65535.0
+Band 1 - min: 59, max: 315
+Band 2 - min: 79, max: 274
+Band 3 - min: 66, max: 331
+
+-- PART 3: Anomaly / Dump Site Detection --
+Number of dump sites detected: 29
+Breakdown by risk level: {'high': 10, 'medium': 3, 'low': 16}
+
+-- PART 4: Road Network Analysis --
+Total length in HSR Layout: 221.60 km
+Number of road segments: 2027
+Breakdown by osm_type:
+osm_type
+way    2027
+Baseline km: 132.44
+Optimized km: 32.41
+Improvement: 75.5%
+
+All outputs saved to /output folder

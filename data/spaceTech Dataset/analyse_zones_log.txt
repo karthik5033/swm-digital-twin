@@ -1,0 +1,29 @@
+-- STEP 1: Building Detection from Satellite --
+Total structures detected: 1643
+
+-- STEP 2: Classify Residential vs Commercial --
+Residential count: 20
+Commercial count: 1407
+Mixed count: 216
+
+-- STEP 3: Population Estimation --
+Estimated population: 120000 (Known: ~120000)
+
+-- STEP 4: Waste Generation Calculation --
+Residential waste per day: 8472.30 kg
+Commercial waste per day: 3517.50 kg
+Total waste per day: 12249.00 kg (12.25 tons)
+Total waste per year: 4470.89 tons
+
+=== HSR LAYOUT ANALYSIS SUMMARY ===
+Total buildings detected: 1643
+  Residential: 20 (1.2%)
+  Commercial: 1407 (85.6%)
+  Mixed: 216 (13.1%)
+Estimated population: 120000 (known: ~120000)
+Daily waste generation: 12.2 tons/day
+Annual waste generation: 4470.9 tons/year
+  From residential: 69.2%
+  From commercial: 28.7%
+High waste zones: 4 of 16
+==================================

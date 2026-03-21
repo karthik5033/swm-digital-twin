@@ -1,0 +1,301 @@
+{
+  "total_structures": 1643,
+  "residential_count": 20,
+  "commercial_count": 1407,
+  "mixed_count": 216,
+  "estimated_population": 120000,
+  "waste_per_day_kg": 12249.0,
+  "waste_per_year_tons": 4470.89,
+  "residential_waste_kg_day": 8472.3,
+  "commercial_waste_kg_day": 3517.5,
+  "zones": [
+    {
+      "zone_id": "A1",
+      "bounds": [
+        77.622725,
+        12.897941,
+        77.63438125,
+        12.906222
+      ],
+      "center": [
+        77.628553125,
+        12.9020815
+      ],
+      "residential_count": 0,
+      "commercial_count": 14,
+      "population_estimate": 1067,
+      "waste_kg_day": 36.2,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "A2",
+      "bounds": [
+        77.63438125,
+        12.897941,
+        77.6460375,
+        12.906222
+      ],
+      "center": [
+        77.64020937500001,
+        12.9020815
+      ],
+      "residential_count": 1,
+      "commercial_count": 20,
+      "population_estimate": 5725,
+      "waste_kg_day": 536.39,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "A3",
+      "bounds": [
+        77.6460375,
+        12.897941,
+        77.65769374999999,
+        12.906222
+      ],
+      "center": [
+        77.651865625,
+        12.9020815
+      ],
+      "residential_count": 4,
+      "commercial_count": 116,
+      "population_estimate": 21544,
+      "waste_kg_day": 2015.99,
+      "risk": "high"
+    },
+    {
+      "zone_id": "A4",
+      "bounds": [
+        77.65769374999999,
+        12.897941,
+        77.66935,
+        12.906222
+      ],
+      "center": [
+        77.66352187499999,
+        12.9020815
+      ],
+      "residential_count": 0,
+      "commercial_count": 0,
+      "population_estimate": 0,
+      "waste_kg_day": 0.0,
+      "risk": "low"
+    },
+    {
+      "zone_id": "B1",
+      "bounds": [
+        77.622725,
+        12.906222,
+        77.63438125,
+        12.914503
+      ],
+      "center": [
+        77.628553125,
+        12.9103625
+      ],
+      "residential_count": 4,
+      "commercial_count": 195,
+      "population_estimate": 25523,
+      "waste_kg_day": 2046.01,
+      "risk": "high"
+    },
+    {
+      "zone_id": "B2",
+      "bounds": [
+        77.63438125,
+        12.906222,
+        77.6460375,
+        12.914503
+      ],
+      "center": [
+        77.64020937500001,
+        12.9103625
+      ],
+      "residential_count": 1,
+      "commercial_count": 312,
+      "population_estimate": 36587,
+      "waste_kg_day": 1307.19,
+      "risk": "high"
+    },
+    {
+      "zone_id": "B3",
+      "bounds": [
+        77.6460375,
+        12.906222,
+        77.65769374999999,
+        12.914503
+      ],
+      "center": [
+        77.651865625,
+        12.9103625
+      ],
+      "residential_count": 1,
+      "commercial_count": 221,
+      "population_estimate": 33287,
+      "waste_kg_day": 1072.49,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "B4",
+      "bounds": [
+        77.65769374999999,
+        12.906222,
+        77.66935,
+        12.914503
+      ],
+      "center": [
+        77.66352187499999,
+        12.9103625
+      ],
+      "residential_count": 0,
+      "commercial_count": 5,
+      "population_estimate": 1164,
+      "waste_kg_day": 13.7,
+      "risk": "low"
+    },
+    {
+      "zone_id": "C1",
+      "bounds": [
+        77.622725,
+        12.914503,
+        77.63438125,
+        12.922784
+      ],
+      "center": [
+        77.628553125,
+        12.9186435
+      ],
+      "residential_count": 0,
+      "commercial_count": 65,
+      "population_estimate": 4561,
+      "waste_kg_day": 168.5,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "C2",
+      "bounds": [
+        77.63438125,
+        12.914503,
+        77.6460375,
+        12.922784
+      ],
+      "center": [
+        77.64020937500001,
+        12.9186435
+      ],
+      "residential_count": 2,
+      "commercial_count": 124,
+      "population_estimate": 20962,
+      "waste_kg_day": 1032.75,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "C3",
+      "bounds": [
+        77.6460375,
+        12.914503,
+        77.65769374999999,
+        12.922784
+      ],
+      "center": [
+        77.651865625,
+        12.9186435
+      ],
+      "residential_count": 0,
+      "commercial_count": 220,
+      "population_estimate": 36490,
+      "waste_kg_day": 596.8,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "C4",
+      "bounds": [
+        77.65769374999999,
+        12.914503,
+        77.66935,
+        12.922784
+      ],
+      "center": [
+        77.66352187499999,
+        12.9186435
+      ],
+      "residential_count": 1,
+      "commercial_count": 26,
+      "population_estimate": 10093,
+      "waste_kg_day": 557.39,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "D1",
+      "bounds": [
+        77.622725,
+        12.922784,
+        77.63438125,
+        12.931065
+      ],
+      "center": [
+        77.628553125,
+        12.9269245
+      ],
+      "residential_count": 0,
+      "commercial_count": 0,
+      "population_estimate": 0,
+      "waste_kg_day": 0.0,
+      "risk": "low"
+    },
+    {
+      "zone_id": "D2",
+      "bounds": [
+        77.63438125,
+        12.922784,
+        77.6460375,
+        12.931065
+      ],
+      "center": [
+        77.64020937500001,
+        12.9269245
+      ],
+      "residential_count": 0,
+      "commercial_count": 4,
+      "population_estimate": 0,
+      "waste_kg_day": 10.0,
+      "risk": "low"
+    },
+    {
+      "zone_id": "D3",
+      "bounds": [
+        77.6460375,
+        12.922784,
+        77.65769374999999,
+        12.931065
+      ],
+      "center": [
+        77.651865625,
+        12.9269245
+      ],
+      "residential_count": 0,
+      "commercial_count": 18,
+      "population_estimate": 5337,
+      "waste_kg_day": 52.2,
+      "risk": "medium"
+    },
+    {
+      "zone_id": "D4",
+      "bounds": [
+        77.65769374999999,
+        12.922784,
+        77.66935,
+        12.931065
+      ],
+      "center": [
+        77.66352187499999,
+        12.9269245
+      ],
+      "residential_count": 6,
+      "commercial_count": 67,
+      "population_estimate": 18827,
+      "waste_kg_day": 2803.4,
+      "risk": "high"
+    }
+  ]
+}

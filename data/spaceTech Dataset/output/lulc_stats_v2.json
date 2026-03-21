@@ -1,0 +1,50 @@
+{
+  "ward": "HSR Layout",
+  "total_area_ha": 586.6,
+  "pixel_resolution_m": {
+    "x": 4.65,
+    "y": 4.47
+  },
+  "dimensions": {
+    "width": 1002,
+    "height": 740
+  },
+  "classes": {
+    "Water Body": {
+      "pixels": 145743,
+      "area_ha": 302.93,
+      "percentage": 51.6,
+      "color_hex": "#2166AC"
+    },
+    "Vegetation": {
+      "pixels": 12467,
+      "area_ha": 25.91,
+      "percentage": 4.4,
+      "color_hex": "#1A9641"
+    },
+    "Rooftop / Built": {
+      "pixels": 20910,
+      "area_ha": 43.46,
+      "percentage": 7.4,
+      "color_hex": "#D7191C"
+    },
+    "Road / Paved": {
+      "pixels": 611,
+      "area_ha": 1.27,
+      "percentage": 0.2,
+      "color_hex": "#BDBDBD"
+    },
+    "Bare Soil": {
+      "pixels": 7635,
+      "area_ha": 15.87,
+      "percentage": 2.7,
+      "color_hex": "#DFC27D"
+    },
+    "Dense Urban Fabric": {
+      "pixels": 94859,
+      "area_ha": 197.17,
+      "percentage": 33.6,
+      "color_hex": "#F1B6DA"
+    }
+  }
+}

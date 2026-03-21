@@ -1,0 +1,374 @@
+{
+  "ward": "HSR Layout",
+  "city": "Bengaluru",
+  "data_source": "OpenStreetMap",
+  "total_buildings": 9483,
+  "type_summary": {
+    "Residential (House)": 8993,
+    "Residential (Apartment)": 243,
+    "Commercial/Retail": 136,
+    "Other/Unclassified": 42,
+    "Office/IT": 39,
+    "Educational": 15,
+    "Religious": 10,
+    "Government/Civic": 3,
+    "Hospital/Medical": 2
+  },
+  "area_stats": {
+    "mean_sqm": 163.7,
+    "median_sqm": 114.8,
+    "max_sqm": 7081.5,
+    "total_footprint_ha": 155.21
+  },
+  "key_facilities": {
+    "hospitals_clinics": 2,
+    "schools_colleges": 15,
+    "commercial_retail": 136,
+    "offices_it": 39,
+    "religious": 10,
+    "government": 3,
+    "hotels": 0
+  },
+  "residential": {
+    "apartments": 243,
+    "houses": 8993,
+    "total": 9236
+  },
+  "zones": [
+    {
+      "zone_id": "A1",
+      "bounds": [
+        77.622725,
+        12.897941,
+        77.63438125,
+        12.906222
+      ],
+      "total_buildings": 141,
+      "type_breakdown": {
+        "Residential (House)": 141
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 155.2,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "A2",
+      "bounds": [
+        77.63438125,
+        12.897941,
+        77.6460375,
+        12.906222
+      ],
+      "total_buildings": 149,
+      "type_breakdown": {
+        "Residential (House)": 148,
+        "Residential (Apartment)": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 139.9,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "A3",
+      "bounds": [
+        77.6460375,
+        12.897941,
+        77.65769374999999,
+        12.906222
+      ],
+      "total_buildings": 474,
+      "type_breakdown": {
+        "Residential (House)": 440,
+        "Residential (Apartment)": 23,
+        "Commercial/Retail": 4,
+        "Educational": 3,
+        "Other/Unclassified": 2,
+        "Office/IT": 2
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 261.7,
+      "medical_count": 0,
+      "school_count": 3,
+      "commercial_count": 4
+    },
+    {
+      "zone_id": "A4",
+      "bounds": [
+        77.65769374999999,
+        12.897941,
+        77.66935,
+        12.906222
+      ],
+      "total_buildings": 0,
+      "type_breakdown": {},
+      "dominant_type": "none",
+      "avg_building_area_sqm": 0,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "B1",
+      "bounds": [
+        77.622725,
+        12.906222,
+        77.63438125,
+        12.914503
+      ],
+      "total_buildings": 1383,
+      "type_breakdown": {
+        "Residential (House)": 1351,
+        "Commercial/Retail": 12,
+        "Office/IT": 10,
+        "Residential (Apartment)": 10
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 154.4,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 12
+    },
+    {
+      "zone_id": "B2",
+      "bounds": [
+        77.63438125,
+        12.906222,
+        77.6460375,
+        12.914503
+      ],
+      "total_buildings": 2188,
+      "type_breakdown": {
+        "Residential (House)": 2098,
+        "Commercial/Retail": 46,
+        "Residential (Apartment)": 24,
+        "Other/Unclassified": 10,
+        "Office/IT": 5,
+        "Educational": 2,
+        "Religious": 2,
+        "Hospital/Medical": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 147.6,
+      "medical_count": 1,
+      "school_count": 2,
+      "commercial_count": 46
+    },
+    {
+      "zone_id": "B3",
+      "bounds": [
+        77.6460375,
+        12.906222,
+        77.65769374999999,
+        12.914503
+      ],
+      "total_buildings": 1740,
+      "type_breakdown": {
+        "Residential (House)": 1679,
+        "Residential (Apartment)": 28,
+        "Commercial/Retail": 12,
+        "Other/Unclassified": 12,
+        "Educational": 5,
+        "Office/IT": 3,
+        "Religious": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 137.3,
+      "medical_count": 0,
+      "school_count": 5,
+      "commercial_count": 12
+    },
+    {
+      "zone_id": "B4",
+      "bounds": [
+        77.65769374999999,
+        12.906222,
+        77.66935,
+        12.914503
+      ],
+      "total_buildings": 0,
+      "type_breakdown": {},
+      "dominant_type": "none",
+      "avg_building_area_sqm": 0,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "C1",
+      "bounds": [
+        77.622725,
+        12.914503,
+        77.63438125,
+        12.922784
+      ],
+      "total_buildings": 277,
+      "type_breakdown": {
+        "Residential (House)": 266,
+        "Commercial/Retail": 5,
+        "Office/IT": 2,
+        "Other/Unclassified": 2,
+        "Hospital/Medical": 1,
+        "Residential (Apartment)": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 276.3,
+      "medical_count": 1,
+      "school_count": 0,
+      "commercial_count": 5
+    },
+    {
+      "zone_id": "C2",
+      "bounds": [
+        77.63438125,
+        12.914503,
+        77.6460375,
+        12.922784
+      ],
+      "total_buildings": 555,
+      "type_breakdown": {
+        "Residential (House)": 515,
+        "Residential (Apartment)": 15,
+        "Office/IT": 10,
+        "Commercial/Retail": 7,
+        "Other/Unclassified": 5,
+        "Educational": 3
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 237.0,
+      "medical_count": 0,
+      "school_count": 3,
+      "commercial_count": 7
+    },
+    {
+      "zone_id": "C3",
+      "bounds": [
+        77.6460375,
+        12.914503,
+        77.65769374999999,
+        12.922784
+      ],
+      "total_buildings": 2082,
+      "type_breakdown": {
+        "Residential (House)": 1963,
+        "Residential (Apartment)": 69,
+        "Commercial/Retail": 41,
+        "Office/IT": 4,
+        "Other/Unclassified": 2,
+        "Government/Civic": 2,
+        "Educational": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 131.5,
+      "medical_count": 0,
+      "school_count": 1,
+      "commercial_count": 41
+    },
+    {
+      "zone_id": "C4",
+      "bounds": [
+        77.65769374999999,
+        12.914503,
+        77.66935,
+        12.922784
+      ],
+      "total_buildings": 158,
+      "type_breakdown": {
+        "Residential (House)": 147,
+        "Commercial/Retail": 3,
+        "Residential (Apartment)": 3,
+        "Religious": 3,
+        "Office/IT": 1,
+        "Government/Civic": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 146.1,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 3
+    },
+    {
+      "zone_id": "D1",
+      "bounds": [
+        77.622725,
+        12.922784,
+        77.63438125,
+        12.931065
+      ],
+      "total_buildings": 0,
+      "type_breakdown": {},
+      "dominant_type": "none",
+      "avg_building_area_sqm": 0,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "D2",
+      "bounds": [
+        77.63438125,
+        12.922784,
+        77.6460375,
+        12.931065
+      ],
+      "total_buildings": 1,
+      "type_breakdown": {
+        "Residential (House)": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 74.0,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 0
+    },
+    {
+      "zone_id": "D3",
+      "bounds": [
+        77.6460375,
+        12.922784,
+        77.65769374999999,
+        12.931065
+      ],
+      "total_buildings": 128,
+      "type_breakdown": {
+        "Residential (House)": 119,
+        "Commercial/Retail": 5,
+        "Religious": 2,
+        "Residential (Apartment)": 1,
+        "Other/Unclassified": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 185.8,
+      "medical_count": 0,
+      "school_count": 0,
+      "commercial_count": 5
+    },
+    {
+      "zone_id": "D4",
+      "bounds": [
+        77.65769374999999,
+        12.922784,
+        77.66935,
+        12.931065
+      ],
+      "total_buildings": 207,
+      "type_breakdown": {
+        "Residential (House)": 125,
+        "Residential (Apartment)": 68,
+        "Other/Unclassified": 8,
+        "Office/IT": 2,
+        "Religious": 2,
+        "Commercial/Retail": 1,
+        "Educational": 1
+      },
+      "dominant_type": "Residential (House)",
+      "avg_building_area_sqm": 393.3,
+      "medical_count": 0,
+      "school_count": 1,
+      "commercial_count": 1
+    }
+  ]
+}

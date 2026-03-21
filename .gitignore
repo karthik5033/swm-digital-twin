@@ -41,6 +41,7 @@ next-env.d.ts
 # Large satellite/analysis images - don't commit
 data/spaceTech Dataset/output/*.png
 public/data/*.png
+*.tif
 
 # Build / lint logs
 eslint.log
