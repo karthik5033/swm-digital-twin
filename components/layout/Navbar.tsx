@@ -97,30 +97,11 @@ export default function Navbar() {
   return (
     <>
     <nav className="relative flex items-center justify-between p-4 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50">
-      {/* LEFT: Logo + API badge + Dark mode toggle */}
+      {/* LEFT: Logo */}
       <div className="flex items-center gap-2">
         <Link href="/" onClick={() => setIsOpen(false)} className="font-extrabold text-2xl tracking-tight text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-2">
           <span className="text-xl">🛰️</span> AstraCity
         </Link>
-
-        {/* API Status Badge — next to logo */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border-slate-300 border font-medium text-xs ml-2">
-          <span className={`w-2 h-2 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500 animate-pulse' : apiStatus === 'checking' ? 'bg-amber-500' : 'bg-red-500'}`}></span>
-          <span className="text-slate-600">
-            {apiStatus === 'online' ? 'API Online' : apiStatus === 'checking' ? 'Checking...' : 'API Offline'}
-          </span>
-        </div>
-
-        {/* Dark Mode Toggle — between brand and nav */}
-        <button 
-          onClick={toggleTheme} 
-          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors text-slate-600 ml-1"
-          aria-label="Toggle dark mode"
-        >
-          <motion.div initial={false} animate={{ rotate: isDark ? 180 : 0 }} transition={{ duration: 0.5, ease: "backOut" }}>
-            {isDark ? <span className="text-xl">☀️</span> : <span className="text-xl">🌙</span>}
-          </motion.div>
-        </button>
       </div>
       
       <div className="flex items-center gap-2 md:gap-6">
