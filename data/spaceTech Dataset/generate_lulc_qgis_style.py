@@ -154,12 +154,47 @@ print(f"  Vegetation:       {mask_veg.sum():>8,} px")
 # STEP 6 — Water (highest priority)
 mask_water = (
     ~nodata_mask &
-    (blueness > 0.06) &
-    (B > R) & (B > G) &
-    (brightness < 0.62)
+    (B > R * 1.35) &        # blue must be MUCH stronger than red
+    (B > G * 1.25) &        # blue much stronger than green  
+    (B > 0.30) &            # minimum absolute blue value
+    (brightness < 0.45) &   # must be dark (real water is dark)
+    (texture < 0.04)        # very smooth texture (water has no texture)
 )
 class_map[mask_water] = 0
 print(f"  Water:            {mask_water.sum():>8,} px")
+
+# Any pixel classified as water that is NOT near the 
+# known Agara Lake location should be re-examined
+# Agara Lake is in the northwest of HSR Layout
+# approximately: lat 12.918-12.928, lon 77.622-77.638
+
+# For pixels classified as water outside this box,
+# if texture > 0.03, reclassify to Dense Urban Fabric
+agara_lon_min, agara_lon_max = 77.622, 77.642
+agara_lat_min, agara_lat_max = 12.914, 12.930
+
+# Convert pixel coords to check if outside Agara box
+rows_arr, cols_arr = np.mgrid[0:height, 0:width]
+import rasterio.transform as rt
+lons, lats = rt.xy(transform, rows_arr.ravel(), 
+                   cols_arr.ravel())
+lons = np.array(lons).reshape(height, width)
+lats = np.array(lats).reshape(height, width)
+
+outside_agara = (
+    (lons < agara_lon_min) | (lons > agara_lon_max) |
+    (lats < agara_lat_min) | (lats > agara_lat_max)
+)
+
+# Reclassify false water outside Agara Lake area
+false_water = (
+    (class_map == 0) &      # classified as water
+    outside_agara &          # not in Agara Lake zone
+    (texture > 0.025)        # has texture = not real water
+)
+class_map[false_water] = 5  # → Dense Urban Fabric
+
+print(f"False water pixels corrected: {false_water.sum()}")
 
 # Nodata
 class_map[nodata_mask] = 255
@@ -314,7 +349,7 @@ fig = plt.figure(figsize=(20, 13),
 
 gs = gridspec.GridSpec(
     1, 2,
-    width_ratios=[83, 17],
+    width_ratios=[75, 25],
     wspace=0.015,
     left=0.0, right=1.0,
     top=1.0, bottom=0.0
@@ -345,7 +380,7 @@ ax_leg.set_axis_off()
 # Title block
 ax_leg.text(0.10, 0.97,
             'HSR Layout',
-            fontsize=11, fontweight='bold',
+            fontsize=16, fontweight='bold',
             color='white',
             transform=ax_leg.transAxes, va='top')
 ax_leg.text(0.10, 0.925,
@@ -373,12 +408,12 @@ for i, (cid, s) in enumerate(stats.items()):
     # Color swatch — solid square
     sq = mpatches.FancyBboxPatch(
         (0.08, y - 0.028),
-        width=0.20,
-        height=0.058,
+        width=0.22,
+        height=0.072,
         boxstyle="square,pad=0",
         facecolor=hex_color,
-        edgecolor='#ffffff',
-        linewidth=0.5,
+        edgecolor='#cccccc',
+        linewidth=0.8,
         transform=ax_leg.transAxes,
         zorder=5
     )
@@ -387,7 +422,7 @@ for i, (cid, s) in enumerate(stats.items()):
     # Class name
     ax_leg.text(0.34, y + 0.010,
                 s["name"],
-                fontsize=8.0,
+                fontsize=11.0,
                 fontweight='bold',
                 color='white',
                 transform=ax_leg.transAxes,
@@ -396,7 +431,7 @@ for i, (cid, s) in enumerate(stats.items()):
     # Area and percentage
     ax_leg.text(0.34, y - 0.020,
                 f"{s['area_ha']} ha  ({s['pct']}%)",
-                fontsize=7.0,
+                fontsize=10.0,
                 color='#94a3b8',
                 transform=ax_leg.transAxes,
                 va='center')
@@ -416,7 +451,7 @@ footer = [
 for j, line in enumerate(footer):
     ax_leg.text(0.10, 0.078 - j * 0.022,
                 line,
-                fontsize=6.5,
+                fontsize=9.0,
                 color='#475569',
                 transform=ax_leg.transAxes,
                 va='top')

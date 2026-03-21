@@ -11,26 +11,26 @@
   },
   "classes": {
     "Water Body": {
-      "pixels": 145743,
-      "area_ha": 302.93,
-      "percentage": 51.6,
+      "pixels": 26195,
+      "area_ha": 54.45,
+      "percentage": 9.3,
       "color_hex": "#2166AC"
     },
     "Vegetation": {
-      "pixels": 12467,
-      "area_ha": 25.91,
-      "percentage": 4.4,
+      "pixels": 44698,
+      "area_ha": 92.91,
+      "percentage": 15.8,
       "color_hex": "#1A9641"
     },
     "Rooftop / Built": {
-      "pixels": 20910,
-      "area_ha": 43.46,
-      "percentage": 7.4,
+      "pixels": 21924,
+      "area_ha": 45.57,
+      "percentage": 7.8,
       "color_hex": "#D7191C"
     },
     "Road / Paved": {
-      "pixels": 611,
-      "area_ha": 1.27,
+      "pixels": 682,
+      "area_ha": 1.42,
       "percentage": 0.2,
       "color_hex": "#BDBDBD"
     },
@@ -41,9 +41,9 @@
       "color_hex": "#DFC27D"
     },
     "Dense Urban Fabric": {
-      "pixels": 94859,
-      "area_ha": 197.17,
-      "percentage": 33.6,
+      "pixels": 181091,
+      "area_ha": 376.41,
+      "percentage": 64.2,
       "color_hex": "#F1B6DA"
     }
   }
