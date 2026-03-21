@@ -48,8 +48,16 @@ export default function SimulationPanel() {
 
   const [isRunning, setIsRunning] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [wardList, setWardList] = useState<string[]>([]);
 
   useEffect(() => {
+    fetch('/api/geojson').then(res => res.json()).then(data => {
+      if (data.features) {
+        const names = data.features.map((f: { properties: { name: string } }) => f.properties.name).sort();
+        setWardList(names);
+      }
+    }).catch(console.error);
+
     const t = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(t);
   }, []);

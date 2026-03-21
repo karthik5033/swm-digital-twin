@@ -1,0 +1,233 @@
+{
+  "ward": "HSR Layout",
+  "total_area_hectares": 704.24,
+  "lulc_summary": {
+    "rooftop": {
+      "area_ha": 147.45,
+      "pct": 20.94,
+      "rooftop_count": 760
+    },
+    "road_paved": {
+      "area_ha": 220.49,
+      "pct": 31.31
+    },
+    "vegetation": {
+      "area_ha": 28.45,
+      "pct": 4.04,
+      "patch_count": 11
+    },
+    "bare_soil": {
+      "area_ha": 11.57,
+      "pct": 1.64,
+      "patch_count": 0
+    },
+    "water": {
+      "area_ha": 22.23,
+      "pct": 3.16
+    },
+    "shadow_dark": {
+      "area_ha": 2.96,
+      "pct": 0.42
+    },
+    "mixed": {
+      "area_ha": 271.09,
+      "pct": 38.49
+    }
+  },
+  "rooftop_analysis": {
+    "total": 760,
+    "large_flat_commercial": 566,
+    "medium_apartment": 194,
+    "small_house": 0,
+    "total_rooftop_area_ha": 92.93,
+    "avg_rooftop_sqm": 1222.8
+  },
+  "open_spaces": {
+    "green_patches": 11,
+    "bare_land_patches": 0,
+    "water_bodies": 25,
+    "high_risk_future_dumps": 0
+  },
+  "zones": [
+    {
+      "zone_id": "A1",
+      "building_coverage_pct": 3.91,
+      "green_coverage_pct": 0.21,
+      "impervious_pct": 10.99,
+      "open_land_pct": 0.52,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 18.7,
+      "bounds": [
+        77.622725,
+        12.897941,
+        77.63438125,
+        12.906222
+      ]
+    },
+    {
+      "zone_id": "A2",
+      "building_coverage_pct": 14.93,
+      "green_coverage_pct": 0.82,
+      "impervious_pct": 44.69,
+      "open_land_pct": 0.93,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 21.1,
+      "bounds": [
+        77.63438125,
+        12.897941,
+        77.6460375,
+        12.906222
+      ]
+    },
+    {
+      "zone_id": "A3",
+      "building_coverage_pct": 15.48,
+      "green_coverage_pct": 0.99,
+      "impervious_pct": 33.71,
+      "open_land_pct": 0.97,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 149.5,
+      "bounds": [
+        77.6460375,
+        12.897941,
+        77.65769374999999,
+        12.906222
+      ]
+    },
+    {
+      "zone_id": "B1",
+      "building_coverage_pct": 3.64,
+      "green_coverage_pct": 12.67,
+      "impervious_pct": 13.96,
+      "open_land_pct": 0.34,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 279.6,
+      "bounds": [
+        77.622725,
+        12.906222,
+        77.63438125,
+        12.914503
+      ]
+    },
+    {
+      "zone_id": "B2",
+      "building_coverage_pct": 24.1,
+      "green_coverage_pct": 4.53,
+      "impervious_pct": 58.73,
+      "open_land_pct": 1.52,
+      "density_class": "MEDIUM",
+      "waste_kg_day_estimate": 364.3,
+      "bounds": [
+        77.63438125,
+        12.906222,
+        77.6460375,
+        12.914503
+      ]
+    },
+    {
+      "zone_id": "B3",
+      "building_coverage_pct": 11.48,
+      "green_coverage_pct": 0.45,
+      "impervious_pct": 24.67,
+      "open_land_pct": 0.83,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 230.1,
+      "bounds": [
+        77.6460375,
+        12.906222,
+        77.65769374999999,
+        12.914503
+      ]
+    },
+    {
+      "zone_id": "C1",
+      "building_coverage_pct": 0.04,
+      "green_coverage_pct": 0.84,
+      "impervious_pct": 0.88,
+      "open_land_pct": 0.01,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 72.0,
+      "bounds": [
+        77.622725,
+        12.914503,
+        77.63438125,
+        12.922784
+      ]
+    },
+    {
+      "zone_id": "C2",
+      "building_coverage_pct": 20.42,
+      "green_coverage_pct": 2.34,
+      "impervious_pct": 46.63,
+      "open_land_pct": 1.66,
+      "density_class": "MEDIUM",
+      "waste_kg_day_estimate": 147.9,
+      "bounds": [
+        77.63438125,
+        12.914503,
+        77.6460375,
+        12.922784
+      ]
+    },
+    {
+      "zone_id": "C3",
+      "building_coverage_pct": 6.03,
+      "green_coverage_pct": 0.35,
+      "impervious_pct": 14.29,
+      "open_land_pct": 1.0,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 204.1,
+      "bounds": [
+        77.6460375,
+        12.914503,
+        77.65769374999999,
+        12.922784
+      ]
+    },
+    {
+      "zone_id": "D1",
+      "building_coverage_pct": 0.0,
+      "green_coverage_pct": 0.0,
+      "impervious_pct": 0.0,
+      "open_land_pct": 0.0,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 0,
+      "bounds": [
+        77.622725,
+        12.922784,
+        77.63438125,
+        12.931065
+      ]
+    },
+    {
+      "zone_id": "D2",
+      "building_coverage_pct": 14.91,
+      "green_coverage_pct": 0.77,
+      "impervious_pct": 35.32,
+      "open_land_pct": 1.43,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 0,
+      "bounds": [
+        77.63438125,
+        12.922784,
+        77.6460375,
+        12.931065
+      ]
+    },
+    {
+      "zone_id": "D3",
+      "building_coverage_pct": 2.28,
+      "green_coverage_pct": 0.19,
+      "impervious_pct": 6.69,
+      "open_land_pct": 0.7,
+      "density_class": "LOW",
+      "waste_kg_day_estimate": 17.4,
+      "bounds": [
+        77.6460375,
+        12.922784,
+        77.65769374999999,
+        12.931065
+      ]
+    }
+  ]
+}

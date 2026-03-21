@@ -453,7 +453,7 @@ export default function MapContainer() {
   }, [activeLayers, mapLoaded]);
 
   return (
-    <div id="map-page" className="relative w-full bg-slate-100" style={{ height: 'calc(100vh - 65px)' }}>
+    <div id="map-page" className="relative w-full h-full bg-slate-900">
       <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-50/80 to-transparent z-[1]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-50/80 to-transparent z-[1]" />

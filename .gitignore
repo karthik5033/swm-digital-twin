@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -12,6 +13,7 @@
 # next.js
 /.next/
 /out/
+**/.next/
 
 # production
 /build
@@ -24,6 +26,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 # local env files
 .env*.local
@@ -34,3 +37,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large satellite/analysis images - don't commit
+data/spaceTech Dataset/output/*.png
+public/data/*.png
+
+# Build / lint logs
+eslint.log
+eslint_output.log
+lint.log
+lint.txt
+build.log
+build_clean.log

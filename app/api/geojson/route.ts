@@ -9,6 +9,7 @@ export async function GET() {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const geojson = JSON.parse(fileContents);
     
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     geojson.features = geojson.features.map((f: any) => {
       f.properties.id = f.properties.ward_name || f.properties.KGISWardName || f.properties.name;
       f.properties.name = f.properties.ward_name || f.properties.KGISWardName || f.properties.name;
@@ -21,6 +22,7 @@ export async function GET() {
 
     return NextResponse.json(geojson);
   } catch (err) {
+    console.error('[API/GeoJSON] Error loading GeoJSON:', err);
     return NextResponse.json({ error: 'Failed to read GeoJSON' }, { status: 500 });
   }
 }

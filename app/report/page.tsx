@@ -84,7 +84,7 @@ export default function ReportPage() {
               { id: 'actions', label: 'Recommended Actions' },
               { id: 'raw', label: 'Raw Data Tables' },
             ].map((sec) => (
-              <label key={sec.id} className="flex items-center gap-3 cursor-pointer group">
+              <label key={sec.id} onClick={() => toggleSection(sec.id)} className="flex items-center gap-3 cursor-pointer group">
                 <div className={`w-6 h-6 rounded-md flex items-center justify-center transition-all border-2 ${selectedSections[sec.id] ? 'bg-teal-500 border-teal-500' : 'bg-white border-slate-300 group-hover:border-teal-400'}`}>
                   {selectedSections[sec.id] && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -164,8 +164,8 @@ export default function ReportPage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-800 uppercase tracking-wider border-b border-slate-200 pb-2 mb-4">1. Executive Summary</h2>
                 <p className="font-medium text-slate-600 leading-relaxed text-justify">
-                  This report summarizes the operational state and projected risks associated with Bengaluru's waste ecosystem over the timeframe marked as <span className="font-bold text-slate-800 bg-slate-100 px-1">{dateRange}</span>. 
-                  Across the surveyed geography of 198 wards encompassing roughly {economicParams.totalTrucks.toLocaleString()} collection vehicles, we have synthesized high-confidence mitigation strategies utilizing AstraCity's spatial intelligence heuristics. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
+                  This report summarizes the operational state and projected risks associated with Bengaluru&apos;s waste ecosystem over the timeframe marked as <span className="font-bold text-slate-800 bg-slate-100 px-1">{dateRange}</span>. 
+                  Across the surveyed geography of 198 wards encompassing roughly {economicParams.totalTrucks.toLocaleString()} collection vehicles, we have synthesized high-confidence mitigation strategies utilizing AstraCity&apos;s spatial intelligence heuristics. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
                 </p>
               </section>
             )}
@@ -245,7 +245,7 @@ export default function ReportPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {wardScores.slice(0, 10).map((w: any) => (
+                    {wardScores.slice(0, 10).map((w: { id: string | number; name: string; score: number; zone: string }) => (
                       <tr key={w.id} className="border border-slate-200">
                         <td className="py-2 px-3 border border-slate-200">{w.id}</td>
                         <td className="py-2 px-3 border border-slate-200 font-bold text-slate-800">{w.name}</td>

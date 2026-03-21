@@ -44,10 +44,10 @@ export default function WardsPage() {
     fetch('/api/geojson')
       .then(res => res.json())
       .then(data => {
-        const geoWards = data.features.map((f: any) => f.properties);
+        const geoWards = data.features.map((f: { properties: { name: string, ward_no: number, zone: string } }) => f.properties);
         const scoresMap = new Map(staticWardScores.map(w => [w.name, w]));
         
-        const combined: Ward[] = geoWards.map((gw: any, idx: number) => {
+        const combined: Ward[] = geoWards.map((gw: { name: string, ward_no: number, zone: string }, idx: number) => {
           const existing = scoresMap.get(gw.name);
           if (existing) return existing;
           // Unmatched ward -> fallback 50
@@ -90,8 +90,8 @@ export default function WardsPage() {
   const rowsPerPage = 10;
 
   // Derive grouped wards for the visual grid
-  const zonesList = ['North', 'West', 'Central', 'East', 'South'];
   const visualGroups = useMemo(() => {
+    const zonesList = ['North', 'West', 'Central', 'East', 'South'];
     return zonesList.reduce((acc, zone) => {
       acc[zone] = wardScoresList.filter(w => w.zone === zone);
       return acc;

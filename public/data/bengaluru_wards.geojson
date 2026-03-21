@@ -1,0 +1,705 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Koramangala",
+        "id": 1,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              12.85
+            ],
+            [
+              77.5,
+              12.85
+            ],
+            [
+              77.5,
+              12.9
+            ],
+            [
+              77.45,
+              12.9
+            ],
+            [
+              77.45,
+              12.85
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Indiranagar",
+        "id": 2,
+        "zone": "East"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              12.85
+            ],
+            [
+              77.55,
+              12.85
+            ],
+            [
+              77.55,
+              12.9
+            ],
+            [
+              77.5,
+              12.9
+            ],
+            [
+              77.5,
+              12.85
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Whitefield",
+        "id": 3,
+        "zone": "East"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              12.85
+            ],
+            [
+              77.6,
+              12.85
+            ],
+            [
+              77.6,
+              12.9
+            ],
+            [
+              77.55,
+              12.9
+            ],
+            [
+              77.55,
+              12.85
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hebbal",
+        "id": 4,
+        "zone": "North"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60000000000001,
+              12.85
+            ],
+            [
+              77.65,
+              12.85
+            ],
+            [
+              77.65,
+              12.9
+            ],
+            [
+              77.60000000000001,
+              12.9
+            ],
+            [
+              77.60000000000001,
+              12.85
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jayanagar",
+        "id": 5,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              12.9
+            ],
+            [
+              77.5,
+              12.9
+            ],
+            [
+              77.5,
+              12.950000000000001
+            ],
+            [
+              77.45,
+              12.950000000000001
+            ],
+            [
+              77.45,
+              12.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Malleswaram",
+        "id": 6,
+        "zone": "West"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              12.9
+            ],
+            [
+              77.55,
+              12.9
+            ],
+            [
+              77.55,
+              12.950000000000001
+            ],
+            [
+              77.5,
+              12.950000000000001
+            ],
+            [
+              77.5,
+              12.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Electronic City",
+        "id": 7,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              12.9
+            ],
+            [
+              77.6,
+              12.9
+            ],
+            [
+              77.6,
+              12.950000000000001
+            ],
+            [
+              77.55,
+              12.950000000000001
+            ],
+            [
+              77.55,
+              12.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "HSR Layout",
+        "id": 8,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60000000000001,
+              12.9
+            ],
+            [
+              77.65,
+              12.9
+            ],
+            [
+              77.65,
+              12.950000000000001
+            ],
+            [
+              77.60000000000001,
+              12.950000000000001
+            ],
+            [
+              77.60000000000001,
+              12.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bellandur",
+        "id": 9,
+        "zone": "East"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              12.95
+            ],
+            [
+              77.5,
+              12.95
+            ],
+            [
+              77.5,
+              13
+            ],
+            [
+              77.45,
+              13
+            ],
+            [
+              77.45,
+              12.95
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BTM Layout",
+        "id": 10,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              12.95
+            ],
+            [
+              77.55,
+              12.95
+            ],
+            [
+              77.55,
+              13
+            ],
+            [
+              77.5,
+              13
+            ],
+            [
+              77.5,
+              12.95
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Yelahanka",
+        "id": 11,
+        "zone": "North"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              12.95
+            ],
+            [
+              77.6,
+              12.95
+            ],
+            [
+              77.6,
+              13
+            ],
+            [
+              77.55,
+              13
+            ],
+            [
+              77.55,
+              12.95
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rajajinagar",
+        "id": 12,
+        "zone": "West"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60000000000001,
+              12.95
+            ],
+            [
+              77.65,
+              12.95
+            ],
+            [
+              77.65,
+              13
+            ],
+            [
+              77.60000000000001,
+              13
+            ],
+            [
+              77.60000000000001,
+              12.95
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Basavanagudi",
+        "id": 13,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              13
+            ],
+            [
+              77.5,
+              13
+            ],
+            [
+              77.5,
+              13.05
+            ],
+            [
+              77.45,
+              13.05
+            ],
+            [
+              77.45,
+              13
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marathahalli",
+        "id": 14,
+        "zone": "East"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              13
+            ],
+            [
+              77.55,
+              13
+            ],
+            [
+              77.55,
+              13.05
+            ],
+            [
+              77.5,
+              13.05
+            ],
+            [
+              77.5,
+              13
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peenya",
+        "id": 15,
+        "zone": "West"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              13
+            ],
+            [
+              77.6,
+              13
+            ],
+            [
+              77.6,
+              13.05
+            ],
+            [
+              77.55,
+              13.05
+            ],
+            [
+              77.55,
+              13
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "K R Puram",
+        "id": 16,
+        "zone": "East"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60000000000001,
+              13
+            ],
+            [
+              77.65,
+              13
+            ],
+            [
+              77.65,
+              13.05
+            ],
+            [
+              77.60000000000001,
+              13.05
+            ],
+            [
+              77.60000000000001,
+              13
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Shivajinagar",
+        "id": 17,
+        "zone": "Central"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.45,
+              13.049999999999999
+            ],
+            [
+              77.5,
+              13.049999999999999
+            ],
+            [
+              77.5,
+              13.1
+            ],
+            [
+              77.45,
+              13.1
+            ],
+            [
+              77.45,
+              13.049999999999999
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Majestic",
+        "id": 18,
+        "zone": "Central"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.5,
+              13.049999999999999
+            ],
+            [
+              77.55,
+              13.049999999999999
+            ],
+            [
+              77.55,
+              13.1
+            ],
+            [
+              77.5,
+              13.1
+            ],
+            [
+              77.5,
+              13.049999999999999
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Banashankari",
+        "id": 19,
+        "zone": "South"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              13.049999999999999
+            ],
+            [
+              77.6,
+              13.049999999999999
+            ],
+            [
+              77.6,
+              13.1
+            ],
+            [
+              77.55,
+              13.1
+            ],
+            [
+              77.55,
+              13.049999999999999
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Vijay Nagar",
+        "id": 20,
+        "zone": "West"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.60000000000001,
+              13.049999999999999
+            ],
+            [
+              77.65,
+              13.049999999999999
+            ],
+            [
+              77.65,
+              13.1
+            ],
+            [
+              77.60000000000001,
+              13.1
+            ],
+            [
+              77.60000000000001,
+              13.049999999999999
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

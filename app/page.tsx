@@ -216,7 +216,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-wrap gap-2 justify-center max-w-3xl bg-slate-100 dark:bg-black/40 p-10 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-inner dark:shadow-none">
-          {wardScoresData.map((ward: any, index: number) => {
+          {wardScoresData.map((ward: { id: string | number; score: number; name: string }, index: number) => {
              let colorClass = 'bg-[#059669]'; // green
              if (ward.score <= 40) colorClass = 'bg-[#e11d48] animate-pulse shadow-[0_0_15px_rgba(225,29,72,0.6)]'; // red
              else if (ward.score <= 70) colorClass = 'bg-[#d97706]'; // amber
@@ -251,7 +251,7 @@ export default function Home() {
           <svg className="w-12 h-12 text-[#2dd4bf] mx-auto mb-6 opacity-80" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.714 4.148-9.015 9.009-11.609l-2.016-1.571c-3.1 2.308-8.991 6.942-8.991 13.178v7.393h1.998zm-11.028 0v-7.391c0-5.714 4.148-9.015 9.009-11.609l-2.016-1.571c-3.1 2.308-8.991 6.942-8.991 13.178v7.393h1.998z"/></svg>
 
           <p className="text-xl md:text-3xl font-medium text-slate-800 dark:text-white leading-relaxed mb-10 italic">
-            "Bengaluru generates 5,000 tons of waste every day. No one knows in real time where illegal dumps are forming... AstraCity calculates — to the rupee — how much money these optimizations save the government."
+            &quot;Bengaluru generates 5,000 tons of waste every day. No one knows in real time where illegal dumps are forming... AstraCity calculates — to the rupee — how much money these optimizations save the government.&quot;
           </p>
 
           <Link
