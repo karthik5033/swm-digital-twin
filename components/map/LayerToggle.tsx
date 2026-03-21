@@ -11,10 +11,11 @@ const LAYERS: { id: LayerId; label: string; color: string; glowColor: string }[]
   { id: 'dryWaste', label: 'Dry Waste Centres', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.35)' },
   { id: 'processing', label: 'Waste Processing Units', color: '#10b981', glowColor: 'rgba(16,185,129,0.35)' },
   { id: 'methane', label: 'Bio Methanisation', color: '#f97316', glowColor: 'rgba(249,115,22,0.35)' },
-  { id: 'density', label: 'Building Density', color: '#a855f7', glowColor: 'rgba(168,85,247,0.35)' },
+  { id: 'density', label: 'Waste Zones', color: '#ef4444', glowColor: 'rgba(239,68,68,0.35)' },
   { id: 'openSpaces', label: 'Open Spaces', color: '#86efac', glowColor: 'rgba(134,239,172,0.35)' },
   { id: 'segregation', label: 'Segregation Zones', color: '#eab308', glowColor: 'rgba(234,179,8,0.35)' },
   { id: 'lulc', label: 'LULC Analysis', color: '#06b6d4', glowColor: 'rgba(6,182,212,0.35)' },
+  { id: 'agaraLake', label: '🔵 Agara Lake + Buffer', color: '#3b82f6', glowColor: 'rgba(59,130,246,0.4)' },
 ];
 
 export default function LayerToggle() {

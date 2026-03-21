@@ -101,6 +101,27 @@ export default function ImpactDashboard() {
         </div>
       )}
 
+      {/* Agara Lake Alert Card */}
+      <div className="max-w-7xl mx-auto px-6 pt-6">
+        <div className="flex items-start gap-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-300 dark:border-blue-700 rounded-2xl p-5 shadow-sm">
+          <div className="text-3xl mt-0.5">🌊</div>
+          <div className="flex-1">
+            <h3 className="font-extrabold text-blue-800 dark:text-blue-300 text-base mb-1">
+              ⚠️ AGARA LAKE POLLUTION RISK
+            </h3>
+            <p className="text-blue-700 dark:text-blue-400 text-sm leading-relaxed">
+              <strong>3 illegal dump sites detected</strong> within 500m of Agara Lake buffer zone.<br />
+              Leachate contamination risk: <span className="font-black text-red-600 dark:text-red-400">HIGH</span> — 
+              Plastic waste &amp; chemical runoff threatens the protected water body.<br />
+              Immediate action required to prevent further contamination &amp; protect biodiversity.
+            </p>
+          </div>
+          <span className="shrink-0 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 text-xs font-black px-3 py-1.5 rounded-full border border-red-300 dark:border-red-700">
+            CRITICAL
+          </span>
+        </div>
+      </div>
+
       <main className="max-w-7xl mx-auto px-6 pt-16 mt-4">
         
         {/* SECTION 1: HSR Layout Overview Cards */}

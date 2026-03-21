@@ -8,6 +8,42 @@ import LayerToggle from './LayerToggle';
 import WardSidebar from './WardSidebar';
 
 /* --- MOCK HSR LAYOUT DATA --- */
+const generateBuildings = () => {
+  const features: any[] = [];
+  let counts = { small: 342, medium: 213, large: 129, commercial: 76 };
+  const addBldg = (type: string, areaMin: number, areaMax: number, cType: string) => {
+    const area = Math.floor(Math.random() * (areaMax - areaMin + 1)) + areaMin;
+    let finalType = type;
+    if (cType === 'commercial') {
+      const types = ['Commercial Shop', 'Commercial/Mall', 'Restaurant', 'Hospital', 'School', 'IT Office'];
+      finalType = types[Math.floor(Math.random() * types.length)];
+    }
+    
+    features.push({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [77.630 + Math.random() * 0.025, 12.900 + Math.random() * 0.025] },
+      properties: {
+        type: finalType,
+        area,
+        category: cType, // useful for tracking classification string if needed
+        floors: Math.floor(area / 100) + 1,
+        dailyWaste: (area * 0.02).toFixed(1),
+        wasteType: '60% Organic, 30% Dry',
+        route: `AR-${Math.floor(Math.random() * 10) + 1}`,
+        distance: Math.floor(Math.random() * 800) + 50
+      }
+    });
+  };
+
+  for(let i=0; i<counts.small; i++) addBldg('Residential House', 50, 99, 'small');
+  for(let i=0; i<counts.medium; i++) addBldg('Residential House', 100, 199, 'medium');
+  for(let i=0; i<counts.large; i++) addBldg('Apartment', 200, 499, 'large');
+  for(let i=0; i<counts.commercial; i++) addBldg('Commercial', 500, 1200, 'commercial');
+
+  return { type: 'FeatureCollection', features };
+};
+const BUILDINGS_GEOJSON: any = generateBuildings();
+
 const DUMPS_GEOJSON: any = {
   type: 'FeatureCollection',
   features: [
@@ -49,6 +85,45 @@ const OPEN_SPACES_GEOJSON: any = {
   ]
 };
 
+const AGARA_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    properties: { name: 'Agara Lake', area_sqm: 52000, type: 'water_body', pollution_risk: 'high', status: 'Protected' },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [77.6398, 12.9201], [77.6412, 12.9215], [77.6435, 12.9218], [77.6448, 12.9208],
+        [77.6445, 12.9192], [77.6428, 12.9182], [77.6408, 12.9183], [77.6398, 12.9195], [77.6398, 12.9201]
+      ]]
+    }
+  }]
+};
+
+const AGARA_BUFFER_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [77.6385, 12.9185], [77.6412, 12.9228], [77.6445, 12.9231], [77.6465, 12.9210],
+        [77.6460, 12.9180], [77.6430, 12.9168], [77.6395, 12.9170], [77.6385, 12.9185]
+      ]]
+    }
+  }]
+};
+
+const AGARA_LINES_GEOJSON: any = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6380, 12.9180], [77.6398, 12.9195]] }, properties: { label: 'D7 → Lake: 180m ⚠️' } },
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6410, 12.9116], [77.6428, 12.9182]] }, properties: { label: 'D19 → Lake: 480m ⚠️' } },
+    { type: 'Feature', geometry: { type: 'LineString', coordinates: [[77.6350, 12.9220], [77.6398, 12.9201]] }, properties: { label: 'D12 → Lake: 320m ⚠️' } }
+  ]
+};
+
 const SEGREGATION_GEOJSON: any = {
   type: 'FeatureCollection',
   features: [
@@ -60,16 +135,35 @@ const SEGREGATION_GEOJSON: any = {
   ]
 };
 
-const DENSITY_GEOJSON: any = {
+const WASTE_ZONES_GEOJSON: any = {
   type: 'FeatureCollection',
-  features: Array.from({ length: 200 }).map(() => ({
-    type: 'Feature',
-    geometry: { 
-      type: 'Point', 
-      coordinates: [77.630 + Math.random() * 0.025, 12.900 + Math.random() * 0.025] 
+  features: [
+    {
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [[[77.6420, 12.9080],[77.6480, 12.9080],[77.6480, 12.9150],[77.6420, 12.9150],[77.6420, 12.9080]]] },
+      properties: { zone: 'Zone 1', name: 'HSR Main (Sector 1-2)', waste: 247, buildings: 180, population: 55000, freq: '2x daily', color: '#ef4444', status: 'Critical' }
     },
-    properties: { weight: Math.random() }
-  }))
+    {
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [[[77.6350, 12.9080],[77.6420, 12.9080],[77.6420, 12.9150],[77.6350, 12.9150],[77.6350, 12.9080]]] },
+      properties: { zone: 'Zone 2', name: 'BDA Complex (Sector 3)', waste: 189, buildings: 150, population: 42000, freq: '1x daily', color: '#f97316', status: 'High' }
+    },
+    {
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [[[77.6420, 12.9150],[77.6480, 12.9150],[77.6480, 12.9220],[77.6420, 12.9220],[77.6420, 12.9150]]] },
+      properties: { zone: 'Zone 3', name: 'Agara (Sector 4)', waste: 171, buildings: 130, population: 38000, freq: '1x daily', color: '#f59e0b', status: 'Medium' }
+    },
+    {
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [[[77.6350, 12.9150],[77.6420, 12.9150],[77.6420, 12.9220],[77.6350, 12.9220],[77.6350, 12.9150]]] },
+      properties: { zone: 'Zone 4', name: 'Somasundara (Sector 5)', waste: 216, buildings: 160, population: 48000, freq: '2x daily', color: '#ef4444', status: 'Critical' }
+    },
+    {
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [[[77.6280, 12.9080],[77.6350, 12.9080],[77.6350, 12.9220],[77.6280, 12.9220],[77.6280, 12.9080]]] },
+      properties: { zone: 'Zone 5', name: '7th Sector (Sector 6-7)', waste: 167, buildings: 140, population: 37000, freq: '1x daily', color: '#22c55e', status: 'Low' }
+    }
+  ]
 };
 
 const LULC_GEOJSON: any = {
@@ -176,7 +270,9 @@ export default function MapContainer() {
   const hubMarkers = useRef<maplibregl.Marker[]>([]);
   const animationRef = useRef<number | null>(null);
   const activeLayers = useStore((s) => s.activeLayers);
+  
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [bldgFilter, setBldgFilter] = useState('All');
 
   useEffect(() => {
     if (map.current || !mapContainer.current) return;
@@ -212,7 +308,7 @@ export default function MapContainer() {
       map.current!.addSource('dryWaste-source', { type: 'geojson', data: DRY_WASTE_GEOJSON });
       map.current!.addSource('processing-source', { type: 'geojson', data: PROCESSING_GEOJSON });
       map.current!.addSource('methane-source', { type: 'geojson', data: METHANE_GEOJSON });
-      map.current!.addSource('density-source', { type: 'geojson', data: DENSITY_GEOJSON });
+      map.current!.addSource('wasteZones-source', { type: 'geojson', data: WASTE_ZONES_GEOJSON });
       map.current!.addSource('openSpaces-source', { type: 'geojson', data: OPEN_SPACES_GEOJSON });
       map.current!.addSource('segregation-source', { type: 'geojson', data: SEGREGATION_GEOJSON });
       map.current!.addSource('lulc-source', { type: 'geojson', data: LULC_GEOJSON });
@@ -221,6 +317,10 @@ export default function MapContainer() {
       map.current!.addSource('autoRoutes-source', { type: 'geojson', data: AUTO_ROUTES_GEOJSON });
       map.current!.addSource('auto-dots', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
       map.current!.addSource('main-dot', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+
+      map.current!.addSource('agara-source', { type: 'geojson', data: AGARA_GEOJSON });
+      map.current!.addSource('agara-buffer', { type: 'geojson', data: AGARA_BUFFER_GEOJSON });
+      map.current!.addSource('agara-lines', { type: 'geojson', data: AGARA_LINES_GEOJSON });
 
       // Add Layers
       // 1. Dumpyards (red circles)
@@ -259,23 +359,45 @@ export default function MapContainer() {
         layout: { visibility: 'visible' }
       });
 
-      // 5. Density Heatmap (purple)
+      // 5. Waste Zone Polygons
       map.current!.addLayer({
         id: 'density',
-        type: 'heatmap',
-        source: 'density-source',
+        type: 'fill',
+        source: 'wasteZones-source',
         paint: {
-          'heatmap-weight': ['get', 'weight'],
-          'heatmap-intensity': 1.5,
-          'heatmap-radius': 40,
-          'heatmap-color': [
-            'interpolate', ['linear'], ['heatmap-density'],
-            0, 'rgba(168,85,247,0)',
-            0.5, 'rgba(168,85,247,0.5)',
-            1, 'rgba(107,33,168,1)'
-          ],
+          'fill-color': ['get', 'color'],
+          'fill-opacity': 0.32
         },
-        layout: { visibility: 'none' }
+        layout: { visibility: 'visible' }
+      });
+      map.current!.addLayer({
+        id: 'density-outline',
+        type: 'line',
+        source: 'wasteZones-source',
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-width': 1.5,
+          'line-opacity': 0.7
+        },
+        layout: { visibility: 'visible' }
+      });
+      map.current!.addLayer({
+        id: 'density-labels',
+        type: 'symbol',
+        source: 'wasteZones-source',
+        layout: {
+          'text-field': ['concat', ['get', 'zone'], ' | ', ['to-string', ['get', 'waste']], ' kg/day'],
+          'text-size': 11,
+          'text-font': ['Open Sans SemiBold', 'Arial Unicode MS Regular'],
+          'text-offset': [0, 0],
+          'text-anchor': 'center',
+          'visibility': 'visible'
+        },
+        paint: {
+          'text-color': '#1e293b',
+          'text-halo-color': '#ffffff',
+          'text-halo-width': 2
+        }
       });
 
       // 6. Open Spaces (light green polygons)
@@ -285,6 +407,60 @@ export default function MapContainer() {
         source: 'openSpaces-source',
         paint: { 'fill-color': '#86efac', 'fill-opacity': 0.6 },
         layout: { visibility: 'none' }
+      });
+
+      // 6.b Agara Buffer
+      map.current!.addLayer({
+        id: 'agaraBuffer-fill',
+        type: 'fill',
+        source: 'agara-buffer',
+        paint: { 'fill-color': '#f97316', 'fill-opacity': 0.15 },
+        layout: { visibility: 'visible' }
+      });
+      map.current!.addLayer({
+        id: 'agaraBuffer-line',
+        type: 'line',
+        source: 'agara-buffer',
+        paint: { 'line-color': '#f97316', 'line-width': 1, 'line-dasharray': [2, 2] },
+        layout: { visibility: 'visible' }
+      });
+
+      // 6.c Agara Lake
+      map.current!.addLayer({
+        id: 'agaraLake-fill',
+        type: 'fill',
+        source: 'agara-source',
+        paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0.5 },
+        layout: { visibility: 'visible' }
+      });
+      map.current!.addLayer({
+        id: 'agaraLake-line',
+        type: 'line',
+        source: 'agara-source',
+        paint: { 'line-color': '#60a5fa', 'line-width': 2, 'line-opacity': 0.8 },
+        layout: { visibility: 'visible' }
+      });
+
+      // 6.d Agara Lines (dump distances)
+      map.current!.addLayer({
+        id: 'agaraLines',
+        type: 'line',
+        source: 'agara-lines',
+        paint: { 'line-color': '#ef4444', 'line-width': 1.5, 'line-dasharray': [2, 1] },
+        layout: { visibility: 'visible' }
+      });
+      map.current!.addLayer({
+        id: 'agaraLines-labels',
+        type: 'symbol',
+        source: 'agara-lines',
+        layout: { 
+          'text-field': ['get', 'label'], 
+          'symbol-placement': 'line',
+          'text-offset': [0, -1],
+          'text-size': 10,
+          'visibility': 'visible'
+        },
+        paint: { 'text-color': '#ef4444', 'text-halo-color': '#ffffff', 'text-halo-width': 2 }
       });
 
       // 7. Segregation Zones (colored polygons)
@@ -341,6 +517,40 @@ export default function MapContainer() {
         layout: { visibility: 'visible' } // same group as mainRoute
       });
 
+      // 13. Buildings Layer
+      map.current!.addSource('buildings-source', { type: 'geojson', data: BUILDINGS_GEOJSON });
+      map.current!.addLayer({
+        id: 'buildings',
+        type: 'circle',
+        source: 'buildings-source',
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['get', 'area'],
+            0, 3,
+            50, 4,
+            100, 6,
+            200, 8,
+            500, 10,
+            1000, 14
+          ],
+          'circle-color': [
+            'case',
+            ['==', ['get', 'type'], 'Restaurant'], '#dc2626',
+            ['==', ['get', 'type'], 'Hospital'], '#f97316',
+            ['==', ['get', 'type'], 'School'], '#22c55e',
+            ['==', ['get', 'type'], 'IT Office'], '#14b8a6',
+            ['==', ['get', 'type'], 'Commercial/Mall'], '#f97316',
+            ['==', ['get', 'type'], 'Commercial Shop'], '#eab308',
+            ['>=', ['get', 'area'], 100], '#a855f7',
+            '#3b82f6'
+          ],
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#ffffff',
+          'circle-opacity': 0.8
+        },
+        layout: { visibility: 'visible' }
+      });
+
       // Add HTML Markers for Truck Hubs
       TRUCK_HUBS_GEOJSON.features.forEach((feature: any) => {
         const el = document.createElement('div');
@@ -386,7 +596,54 @@ export default function MapContainer() {
       setupPopup('dryWaste', p => `<strong>🔵 ${p.name}</strong><br/>Capacity: ${p.capacity}`);
       setupPopup('processing', p => `<strong>🟢 ${p.type}</strong><br/>Capacity: ${p.capacity}`);
       setupPopup('methane', p => `<strong>🟠 ${p.name}</strong><br/>Output: ${p.output}`);
+      setupPopup('density', p => `
+        <div style="font-family:Inter,sans-serif;font-size:12px;width:220px;color:#0f172a">
+          <div style="font-weight:900;font-size:13px;border-bottom:2px solid ${p.color};margin-bottom:6px;padding-bottom:4px">
+            🗺️ ${p.name}
+          </div>
+          <div style="margin-bottom:6px">
+            <b>Daily Waste:</b> <span style="color:${p.color};font-weight:800">${p.waste} kg/day</span><br/>
+            <b>Buildings:</b> ${p.buildings}<br/>
+            <b>Population:</b> ${(p.population as number).toLocaleString()}<br/>
+            <b>Collection:</b> ${p.freq}<br/>
+            <b>Status:</b> <span style="color:${p.color};font-weight:700">${p.status}</span>
+          </div>
+        </div>
+      `);
+      setupPopup('agaraLake-fill', () => `
+        <div style="font-family:Inter,sans-serif;font-size:12px;width:240px;color:#0f172a;">
+          <div style="font-weight:900;font-size:14px;border-bottom:2px solid #3b82f6;margin-bottom:6px;padding-bottom:4px;display:flex;justify-content:space-between">
+            <span>🌊 AGARA LAKE</span>
+            <span>📍 HSR</span>
+          </div>
+          <div style="margin-bottom:8px">
+            <b>Area:</b> 52,000 sqm (5.2 ha)<br/>
+            <b>Status:</b> Protected Water Body<br/>
+            <b>Depth:</b> 3-4 meters
+          </div>
+          <div style="font-size:11px;background:#fee2e2;border:1px solid #fca5a5;padding:6px;border-radius:6px;margin-bottom:8px">
+            <span style="color:#dc2626;font-weight:900">⚠️ POLLUTION RISK: HIGH</span><br/>
+            Near dump sites: 3 within 500m<br/>
+            Buffer violations: 2
+          </div>
+          <div style="font-size:11px;color:#475569">
+            🔴 Buffer zone 100m restricted<br/>
+            🚫 No dumping warning active<br/>
+            ♻️ Needs immediate cleanup
+          </div>
+        </div>
+      `);
       setupPopup('lulc', p => `<strong>📡 LULC Analysis</strong><br/>Classification: <b>${p.type}</b>${p.type === 'Open Bare Land' ? '<br/><span style="color:#f39c12">⚠️ High illegal dump risk</span>' : ''}`);
+      setupPopup('buildings', p => `
+        <strong>🏢 Building Stats</strong><br/>
+        Type: ${p.type}<br/>
+        Size: ${p.area} sqm<br/>
+        Floors: ${p.floors}<br/>
+        Daily Waste: <b>${p.dailyWaste} kg</b><br/>
+        Waste Type: ${p.wasteType}<br/>
+        Collection: ${p.route}<br/>
+        Distance to hub: ${p.distance}m
+      `);
 
       let t = 0;
       const animateFlow = () => {
@@ -408,6 +665,11 @@ export default function MapContainer() {
         const mdSource = map.current.getSource('main-dot') as maplibregl.GeoJSONSource;
         if (mdSource) mdSource.setData({ type: 'FeatureCollection', features: [ { type: 'Feature', geometry: { type: 'Point', coordinates: mainTruckDot }, properties: {} } ] });
         
+        // Agara ripples (opacity 0.4 to 0.9)
+        if (map.current.getLayer('agaraLake-line')) {
+          map.current.setPaintProperty('agaraLake-line', 'line-opacity', Math.sin(t * 15) * 0.25 + 0.65);
+        }
+
         animationRef.current = requestAnimationFrame(animateFlow);
       };
       animateFlow();
@@ -429,16 +691,43 @@ export default function MapContainer() {
 
   useEffect(() => {
     if (!map.current || !mapLoaded) return;
-    const managedLayers = ['dumps', 'dryWaste', 'processing', 'methane', 'density', 'openSpaces', 'segregation', 'lulc', 'mainRoute', 'autoRoutes'];
+    
+    // Setup Layer Filter
+    let filterExpr = null;
+    if (bldgFilter === 'Houses Only') filterExpr = ['<=', ['get', 'area'], 199];
+    else if (bldgFilter === 'Large Only') filterExpr = ['all', ['>=', ['get', 'area'], 200], ['<=', ['get', 'area'], 499]];
+    else if (bldgFilter === 'Commercial Only') filterExpr = ['>=', ['get', 'area'], 500];
+    
+    if (filterExpr) map.current.setFilter('buildings', filterExpr as any);
+    else map.current.setFilter('buildings', null);
+
+  }, [bldgFilter, mapLoaded]);
+
+  useEffect(() => {
+    if (!map.current || !mapLoaded) return;
+    const managedLayers = ['dumps', 'dryWaste', 'processing', 'methane', 'density', 'openSpaces', 'segregation', 'lulc', 'mainRoute', 'autoRoutes', 'agaraLake'];
     Object.entries(activeLayers).forEach(([layerId, isVisible]) => {
-      if (managedLayers.includes(layerId) && map.current?.getLayer(layerId)) {
-        map.current.setLayoutProperty(layerId, 'visibility', isVisible ? 'visible' : 'none');
+      const displayVal = isVisible ? 'visible' : 'none';
+      if (layerId === 'density') {
+        // Toggle all 3 zone sub-layers together
+        ['density', 'density-outline', 'density-labels'].forEach(id => {
+          if (map.current?.getLayer(id)) map.current.setLayoutProperty(id, 'visibility', displayVal);
+        });
+      } else if (layerId === 'agaraLake') {
+        if (map.current?.getLayer('agaraLake-fill')) map.current.setLayoutProperty('agaraLake-fill', 'visibility', displayVal);
+        if (map.current?.getLayer('agaraLake-line')) map.current.setLayoutProperty('agaraLake-line', 'visibility', displayVal);
+        if (map.current?.getLayer('agaraBuffer-fill')) map.current.setLayoutProperty('agaraBuffer-fill', 'visibility', displayVal);
+        if (map.current?.getLayer('agaraBuffer-line')) map.current.setLayoutProperty('agaraBuffer-line', 'visibility', displayVal);
+        if (map.current?.getLayer('agaraLines')) map.current.setLayoutProperty('agaraLines', 'visibility', displayVal);
+        if (map.current?.getLayer('agaraLines-labels')) map.current.setLayoutProperty('agaraLines-labels', 'visibility', displayVal);
+      } else if (managedLayers.includes(layerId) && map.current?.getLayer(layerId)) {
+        map.current.setLayoutProperty(layerId, 'visibility', displayVal);
         // Also toggle the animated dots for those routes
         if (layerId === 'mainRoute' && map.current.getLayer('mainRoute-dot')) {
-          map.current.setLayoutProperty('mainRoute-dot', 'visibility', isVisible ? 'visible' : 'none');
+           map.current.setLayoutProperty('mainRoute-dot', 'visibility', isVisible ? 'visible' : 'none');
         }
         if (layerId === 'autoRoutes' && map.current.getLayer('autoRoutes-dots')) {
-          map.current.setLayoutProperty('autoRoutes-dots', 'visibility', isVisible ? 'visible' : 'none');
+           map.current.setLayoutProperty('autoRoutes-dots', 'visibility', isVisible ? 'visible' : 'none');
         }
       }
       
@@ -450,15 +739,80 @@ export default function MapContainer() {
         });
       }
     });
+
   }, [activeLayers, mapLoaded]);
 
   return (
-    <div id="map-page" className="relative w-full h-full bg-slate-900">
+    <div id="map-page" className="relative w-full h-full bg-slate-900 overflow-hidden">
       <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-50/80 to-transparent z-[1]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-50/80 to-transparent z-[1]" />
       <LayerToggle />
       <WardSidebar />
+
+      {/* Waste Zone Legend - bottom right */}
+      <div className="absolute bottom-6 right-6 z-[10] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-2xl text-white text-xs">
+        <h3 className="font-extrabold uppercase tracking-widest text-slate-300 mb-3 text-[10px] border-b border-slate-700/50 pb-1.5">Waste Zone Legend</h3>
+        <div className="space-y-2">
+          {[
+            { color: '#ef4444', label: '>200 kg/day', level: 'Critical' },
+            { color: '#f97316', label: '150-200 kg/day', level: 'High' },
+            { color: '#f59e0b', label: '100-150 kg/day', level: 'Medium' },
+            { color: '#22c55e', label: '<100 kg/day', level: 'Low' },
+          ].map(({ color, label, level }) => (
+            <div key={level} className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm shrink-0" style={{ background: color, opacity: 0.85 }} />
+              <span className="text-slate-300 font-semibold">{label}</span>
+              <span className="ml-auto text-slate-500 font-bold">{level}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Building Distribution Card */}
+      <div className="absolute bottom-6 left-6 z-[10] w-[350px] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-2xl p-5 shadow-2xl text-white">
+        <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-300 mb-4 border-b border-slate-700/50 pb-2">Building Distribution</h3>
+        
+        <div className="space-y-4 mb-5 text-xs font-medium">
+          <div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏠 Small Houses (&lt;100sqm)</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-blue-500 rounded-full w-[45%]" /> <span>45% | 342 buildings</span></div>
+          </div>
+          <div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏘️ Medium Houses (100-200sqm)</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-purple-500 rounded-full w-[28%]" /> <span>28% | 213 buildings</span></div>
+          </div>
+          <div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏢 Large Buildings (200-500sqm)</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-purple-400 rounded-full w-[17%]" /> <span>17% | 129 buildings</span></div>
+          </div>
+          <div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏬 Commercial/Complex (&gt;500sqm)</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-orange-500 rounded-full w-[10%]" /> <span>10% | 76 buildings</span></div>
+          </div>
+        </div>
+        
+        <div className="flex justify-between border-t border-slate-700/50 pt-3 text-sm mb-4">
+          <span className="font-bold text-slate-400">Total Analyzed:</span>
+          <span className="font-black text-teal-400">760 buildings</span>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {['All', 'Houses Only', 'Large Only', 'Commercial Only'].map(f => (
+            <button 
+              key={f}
+              onClick={() => setBldgFilter(f)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+                bldgFilter === f 
+                ? 'bg-teal-500 border-teal-400 text-white shadow-[0_0_10px_rgba(20,184,166,0.5)]' 
+                : 'bg-slate-800 border-slate-600 text-slate-400 hover:bg-slate-700 hover:text-white'
+              }`}
+            >
+              {f === 'All' ? 'Show All' : f}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

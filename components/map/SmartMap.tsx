@@ -394,9 +394,10 @@ export default function SmartMap() {
           { label: 'dumps detected', value: '29' },
           { label: 'waste/day', value: '12.25T' },
           { label: 'route saving', value: '75.5%' },
-        ].map(({ label, value }) => (
+          { label: '⚠️ lake at risk', value: '1', warn: true },
+        ].map(({ label, value, warn }) => (
           <div key={label} className="flex items-center gap-2 text-white/50">
-            <span className="text-[#00d4aa] text-sm font-black">{value}</span>
+            <span className={`text-sm font-black ${warn ? 'text-orange-400' : 'text-[#00d4aa]'}`}>{value}</span>
             <span>{label}</span>
           </div>
         ))}
