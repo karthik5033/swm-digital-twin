@@ -6,6 +6,10 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend
 } from 'recharts';
+import { Skeleton } from "@/components/ui/Skeleton";
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+const ImageModal = dynamic(() => import('@/components/ui/ImageModal'), { ssr: false });
 
 // =======================
 // Data Sets
