@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import Link from 'next/link';
+import { HSR_DATA } from '@/lib/constants';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -80,6 +81,7 @@ export default function SmartMap() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [is3D, setIs3D] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [zoneAnalysisData, setZoneAnalysisData] = useState<any>(null); // Added state for zone summary
   const [layerVisibility, setLayerVisibility] = useState<Record<string, boolean>>(
     () => Object.fromEntries(LAYERS.map((l) => [l.id, l.defaultOn]))
   );
@@ -146,6 +148,142 @@ export default function SmartMap() {
       m.on('click', 'ward-fill', () => setSidebarOpen(true));
       m.on('mouseenter', 'ward-fill', () => { m.getCanvas().style.cursor = 'pointer'; });
       m.on('mouseleave', 'ward-fill', () => { m.getCanvas().style.cursor = ''; });
+
+      // ═══════════════════════════════════════════════════════════════
+      // FIX ZONE GRID - GeoJSON features from zone bounds
+      // ═══════════════════════════════════════════════════════════════
+      setZoneAnalysisData(zoneAnalysis); // Store for sidebar summary
+
+      const zoneFeatures = (zoneAnalysis.zones || []).map((zone: any) => ({
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Polygon' as const,
+          coordinates: [[
+            [zone.bounds[0], zone.bounds[1]], // SW
+            [zone.bounds[2], zone.bounds[1]], // SE
+            [zone.bounds[2], zone.bounds[3]], // NE
+            [zone.bounds[0], zone.bounds[3]], // NW
+            [zone.bounds[0], zone.bounds[1]]  // close
+          ]]
+        },
+        properties: {
+          zone_id: zone.zone_id,
+          waste_kg_day: zone.waste_kg_day,
+          population: zone.population_estimate || Math.round(zone.waste_kg_day / 0.45) || 0,
+          residential: zone.residential_count || 0,
+          commercial: zone.commercial_count || 0,
+          risk: zone.risk,
+          center_lon: zone.center?.[0] || 0,
+          center_lat: zone.center?.[1] || 0
+        }
+      }));
+
+      m.addSource('zone-grid-source', {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: zoneFeatures }
+      });
+
+      m.addLayer({
+        id: 'zone-grid-fill',
+        type: 'fill',
+        source: 'zone-grid-source',
+        layout: { visibility: 'none' },
+        paint: {
+          'fill-color': [
+            'interpolate', ['linear'], ['get', 'waste_kg_day'],
+            0,   '#22c55e',   // green
+            100, '#f59e0b',   // amber
+            200, '#ef4444',   // red
+            400, '#7f1d1d'    // dark red
+          ],
+          'fill-opacity': 0.45
+        }
+      });
+
+      m.addLayer({
+        id: 'zone-grid-border',
+        type: 'line',
+        source: 'zone-grid-source',
+        layout: { visibility: 'none' },
+        paint: {
+          'line-color': '#ffffff',
+          'line-width': 1.5,
+          'line-opacity': 0.7,
+          'line-dasharray': [3, 2]
+        }
+      });
+
+      m.addLayer({
+        id: 'zone-grid-labels',
+        type: 'symbol',
+        source: 'zone-grid-source',
+        layout: {
+          visibility: 'none',
+          'text-field': [
+            'concat',
+            ['get', 'zone_id'],
+            '\n',
+            ['to-string', ['round', ['get', 'waste_kg_day']]],
+            ' kg'
+          ],
+          'text-size': 11,
+          'text-anchor': 'center',
+          'text-justify': 'center',
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold']
+        },
+        paint: {
+          'text-color': '#ffffff',
+          'text-halo-color': '#000000',
+          'text-halo-width': 1.5
+        }
+      });
+
+      m.on('click', 'zone-grid-fill', (e) => {
+        const props = e.features?.[0]?.properties as any;
+        if (!props) return;
+        
+        const riskColor = { high: '#ef4444', medium: '#f59e0b', low: '#22c55e' }[props.risk as string] || '#6b7280';
+        const riskBadge = `<span style="background:${riskColor}22;color:${riskColor};border:1px solid ${riskColor};padding:2px 8px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;">${props.risk} risk</span>`;
+
+        new maplibregl.Popup({ maxWidth: '280px', className: 'zone-popup' })
+          .setLngLat(e.lngLat)
+          .setHTML(`
+            <div style="background:#111827;color:white;padding:14px;border-radius:8px;font-family:sans-serif;width:240px;box-sizing:border-box;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-size:16px;font-weight:bold;color:#00d4aa;text-shadow:none;">Zone ${props.zone_id}</span>${riskBadge}
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                <div style="background:#1f2937;padding:8px;border-radius:6px;">
+                  <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Waste/Day</div>
+                  <div style="color:#f59e0b;font-size:16px;font-weight:bold;text-shadow:none;">${Math.round(props.waste_kg_day)} kg</div>
+                </div>
+                <div style="background:#1f2937;padding:8px;border-radius:6px;">
+                  <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Population</div>
+                  <div style="color:#00d4aa;font-size:16px;font-weight:bold;text-shadow:none;">${Number(props.population).toLocaleString()}</div>
+                </div>
+                <div style="background:#1f2937;padding:8px;border-radius:6px;">
+                  <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Residential</div>
+                  <div style="color:white;font-size:16px;font-weight:bold;text-shadow:none;">${props.residential} bldgs</div>
+                </div>
+                <div style="background:#1f2937;padding:8px;border-radius:6px;">
+                  <div style="color:#94a3b8;font-size:10px;text-transform:uppercase;">Commercial</div>
+                  <div style="color:white;font-size:16px;font-weight:bold;text-shadow:none;">${props.commercial} bldgs</div>
+                </div>
+              </div>
+              <div style="background:#1f2937;padding:8px;border-radius:6px;font-size:11px;color:#94a3b8;line-height:1.4;text-shadow:none;">
+                ${props.risk === 'high' ? '⚠️ Priority collection zone — schedule daily pickup' : props.risk === 'medium' ? '📋 Standard collection — every 2 days' : '✅ Low priority — weekly collection sufficient'}
+              </div>
+              <div style="font-size:9px;color:#475569;margin-top:6px;text-align:center">
+                Population: Census 2011 projection · Waste: CPCB standard 0.5kg/person/day
+              </div>
+            </div>
+          `)
+          .addTo(m);
+      });
+
+      m.on('mouseenter', 'zone-grid-fill', () => { m.getCanvas().style.cursor = 'pointer'; });
+      m.on('mouseleave', 'zone-grid-fill', () => { m.getCanvas().style.cursor = ''; });
+
 
       // ═══════════ Road Network ═══════════
       m.addSource('roads-source', { type: 'geojson', data: roads });
@@ -600,6 +738,11 @@ export default function SmartMap() {
             m.easeTo({ pitch: 0, bearing: 0, duration: 800 });
           }
         }
+        else if (layerId === 'zone-grid') {
+          setVis('zone-grid-fill');
+          setVis('zone-grid-border');
+          setVis('zone-grid-labels');
+        }
         else if (layerId === 'routes')         { setVis('routes-baseline-line'); setVis('routes-optimized-line'); }
         else if (layerId === 'openspaces')     { setVis('openspaces-circle'); }
 
@@ -616,24 +759,11 @@ export default function SmartMap() {
       {/* ══════════════════════════════════════════════════════ */}
       <div className="shrink-0 bg-[#0a0f1a] border-b border-white/10 px-6 py-2 flex items-center justify-center gap-0 text-xs font-semibold tracking-wide">
         {[
-<<<<<<< HEAD
-          { label: 'mapped', value: '704 ha' },
-          { label: 'buildings analyzed', value: '9,471' },
-          { label: 'dumps detected', value: '29' },
-          { label: 'waste/day', value: '19.78T' },
-          { label: 'route saving', value: '75.5%' },
-          { label: '⚠️ lake at risk', value: '1', warn: true },
-        ].map(({ label, value, warn }) => (
-          <div key={label} className="flex items-center gap-2 text-white/50">
-            <span className={`text-sm font-black ${warn ? 'text-orange-400' : 'text-[#00d4aa]'}`}>{value}</span>
-            <span>{label}</span>
-          </div>
-=======
-          { label: 'mapped', value: '704 ha', warn: false },
-          { label: 'DWCC detected', value: '29', warn: false },
-          { label: 'waste/day', value: '12.25T', warn: false },
-          { label: 'route saving', value: '75.5%', warn: false },
-          { label: 'lake at risk', value: '1', warn: true },
+          { label: 'mapped', value: `${HSR_DATA.area_hectares} ha`, warn: false },
+          { label: 'population', value: HSR_DATA.population_2026.toLocaleString(), warn: false },
+          { label: 'waste/day', value: `${HSR_DATA.daily_waste_tons}T`, warn: false },
+          { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
+          { label: 'dumps detected', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
         ].map(({ label, value, warn }, i) => (
           <React.Fragment key={label}>
             {i > 0 && <span className="text-white/15 mx-4 select-none">|</span>}
@@ -642,7 +772,6 @@ export default function SmartMap() {
               <span>{warn ? `⚠️ ${label}` : label}</span>
             </div>
           </React.Fragment>
->>>>>>> 4ee350f (Update Waste Heatmap logic to use actual building data and improve UI gradient)
         ))}
       </div>
 
@@ -747,6 +876,122 @@ export default function SmartMap() {
           </div>
         </div>
 
+        {/* ── Zone Grid Summary Sidebar ── */}
+        {layerVisibility['zone-grid'] && zoneAnalysisData?.zones && (
+          <div 
+            className="absolute right-4 z-10 w-[260px] bg-slate-900 border border-slate-700 rounded-2xl shadow-xl overflow-hidden pointer-events-auto"
+            style={{ top: '220px', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}
+          >
+            {/* Header */}
+            <div className="bg-teal-900/40 px-4 py-3 border-b border-teal-500/20">
+              <h3 className="text-white font-extrabold text-[15px] flex items-center gap-2">
+                <span className="text-lg leading-none">📊</span> Zone Analysis
+              </h3>
+              <div className="text-teal-400/80 text-[10px] font-bold uppercase tracking-wider mt-1">
+                HSR Layout · 45 zones · 500m grid
+              </div>
+            </div>
+            
+            <div className="p-4 space-y-4">
+              {/* Population Section */}
+              <div className="space-y-2">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">POPULATION (Census 2011)</div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span>2011 baseline:</span>
+                    <span className="font-mono font-bold text-white">1,76,195</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span>2026 projection:</span>
+                    <span className="font-mono font-bold text-teal-400">2,20,000</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-400">
+                    <span>Growth rate:</span>
+                    <span>8%/year</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-400">
+                    <span>Density:</span>
+                    <span>21,978/sq km</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-px bg-slate-800 w-full" />
+
+              {/* Daily Waste Section */}
+              <div className="space-y-2">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">DAILY WASTE (CPCB Standard)</div>
+                <div className="flex justify-between text-xs text-slate-300 font-bold mb-1">
+                  <span>Total:</span>
+                  <span className="text-white">1,10,000 kg</span>
+                </div>
+                <div className="text-[10px] text-slate-500 text-right -mt-1 mb-2">(110 tons/day)</div>
+                
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🟢</span> Wet:</span>
+                    <span className="font-mono text-slate-400">66,000 kg (60%)</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🔵</span> Dry:</span>
+                    <span className="font-mono text-slate-400">38,500 kg (35%)</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">⚪</span> Other:</span>
+                    <span className="font-mono text-slate-400">5,500 kg (5%)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-px bg-slate-800 w-full" />
+              
+              {/* Risk Profile */}
+              <div className="space-y-2">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">RISK PROFILE</div>
+                <div className="grid grid-cols-3 gap-1">
+                  <div className="bg-red-500/10 border border-red-500/20 rounded-md p-1.5 text-center">
+                    <div className="text-[10px] text-red-500 font-bold mb-0.5">High</div>
+                    <div className="text-sm font-bold text-white">13</div>
+                  </div>
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-md p-1.5 text-center">
+                    <div className="text-[10px] text-amber-500 font-bold mb-0.5">Med</div>
+                    <div className="text-sm font-bold text-white">14</div>
+                  </div>
+                  <div className="bg-green-500/10 border border-green-500/20 rounded-md p-1.5 text-center">
+                    <div className="text-[10px] text-green-500 font-bold mb-0.5">Low</div>
+                    <div className="text-sm font-bold text-white">18</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="h-px bg-slate-800 w-full" />
+
+              {/* Infrastructure */}
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">INFRASTRUCTURE</div>
+                <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <span>🏭</span>
+                  <span>16 DWCC centers</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <span>♻️</span>
+                  <span>2 Bio-methanisation units</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <span>🚯</span>
+                  <span>0 Open dumpyards</span>
+                </div>
+              </div>
+
+              {/* Footer Source */}
+              <div className="pt-2 text-[9px] text-slate-600 bg-slate-800/30 p-2 rounded border border-slate-700/50">
+                <div className="font-semibold">Source: Census 2011 · geoiq.io</div>
+                <div>Method: CPCB 0.5kg/person/day</div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ── Ward Info Sidebar ── */}
         <div
           className="absolute top-0 right-0 h-full z-10 transition-transform duration-500 ease-in-out overflow-y-auto"
@@ -773,28 +1018,28 @@ export default function SmartMap() {
             </div>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Satellite Analysis" icon="🛰️">
-              <SidebarRow icon="🏠" label="Rooftops mapped" value="760" />
-              <SidebarRow icon="👥" label="Population est." value="1,20,000" />
-              <SidebarRow icon="📦" label="Waste generated" value="12.25 T/day" highlight />
+              <SidebarRow icon="🏠" label="Rooftops mapped" value={HSR_DATA.total_buildings_osm.toLocaleString()} />
+              <SidebarRow icon="👥" label="Population (2026)" value={HSR_DATA.population_2026.toLocaleString()} />
+              <SidebarRow icon="📦" label="Waste generated" value={`${HSR_DATA.daily_waste_tons} T/day`} highlight />
               <SidebarRow icon="🌿" label="Green cover" value="4.0%" warn />
-              <SidebarRow icon="📐" label="Total area" value="704 ha" />
+              <SidebarRow icon="📐" label="Total area" value={`${HSR_DATA.area_hectares} ha`} />
             </SidebarSection>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Collection Centers" icon="♻️">
               <SidebarRow icon="🔵" label="Large capacity" value="10" />
               <SidebarRow icon="🟢" label="Medium capacity" value="3" />
               <SidebarRow icon="⚪" label="Small capacity" value="16" />
-              <SidebarRow icon="📊" label="Total centers" value="29" highlight />
+              <SidebarRow icon="📊" label="Total centers" value={HSR_DATA.dump_sites_detected.toString()} highlight />
             </SidebarSection>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Route Optimization" icon="🚛">
-              <SidebarRow icon="📍" label="Before (baseline)" value="132.44 km/day" />
-              <SidebarRow icon="✅" label="After (optimized)" value="32.41 km/day" highlight />
+              <SidebarRow icon="📍" label="Before (baseline)" value={`${HSR_DATA.baseline_route_km} km/day`} />
+              <SidebarRow icon="✅" label="After (optimized)" value={`${HSR_DATA.optimized_route_km} km/day`} highlight />
               <div
                 className="mt-2 px-3 py-2 rounded-xl text-xs font-bold text-center"
                 style={{ background: 'rgba(0,212,170,0.1)', color: '#00d4aa', border: '1px solid rgba(0,212,170,0.2)' }}
               >
-                🎉 75.5% distance reduction achieved
+                🎉 {HSR_DATA.route_improvement_pct}% distance reduction achieved
               </div>
             </SidebarSection>
             <div className="h-px bg-white/10" />
@@ -821,6 +1066,29 @@ export default function SmartMap() {
           <div className="absolute inset-0 z-[9]" onClick={() => setSidebarOpen(false)} style={{ cursor: 'default' }} />
         )}
       </div>
+
+      <style>{`
+        /* Maplibre Popup Resets for Zone Popups */
+        .maplibregl-popup-content, .mapboxgl-popup-content {
+          background: transparent !important;
+          padding: 0 !important;
+          border-radius: 8px !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+        }
+        .maplibregl-popup-tip, .mapboxgl-popup-tip {
+          border-top-color: #111827 !important;
+          border-bottom-color: #111827 !important;
+        }
+        .zone-popup .maplibregl-popup-close-button, .zone-popup .mapboxgl-popup-close-button {
+          color: #94a3b8;
+          font-size: 16px;
+          padding: 4px 8px;
+        }
+        .zone-popup .maplibregl-popup-close-button:hover, .zone-popup .mapboxgl-popup-close-button:hover {
+          color: #ffffff;
+          background: transparent;
+        }
+      `}</style>
     </div>
   );
 }

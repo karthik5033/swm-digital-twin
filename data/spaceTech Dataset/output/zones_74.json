@@ -1,0 +1,1261 @@
+{
+  "ward": "HSR Layout",
+  "city": "Bengaluru",
+  "total_zones": 45,
+  "grid_size_m": 500,
+  "method": "CPCB 0.5kg/person/day",
+  "census_data": {
+    "population_census_2011": 63033,
+    "ward_number": "174",
+    "growth_rate_pct": 4.5,
+    "projection_year": 2025,
+    "population_2025": 115000,
+    "area_sq_km": 7.04,
+    "area_hectares": 704,
+    "building_density_per_sqkm": 1345,
+    "road_density_per_sqkm": 288,
+    "sectors": 7,
+    "source": "Census 2011 Ward 174 + Beegru.com 2025"
+  },
+  "waste_methodology": {
+    "standard": "CPCB",
+    "rate_kg_per_person_per_day": 0.5,
+    "wet_pct": 60,
+    "dry_pct": 35,
+    "other_pct": 5,
+    "total_daily_kg": 57500.0,
+    "total_daily_tons": 57.5,
+    "reference": "CPCB Municipal Solid Waste Guidelines"
+  },
+  "population_total": 115001,
+  "waste_total_kg_day": 57835.5,
+  "waste_wet_kg_day": 34701.3,
+  "waste_dry_kg_day": 20242.7,
+  "infrastructure": {
+    "dwcc_centers": 16,
+    "bio_methanisation_units": 2,
+    "dumpyards": 0
+  },
+  "risk_summary": {
+    "high": 13,
+    "medium": 14,
+    "low": 18
+  },
+  "zones": [
+    {
+      "zone_id": "Z01",
+      "bounds": [
+        77.626003,
+        12.909742,
+        77.627272,
+        12.911775
+      ],
+      "center": [
+        77.626841,
+        12.911092
+      ],
+      "area_ha": 1.59,
+      "population": 207,
+      "buildings_total": 17,
+      "buildings_residential": 17,
+      "buildings_commercial": 0,
+      "waste_total_kg": 103.5,
+      "waste_wet_kg": 62.1,
+      "waste_dry_kg": 36.2,
+      "waste_other_kg": 5.2,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z02",
+      "bounds": [
+        77.623298,
+        12.911762,
+        77.627319,
+        12.916319
+      ],
+      "center": [
+        77.625842,
+        12.914425
+      ],
+      "area_ha": 14.97,
+      "population": 2379,
+      "buildings_total": 196,
+      "buildings_residential": 191,
+      "buildings_commercial": 3,
+      "waste_total_kg": 1197.0,
+      "waste_wet_kg": 718.2,
+      "waste_dry_kg": 419.0,
+      "waste_other_kg": 59.8,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z03",
+      "bounds": [
+        77.622725,
+        12.916279,
+        77.627328,
+        12.917665
+      ],
+      "center": [
+        77.625123,
+        12.916921
+      ],
+      "area_ha": 6.44,
+      "population": 839,
+      "buildings_total": 69,
+      "buildings_residential": 67,
+      "buildings_commercial": 1,
+      "waste_total_kg": 422.0,
+      "waste_wet_kg": 253.2,
+      "waste_dry_kg": 147.7,
+      "waste_other_kg": 21.1,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z04",
+      "bounds": [
+        77.628797,
+        12.903641,
+        77.631829,
+        12.90723
+      ],
+      "center": [
+        77.630746,
+        12.905789
+      ],
+      "area_ha": 8.38,
+      "population": 1470,
+      "buildings_total": 121,
+      "buildings_residential": 118,
+      "buildings_commercial": 2,
+      "waste_total_kg": 740.0,
+      "waste_wet_kg": 444.0,
+      "waste_dry_kg": 259.0,
+      "waste_other_kg": 37.0,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z05",
+      "bounds": [
+        77.62725,
+        12.907199,
+        77.631876,
+        12.911762
+      ],
+      "center": [
+        77.629737,
+        12.909627
+      ],
+      "area_ha": 23.35,
+      "population": 5389,
+      "buildings_total": 444,
+      "buildings_residential": 432,
+      "buildings_commercial": 6,
+      "waste_total_kg": 2709.5,
+      "waste_wet_kg": 1625.7,
+      "waste_dry_kg": 948.3,
+      "waste_other_kg": 135.5,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z06",
+      "bounds": [
+        77.627272,
+        12.911716,
+        77.631923,
+        12.916279
+      ],
+      "center": [
+        77.629597,
+        12.913997
+      ],
+      "area_ha": 25.77,
+      "population": 5185,
+      "buildings_total": 427,
+      "buildings_residential": 416,
+      "buildings_commercial": 6,
+      "waste_total_kg": 2607.5,
+      "waste_wet_kg": 1564.5,
+      "waste_dry_kg": 912.6,
+      "waste_other_kg": 130.4,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z07",
+      "bounds": [
+        77.627319,
+        12.916233,
+        77.631927,
+        12.917154
+      ],
+      "center": [
+        77.629315,
+        12.916533
+      ],
+      "area_ha": 2.94,
+      "population": 207,
+      "buildings_total": 17,
+      "buildings_residential": 17,
+      "buildings_commercial": 0,
+      "waste_total_kg": 103.5,
+      "waste_wet_kg": 62.1,
+      "waste_dry_kg": 36.2,
+      "waste_other_kg": 5.2,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z08",
+      "bounds": [
+        77.631793,
+        12.90378,
+        77.636433,
+        12.907199
+      ],
+      "center": [
+        77.632618,
+        12.905968
+      ],
+      "area_ha": 3.96,
+      "population": 352,
+      "buildings_total": 29,
+      "buildings_residential": 28,
+      "buildings_commercial": 0,
+      "waste_total_kg": 176.0,
+      "waste_wet_kg": 105.6,
+      "waste_dry_kg": 61.6,
+      "waste_other_kg": 8.8,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z09",
+      "bounds": [
+        77.631829,
+        12.907153,
+        77.63648,
+        12.911716
+      ],
+      "center": [
+        77.634151,
+        12.909442
+      ],
+      "area_ha": 25.69,
+      "population": 6373,
+      "buildings_total": 525,
+      "buildings_residential": 511,
+      "buildings_commercial": 8,
+      "waste_total_kg": 3206.5,
+      "waste_wet_kg": 1923.9,
+      "waste_dry_kg": 1122.3,
+      "waste_other_kg": 160.3,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z10",
+      "bounds": [
+        77.631876,
+        12.91167,
+        77.636527,
+        12.916233
+      ],
+      "center": [
+        77.6342,
+        12.913949
+      ],
+      "area_ha": 25.75,
+      "population": 4481,
+      "buildings_total": 369,
+      "buildings_residential": 359,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2253.0,
+      "waste_wet_kg": 1351.8,
+      "waste_dry_kg": 788.6,
+      "waste_other_kg": 112.6,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_11",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z11",
+      "bounds": [
+        77.636428,
+        12.905442,
+        77.641037,
+        12.907153
+      ],
+      "center": [
+        77.639145,
+        12.906479
+      ],
+      "area_ha": 6.68,
+      "population": 1470,
+      "buildings_total": 121,
+      "buildings_residential": 118,
+      "buildings_commercial": 2,
+      "waste_total_kg": 740.0,
+      "waste_wet_kg": 444.0,
+      "waste_dry_kg": 259.0,
+      "waste_other_kg": 37.0,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z12",
+      "bounds": [
+        77.636433,
+        12.907106,
+        77.641084,
+        12.91167
+      ],
+      "center": [
+        77.638759,
+        12.909388
+      ],
+      "area_ha": 25.77,
+      "population": 6094,
+      "buildings_total": 502,
+      "buildings_residential": 489,
+      "buildings_commercial": 7,
+      "waste_total_kg": 3064.5,
+      "waste_wet_kg": 1838.7,
+      "waste_dry_kg": 1072.6,
+      "waste_other_kg": 153.2,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_12",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z13",
+      "bounds": [
+        77.63648,
+        12.911623,
+        77.641132,
+        12.916169
+      ],
+      "center": [
+        77.638823,
+        12.913876
+      ],
+      "area_ha": 25.44,
+      "population": 4139,
+      "buildings_total": 341,
+      "buildings_residential": 332,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2082.0,
+      "waste_wet_kg": 1249.2,
+      "waste_dry_kg": 728.7,
+      "waste_other_kg": 104.1,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_05",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z14",
+      "bounds": [
+        77.638207,
+        12.91614,
+        77.641179,
+        12.920683
+      ],
+      "center": [
+        77.639738,
+        12.918382
+      ],
+      "area_ha": 15.85,
+      "population": 984,
+      "buildings_total": 81,
+      "buildings_residential": 79,
+      "buildings_commercial": 1,
+      "waste_total_kg": 494.5,
+      "waste_wet_kg": 296.7,
+      "waste_dry_kg": 173.1,
+      "waste_other_kg": 24.7,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_02",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z15",
+      "bounds": [
+        77.63857,
+        12.920656,
+        77.641208,
+        12.923835
+      ],
+      "center": [
+        77.640135,
+        12.921987
+      ],
+      "area_ha": 7.42,
+      "population": 425,
+      "buildings_total": 35,
+      "buildings_residential": 34,
+      "buildings_commercial": 1,
+      "waste_total_kg": 215.0,
+      "waste_wet_kg": 129.0,
+      "waste_dry_kg": 75.2,
+      "waste_other_kg": 10.8,
+      "waste_per_capita_kg": 0.506,
+      "assigned_dwcc": "DWCC_02",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z16",
+      "bounds": [
+        77.641019,
+        12.904462,
+        77.645641,
+        12.907106
+      ],
+      "center": [
+        77.643509,
+        12.906012
+      ],
+      "area_ha": 11.98,
+      "population": 2379,
+      "buildings_total": 196,
+      "buildings_residential": 191,
+      "buildings_commercial": 3,
+      "waste_total_kg": 1197.0,
+      "waste_wet_kg": 718.2,
+      "waste_dry_kg": 419.0,
+      "waste_other_kg": 59.8,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_06",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z17",
+      "bounds": [
+        77.641037,
+        12.90706,
+        77.645689,
+        12.911623
+      ],
+      "center": [
+        77.643363,
+        12.909341
+      ],
+      "area_ha": 25.77,
+      "population": 4833,
+      "buildings_total": 398,
+      "buildings_residential": 388,
+      "buildings_commercial": 6,
+      "waste_total_kg": 2431.5,
+      "waste_wet_kg": 1458.9,
+      "waste_dry_kg": 851.0,
+      "waste_other_kg": 121.6,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_06",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z18",
+      "bounds": [
+        77.641084,
+        12.911576,
+        77.645736,
+        12.91614
+      ],
+      "center": [
+        77.64341,
+        12.913858
+      ],
+      "area_ha": 25.77,
+      "population": 4905,
+      "buildings_total": 404,
+      "buildings_residential": 393,
+      "buildings_commercial": 6,
+      "waste_total_kg": 2467.5,
+      "waste_wet_kg": 1480.5,
+      "waste_dry_kg": 863.6,
+      "waste_other_kg": 123.4,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_03",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z19",
+      "bounds": [
+        77.641132,
+        12.916093,
+        77.645784,
+        12.920656
+      ],
+      "center": [
+        77.643458,
+        12.918375
+      ],
+      "area_ha": 25.77,
+      "population": 3715,
+      "buildings_total": 306,
+      "buildings_residential": 298,
+      "buildings_commercial": 4,
+      "waste_total_kg": 1867.5,
+      "waste_wet_kg": 1120.5,
+      "waste_dry_kg": 653.6,
+      "waste_other_kg": 93.4,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_03",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z20",
+      "bounds": [
+        77.641179,
+        12.92061,
+        77.645824,
+        12.924476
+      ],
+      "center": [
+        77.643649,
+        12.922316
+      ],
+      "area_ha": 18.98,
+      "population": 704,
+      "buildings_total": 58,
+      "buildings_residential": 56,
+      "buildings_commercial": 1,
+      "waste_total_kg": 354.5,
+      "waste_wet_kg": 212.7,
+      "waste_dry_kg": 124.1,
+      "waste_other_kg": 17.7,
+      "waste_per_capita_kg": 0.504,
+      "assigned_dwcc": "DWCC_16",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z21",
+      "bounds": [
+        77.648516,
+        12.899348,
+        77.650198,
+        12.902514
+      ],
+      "center": [
+        77.649403,
+        12.901082
+      ],
+      "area_ha": 5.71,
+      "population": 632,
+      "buildings_total": 52,
+      "buildings_residential": 51,
+      "buildings_commercial": 1,
+      "waste_total_kg": 318.5,
+      "waste_wet_kg": 191.1,
+      "waste_dry_kg": 111.5,
+      "waste_other_kg": 15.9,
+      "waste_per_capita_kg": 0.504,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_01",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z22",
+      "bounds": [
+        77.645614,
+        12.902497,
+        77.650245,
+        12.90706
+      ],
+      "center": [
+        77.648192,
+        12.905213
+      ],
+      "area_ha": 19.79,
+      "population": 4481,
+      "buildings_total": 369,
+      "buildings_residential": 359,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2253.0,
+      "waste_wet_kg": 1351.8,
+      "waste_dry_kg": 788.6,
+      "waste_other_kg": 112.6,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z23",
+      "bounds": [
+        77.645641,
+        12.907013,
+        77.650293,
+        12.911576
+      ],
+      "center": [
+        77.647967,
+        12.909295
+      ],
+      "area_ha": 25.77,
+      "population": 6241,
+      "buildings_total": 514,
+      "buildings_residential": 501,
+      "buildings_commercial": 7,
+      "waste_total_kg": 3138.0,
+      "waste_wet_kg": 1882.8,
+      "waste_dry_kg": 1098.3,
+      "waste_other_kg": 156.9,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_06",
+      "assigned_methanisation": "BMU_01",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z24",
+      "bounds": [
+        77.645689,
+        12.91153,
+        77.65034,
+        12.916093
+      ],
+      "center": [
+        77.648015,
+        12.913811
+      ],
+      "area_ha": 25.77,
+      "population": 5389,
+      "buildings_total": 444,
+      "buildings_residential": 432,
+      "buildings_commercial": 6,
+      "waste_total_kg": 2709.5,
+      "waste_wet_kg": 1625.7,
+      "waste_dry_kg": 948.3,
+      "waste_other_kg": 135.5,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_04",
+      "assigned_methanisation": "BMU_02",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z25",
+      "bounds": [
+        77.645736,
+        12.916046,
+        77.650388,
+        12.92061
+      ],
+      "center": [
+        77.648062,
+        12.918328
+      ],
+      "area_ha": 25.77,
+      "population": 6094,
+      "buildings_total": 502,
+      "buildings_residential": 489,
+      "buildings_commercial": 7,
+      "waste_total_kg": 3064.5,
+      "waste_wet_kg": 1838.7,
+      "waste_dry_kg": 1072.6,
+      "waste_other_kg": 153.2,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_10",
+      "assigned_methanisation": "BMU_02",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z26",
+      "bounds": [
+        77.645784,
+        12.920563,
+        77.650429,
+        12.924692
+      ],
+      "center": [
+        77.648125,
+        12.922584
+      ],
+      "area_ha": 22.8,
+      "population": 4346,
+      "buildings_total": 358,
+      "buildings_residential": 349,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2185.5,
+      "waste_wet_kg": 1311.3,
+      "waste_dry_kg": 764.9,
+      "waste_other_kg": 109.3,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_16",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z27",
+      "bounds": [
+        77.650164,
+        12.897941,
+        77.654802,
+        12.902497
+      ],
+      "center": [
+        77.652602,
+        12.900385
+      ],
+      "area_ha": 23.55,
+      "population": 3363,
+      "buildings_total": 277,
+      "buildings_residential": 270,
+      "buildings_commercial": 4,
+      "waste_total_kg": 1691.5,
+      "waste_wet_kg": 1014.9,
+      "waste_dry_kg": 592.0,
+      "waste_other_kg": 84.6,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_01",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z28",
+      "bounds": [
+        77.650198,
+        12.90245,
+        77.654849,
+        12.907013
+      ],
+      "center": [
+        77.652522,
+        12.904732
+      ],
+      "area_ha": 25.76,
+      "population": 2099,
+      "buildings_total": 173,
+      "buildings_residential": 168,
+      "buildings_commercial": 2,
+      "waste_total_kg": 1054.5,
+      "waste_wet_kg": 632.7,
+      "waste_dry_kg": 369.1,
+      "waste_other_kg": 52.7,
+      "waste_per_capita_kg": 0.502,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z29",
+      "bounds": [
+        77.650245,
+        12.906967,
+        77.654897,
+        12.91153
+      ],
+      "center": [
+        77.652571,
+        12.909248
+      ],
+      "area_ha": 25.77,
+      "population": 4346,
+      "buildings_total": 358,
+      "buildings_residential": 349,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2185.5,
+      "waste_wet_kg": 1311.3,
+      "waste_dry_kg": 764.9,
+      "waste_other_kg": 109.3,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z30",
+      "bounds": [
+        77.650293,
+        12.911483,
+        77.654945,
+        12.916046
+      ],
+      "center": [
+        77.652619,
+        12.913765
+      ],
+      "area_ha": 25.77,
+      "population": 4626,
+      "buildings_total": 381,
+      "buildings_residential": 371,
+      "buildings_commercial": 5,
+      "waste_total_kg": 2325.5,
+      "waste_wet_kg": 1395.3,
+      "waste_dry_kg": 813.9,
+      "waste_other_kg": 116.3,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_04",
+      "assigned_methanisation": "BMU_02",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z31",
+      "bounds": [
+        77.65034,
+        12.916,
+        77.654992,
+        12.920563
+      ],
+      "center": [
+        77.652666,
+        12.918281
+      ],
+      "area_ha": 25.77,
+      "population": 5537,
+      "buildings_total": 456,
+      "buildings_residential": 444,
+      "buildings_commercial": 7,
+      "waste_total_kg": 2786.0,
+      "waste_wet_kg": 1671.6,
+      "waste_dry_kg": 975.1,
+      "waste_other_kg": 139.3,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_10",
+      "assigned_methanisation": "BMU_02",
+      "risk": "high",
+      "collection_frequency": "daily"
+    },
+    {
+      "zone_id": "Z32",
+      "bounds": [
+        77.650388,
+        12.920516,
+        77.654948,
+        12.92444
+      ],
+      "center": [
+        77.651359,
+        12.922123
+      ],
+      "area_ha": 7.01,
+      "population": 839,
+      "buildings_total": 69,
+      "buildings_residential": 67,
+      "buildings_commercial": 1,
+      "waste_total_kg": 422.0,
+      "waste_wet_kg": 253.2,
+      "waste_dry_kg": 147.7,
+      "waste_other_kg": 21.1,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_10",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z33",
+      "bounds": [
+        77.654758,
+        12.898192,
+        77.657177,
+        12.90245
+      ],
+      "center": [
+        77.655635,
+        12.900342
+      ],
+      "area_ha": 7.58,
+      "population": 1116,
+      "buildings_total": 92,
+      "buildings_residential": 90,
+      "buildings_commercial": 1,
+      "waste_total_kg": 560.5,
+      "waste_wet_kg": 336.3,
+      "waste_dry_kg": 196.2,
+      "waste_other_kg": 28.0,
+      "waste_per_capita_kg": 0.502,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z34",
+      "bounds": [
+        77.654802,
+        12.902445,
+        77.655737,
+        12.906967
+      ],
+      "center": [
+        77.655116,
+        12.905536
+      ],
+      "area_ha": 2.03,
+      "population": 26,
+      "buildings_total": 1,
+      "buildings_residential": 1,
+      "buildings_commercial": 0,
+      "waste_total_kg": 13.0,
+      "waste_wet_kg": 7.8,
+      "waste_dry_kg": 4.6,
+      "waste_other_kg": 0.6,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_07",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z35",
+      "bounds": [
+        77.654849,
+        12.906957,
+        77.657464,
+        12.911483
+      ],
+      "center": [
+        77.655675,
+        12.909528
+      ],
+      "area_ha": 8.46,
+      "population": 26,
+      "buildings_total": 1,
+      "buildings_residential": 1,
+      "buildings_commercial": 0,
+      "waste_total_kg": 13.0,
+      "waste_wet_kg": 7.8,
+      "waste_dry_kg": 4.6,
+      "waste_other_kg": 0.6,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_08",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z36",
+      "bounds": [
+        77.654897,
+        12.911457,
+        77.659549,
+        12.916
+      ],
+      "center": [
+        77.657218,
+        12.913725
+      ],
+      "area_ha": 25.69,
+      "population": 632,
+      "buildings_total": 52,
+      "buildings_residential": 51,
+      "buildings_commercial": 1,
+      "waste_total_kg": 318.5,
+      "waste_wet_kg": 191.1,
+      "waste_dry_kg": 111.5,
+      "waste_other_kg": 15.9,
+      "waste_per_capita_kg": 0.504,
+      "assigned_dwcc": "DWCC_08",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z37",
+      "bounds": [
+        77.654945,
+        12.915953,
+        77.659562,
+        12.920484
+      ],
+      "center": [
+        77.65683,
+        12.917561
+      ],
+      "area_ha": 16.31,
+      "population": 764,
+      "buildings_total": 63,
+      "buildings_residential": 61,
+      "buildings_commercial": 1,
+      "waste_total_kg": 384.5,
+      "waste_wet_kg": 230.7,
+      "waste_dry_kg": 134.6,
+      "waste_other_kg": 19.2,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z38",
+      "bounds": [
+        77.659502,
+        12.911503,
+        77.661459,
+        12.915953
+      ],
+      "center": [
+        77.660207,
+        12.914044
+      ],
+      "area_ha": 7.02,
+      "population": 72,
+      "buildings_total": 6,
+      "buildings_residential": 6,
+      "buildings_commercial": 0,
+      "waste_total_kg": 36.0,
+      "waste_wet_kg": 21.6,
+      "waste_dry_kg": 12.6,
+      "waste_other_kg": 1.8,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_13",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z39",
+      "bounds": [
+        77.659549,
+        12.915933,
+        77.664201,
+        12.920436
+      ],
+      "center": [
+        77.662124,
+        12.917949
+      ],
+      "area_ha": 8.42,
+      "population": 207,
+      "buildings_total": 17,
+      "buildings_residential": 17,
+      "buildings_commercial": 0,
+      "waste_total_kg": 103.5,
+      "waste_wet_kg": 62.1,
+      "waste_dry_kg": 36.2,
+      "waste_other_kg": 5.2,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_13",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z40",
+      "bounds": [
+        77.661212,
+        12.920422,
+        77.664249,
+        12.924958
+      ],
+      "center": [
+        77.663049,
+        12.922763
+      ],
+      "area_ha": 12.53,
+      "population": 1967,
+      "buildings_total": 162,
+      "buildings_residential": 158,
+      "buildings_commercial": 2,
+      "waste_total_kg": 988.5,
+      "waste_wet_kg": 593.1,
+      "waste_dry_kg": 346.0,
+      "waste_other_kg": 49.4,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z41",
+      "bounds": [
+        77.662316,
+        12.924939,
+        77.664281,
+        12.928171
+      ],
+      "center": [
+        77.663514,
+        12.926269
+      ],
+      "area_ha": 5.39,
+      "population": 559,
+      "buildings_total": 46,
+      "buildings_residential": 45,
+      "buildings_commercial": 1,
+      "waste_total_kg": 282.0,
+      "waste_wet_kg": 169.2,
+      "waste_dry_kg": 98.7,
+      "waste_other_kg": 14.1,
+      "waste_per_capita_kg": 0.504,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z42",
+      "bounds": [
+        77.664201,
+        12.920418,
+        77.668343,
+        12.924939
+      ],
+      "center": [
+        77.665721,
+        12.923244
+      ],
+      "area_ha": 13.91,
+      "population": 2099,
+      "buildings_total": 173,
+      "buildings_residential": 168,
+      "buildings_commercial": 2,
+      "waste_total_kg": 1054.5,
+      "waste_wet_kg": 632.7,
+      "waste_dry_kg": 369.1,
+      "waste_other_kg": 52.7,
+      "waste_per_capita_kg": 0.502,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z43",
+      "bounds": [
+        77.664249,
+        12.924897,
+        77.668901,
+        12.929441
+      ],
+      "center": [
+        77.666681,
+        12.927074
+      ],
+      "area_ha": 23.46,
+      "population": 2379,
+      "buildings_total": 196,
+      "buildings_residential": 191,
+      "buildings_commercial": 3,
+      "waste_total_kg": 1197.0,
+      "waste_wet_kg": 718.2,
+      "waste_dry_kg": 419.0,
+      "waste_other_kg": 59.8,
+      "waste_per_capita_kg": 0.503,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "medium",
+      "collection_frequency": "alternate"
+    },
+    {
+      "zone_id": "Z44",
+      "bounds": [
+        77.665633,
+        12.929408,
+        77.668919,
+        12.931065
+      ],
+      "center": [
+        77.667426,
+        12.930191
+      ],
+      "area_ha": 5.9,
+      "population": 559,
+      "buildings_total": 46,
+      "buildings_residential": 45,
+      "buildings_commercial": 1,
+      "waste_total_kg": 282.0,
+      "waste_wet_kg": 169.2,
+      "waste_dry_kg": 98.7,
+      "waste_other_kg": 14.1,
+      "waste_per_capita_kg": 0.504,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    },
+    {
+      "zone_id": "Z45",
+      "bounds": [
+        77.668867,
+        12.926158,
+        77.66935,
+        12.929408
+      ],
+      "center": [
+        77.669083,
+        12.928035
+      ],
+      "area_ha": 1.42,
+      "population": 72,
+      "buildings_total": 6,
+      "buildings_residential": 6,
+      "buildings_commercial": 0,
+      "waste_total_kg": 36.0,
+      "waste_wet_kg": 21.6,
+      "waste_dry_kg": 12.6,
+      "waste_other_kg": 1.8,
+      "waste_per_capita_kg": 0.5,
+      "assigned_dwcc": "DWCC_14",
+      "assigned_methanisation": "BMU_02",
+      "risk": "low",
+      "collection_frequency": "weekly"
+    }
+  ]
+}

@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useSpring, useTransform } from 'framer-motion';
+import { HSR_DATA } from '@/lib/constants';
 
 import { Skeleton } from "@/components/ui/Skeleton";
 
@@ -64,9 +65,9 @@ export default function SimulationPanel() {
   }, []);
 
   const baselineValues = {
-    wasteGenerated: 54.0,
-    dumpsPredicted: 14,
-    landfillInflow: 35.0,
+    wasteGenerated: HSR_DATA.daily_waste_tons,
+    dumpsPredicted: HSR_DATA.dump_sites_detected,
+    landfillInflow: Math.round(HSR_DATA.daily_waste_tons * 0.65), // Estimate based on 110t
     methaneProjection: 420,
     subRoadCoverage: 89,
     costPerDay: 2100,
@@ -81,7 +82,8 @@ export default function SimulationPanel() {
     setIsRunning(true);
     
     setTimeout(() => {
-      const baseWaste = 54.0;
+      const baseWaste = HSR_DATA.daily_waste_tons;
+      const baseDumps = HSR_DATA.dump_sites_detected;
       let newCoverage = 89;
       let newCost = 2100;
 
@@ -117,9 +119,9 @@ export default function SimulationPanel() {
       }
 
       let newWaste = baseWaste * wasteMult;
-      let newLandfill = 35.0 * landfillMult;
+      let newLandfill = baselineValues.landfillInflow * landfillMult;
       let newMethane = 420 * methaneMult;
-      let newDumps = 14 + dumpsAdd;
+      let newDumps = baseDumps + dumpsAdd;
 
       const reductionFactor = segregation * 0.008; 
       newWaste = newWaste - (baseWaste * reductionFactor);
@@ -202,6 +204,31 @@ export default function SimulationPanel() {
           </div>
 
           <div className="flex flex-col gap-6">
+
+            {/* REAL DATA BASELINE CARD */}
+            <div className="bg-slate-900 border border-slate-700 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
+              <div className="flex items-center gap-2 mb-3 text-white font-bold text-sm">
+                <span>📡</span> Real Data — HSR Layout
+              </div>
+              <div className="mb-2 border-b border-slate-700/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-400">Ward Area:</span> <span className="text-white">10.01 sq km</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Population (2026):</span> <span className="text-white">2,20,000</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Census 2011:</span> <span className="text-slate-300">1,76,195</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Growth rate:</span> <span className="text-slate-300">8%/year</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Projection year:</span> <span className="text-slate-300">2026</span></div>
+              </div>
+              <div className="mb-2 border-b border-slate-700/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">110 tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Wet (60%):</span> <span className="text-slate-300">66 tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Dry (35%):</span> <span className="text-slate-300">38.5 tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Other (5%):</span> <span className="text-slate-300">5.5 tons</span></div>
+              </div>
+              <div className="mb-2 border-b border-slate-700/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-400">Waste rate:</span> <span className="text-white">0.5 kg/person/day</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4"></span> <span className="text-slate-500">(CPCB standard)</span></div>
+              </div>
+              <div className="text-[10px] text-slate-500 text-right mt-1">Source: Census 2011 + geoiq.io</div>
+            </div>
 
             {/* HSR Scenario: Demolition Spikes */}
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
