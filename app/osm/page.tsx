@@ -120,7 +120,7 @@ export default function OsmAnalysisPage() {
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-slate-900">HSR Layout Building Map</h2>
                 <a 
-                  href="/data/building_map_legend.png" 
+                  href="/building_map_legend.png" 
                   target="_blank" 
                   rel="noreferrer"
                   className="bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-600 text-sm font-bold px-4 py-2 rounded-lg transition-colors"
@@ -131,7 +131,7 @@ export default function OsmAnalysisPage() {
               
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 mb-4 p-4 text-center">
                 <Image 
-                  src="/data/building_map_legend.png" 
+                  src="/building_map_legend.png" 
                   alt="HSR Layout Building Map"
                   fill
                   className="object-contain"
