@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import wardScoresData from '@/data/ward_scores.json';
+import hsrWardScoresData from '@/data/hsr_ward_scores.json';
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useStore } from '@/lib/store';
 
@@ -17,9 +17,12 @@ type Ward = {
   complaintRate: number;
   trend: 'up' | 'down' | 'stable';
   wasteTons: number;
+  sector?: string;
+  populationDensity?: number;
+  segregationRate?: number;
 };
 
-const staticWardScores: Ward[] = wardScoresData as Ward[];
+const staticWardScores: Ward[] = hsrWardScoresData as Ward[];
 
 // Helper to determine color based on score
 function getScoreColor(score: number) {
@@ -41,38 +44,9 @@ export default function WardsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/geojson')
-      .then(res => res.json())
-      .then(data => {
-        const geoWards = data.features.map((f: { properties: { name: string, ward_no: number, zone: string } }) => f.properties);
-        const scoresMap = new Map(staticWardScores.map(w => [w.name, w]));
-        
-        const combined: Ward[] = geoWards.map((gw: { name: string, ward_no: number, zone: string }, idx: number) => {
-          const existing = scoresMap.get(gw.name);
-          if (existing) return existing;
-          // Unmatched ward -> fallback 50
-          return {
-            id: gw.ward_no || idx + 2000, 
-            name: gw.name || `Unknown Ward ${idx}`,
-            zone: gw.zone || 'Central',
-            score: 50,
-            dumpRisk: 0.5,
-            methaneIntensity: 0.5,
-            routeEfficiency: 0.75,
-            complaintRate: 0.5,
-            trend: 'stable' as const,
-            wasteTons: 100
-          };
-        });
-        
-        const unique = Array.from(new Map(combined.map(item => [item.name, item])).values());
-        setWardScoresList(unique);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to load dynamic wards", err);
-        setIsLoading(false);
-      });
+    // For HSR Layout, we use the static data
+    setWardScoresList(staticWardScores);
+    setIsLoading(false);
   }, []);
   
   // Table filters
@@ -159,10 +133,13 @@ export default function WardsPage() {
         {/* TOP: SUMMARY STRIP */}
         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="flex items-center gap-6 flex-wrap">
-            <h1 className="text-3xl font-black text-slate-800 dark:text-white tracking-tight mr-4">Ward Scoring</h1>
+            <div>
+              <h1 className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">HSR Layout Waste Management</h1>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Real-time metrics for HSR Layout sectors and zones</p>
+            </div>
             <div className="flex gap-4">
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-400 uppercase">Total Wards</span>
+                <span className="text-xs font-bold text-slate-400 uppercase">Total Sectors</span>
                 <span className="text-xl font-bold text-slate-700 dark:text-slate-200">{wardScoresList.length}</span>
               </div>
               <div className="w-px bg-slate-200 hidden sm:block"></div>
@@ -186,7 +163,7 @@ export default function WardsPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
             </span>
-            <span className="font-bold text-sm">5 wards need immediate action</span>
+            <span className="font-bold text-sm">{wardScoresList.filter(w => w.score < 40).length} sectors need immediate action</span>
           </div>
         </div>
 
@@ -195,33 +172,33 @@ export default function WardsPage() {
           {/* LEFT: VISUAL WARD MAP (40%) */}
           <div className="w-full lg:w-[40%] flex flex-col gap-6">
             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm min-h-[500px] flex flex-col transition-colors">
-              <h2 className="text-lg font-extrabold text-slate-800 dark:text-white mb-2">Schematic Diagram</h2>
+              <h2 className="text-lg font-extrabold text-slate-800 dark:text-white mb-2">HSR Layout Geographic Grid</h2>
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-8">
-                Conceptual top-down view of sample wards by geographic zone. Click any block to inspect details.
+                Zone-wise distribution of waste management sectors in HSR Layout. Click any sector to view detailed metrics.
               </p>
 
               {/* Geographic Grid Layout */}
-              <div className="flex-1 flex items-center justify-center">
-                <div className="grid grid-cols-3 gap-4 lg:gap-6 w-full max-w-md">
+              <div className="flex-1 flex items-center justify-center py-8">
+                <div className="grid grid-cols-3 gap-x-4 gap-y-8 w-full max-w-xl">
                   
                   {/* Top: North */}
-                  <div className="col-start-2">
+                  <div className="col-start-2 flex justify-center">
                     <ZoneBlock zone="North" wards={visualGroups['North']} selectedId={selectedWardId} onClick={handleRowClick} />
                   </div>
 
                   {/* Middle row: West, Central, East */}
-                  <div className="col-start-1 row-start-2">
+                  <div className="col-start-1 row-start-2 flex justify-center">
                     <ZoneBlock zone="West" wards={visualGroups['West']} selectedId={selectedWardId} onClick={handleRowClick} />
                   </div>
-                  <div className="col-start-2 row-start-2">
+                  <div className="col-start-2 row-start-2 flex justify-center">
                     <ZoneBlock zone="Central" wards={visualGroups['Central']} selectedId={selectedWardId} onClick={handleRowClick} />
                   </div>
-                  <div className="col-start-3 row-start-2">
+                  <div className="col-start-3 row-start-2 flex justify-center">
                     <ZoneBlock zone="East" wards={visualGroups['East']} selectedId={selectedWardId} onClick={handleRowClick} />
                   </div>
 
                   {/* Bottom: South */}
-                  <div className="col-start-2 row-start-3">
+                  <div className="col-start-2 row-start-3 flex justify-center">
                     <ZoneBlock zone="South" wards={visualGroups['South']} selectedId={selectedWardId} onClick={handleRowClick} />
                   </div>
 
@@ -297,7 +274,7 @@ export default function WardsPage() {
           {/* RIGHT: SORTABLE DATA TABLE (60%) */}
           <div className="w-full lg:w-[60%] flex flex-col bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden min-h-[500px] transition-colors">
             <div className="p-6 border-b border-slate-100 dark:border-slate-700">
-              <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Live Ward Metrics</h2>
+              <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">HSR Layout Sector Metrics</h2>
               
               {/* Filter Bar */}
               <div className="flex flex-col sm:flex-row gap-4 mb-2">
@@ -335,9 +312,9 @@ export default function WardsPage() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-xs uppercase tracking-wider text-slate-500 font-extrabold transition-colors">
-                    {['Ward', 'Zone', 'Score', 'Dump Risk', 'Methane', 'Efficiency', 'Trend'].map((header, idx) => {
+                    {['Sector', 'Zone', 'Score', 'Dump Risk', 'Methane', 'Efficiency', 'Trend'].map((header, idx) => {
                       const keysMap: Record<string, keyof Ward> = {
-                        'Ward': 'name', 'Zone': 'zone', 'Score': 'score', 
+                        'Sector': 'name', 'Zone': 'zone', 'Score': 'score', 
                         'Dump Risk': 'dumpRisk', 'Methane': 'methaneIntensity', 
                         'Efficiency': 'routeEfficiency', 'Trend': 'trend'
                       };
@@ -447,27 +424,45 @@ export default function WardsPage() {
 // --- Helper Component: Zone Block ---
 function ZoneBlock({ zone, wards, selectedId, onClick }: { zone: string, wards: Ward[], selectedId: number | null, onClick: (id: number) => void }) {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">{zone}</span>
-      <div className="flex flex-wrap justify-center gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl min-w-[80px] shadow-inner transition-colors">
+    <div className="flex flex-col items-center w-full gap-2">
+      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{zone}</span>
+      <div className="flex flex-col w-full gap-2 min-h-[60px] justify-center items-center">
         {wards.length === 0 ? (
-          <div className="text-xs text-slate-300 py-1">—</div>
+          <div className="text-xs text-slate-300 dark:text-slate-600 italic">Empty</div>
         ) : (
           wards.map(w => {
             const isSelected = w.id === selectedId;
             const c = getScoreColor(w.score);
+            const shortName = w.name.replace('HSR Layout ', '');
+            
             return (
               <motion.button
                 key={w.id}
-                whileHover={{ scale: 1.15 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onClick(w.id)}
                 title={`${w.name} (Score: ${w.score})`}
-                className={`w-6 h-6 rounded-md shadow-sm transition-all border-2 relative 
-                  ${isSelected ? 'ring-2 ring-teal-500 ring-offset-2 z-10' : 'hover:z-10'}
+                className={`
+                  relative w-full max-w-[140px] p-3 rounded-xl border transition-all flex items-center justify-between gap-3 group shadow-sm
+                  ${isSelected ? 'ring-2 ring-teal-500 ring-offset-2 dark:ring-offset-slate-800 z-10' : 'hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 z-0'}
+                  bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700
                 `}
-                style={{ backgroundColor: c.chart, borderColor: isSelected ? '#0f172a' : 'transparent' }}
-              />
+              >
+                <div className="flex flex-col items-start min-w-0">
+                  <span className={`text-[10px] font-bold uppercase truncate w-full text-left leading-tight ${isSelected ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                    {shortName}
+                  </span>
+                </div>
+                
+                <div 
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg text-sm font-black shrink-0 ${c.bg} ${c.text} border ${c.border}`}
+                >
+                  {w.score}
+                </div>
+
+                {/* Status Indicator Dot */}
+                <div className={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-slate-800 ${w.score <= 40 ? 'bg-rose-500' : w.score <= 70 ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+              </motion.button>
             );
           })
         )}

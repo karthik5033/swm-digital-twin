@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
-// Keep both components pre-loaded and hidden/shown via CSS for instant switching
+// Both components pre-loaded and hidden/shown via CSS for instant switching
 const SmartMap = dynamic(() => import('@/components/map/SmartMap'), {
   ssr: false,
   loading: () => (

@@ -10,6 +10,7 @@ export default function AIQueryBar() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [actionFired, setActionFired] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -85,8 +86,14 @@ export default function AIQueryBar() {
     }
   };
 
+  useEffect(() => {
+    if (isExpanded && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isExpanded]);
+
   return (
-    <div className="fixed bottom-0 left-0 w-full z-[100] flex flex-col pointer-events-none">
+    <div className="fixed bottom-4 right-4 z-[100] flex flex-col pointer-events-none gap-3">
       {/* Response Panel */}
       <AnimatePresence>
         {isOpen && (
@@ -94,7 +101,7 @@ export default function AIQueryBar() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="pointer-events-auto bg-slate-900/95 backdrop-blur-xl border border-slate-700 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] rounded-2xl p-6 mb-4 max-w-4xl mx-auto w-[90%] lg:w-full border-l-4 border-l-teal-500 relative"
+            className="pointer-events-auto bg-slate-900/95 backdrop-blur-xl border border-slate-700 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] rounded-2xl p-6 max-w-sm w-[calc(100vw-2rem)] sm:w-80 border-l-4 border-l-teal-500 relative"
           >
             <button 
               onClick={() => setIsOpen(false)} 
@@ -132,32 +139,54 @@ export default function AIQueryBar() {
         )}
       </AnimatePresence>
 
-      {/* Input Bar */}
-      <div className="pointer-events-auto w-full bg-slate-900/90 backdrop-blur-xl border-t border-slate-800 flex items-center h-[64px] px-4 sm:px-6 relative shadow-[0_-10px_40px_rgba(0,0,0,0.2)] pb-safe">
-        <div className="max-w-4xl w-full mx-auto flex items-center gap-4">
-          <div className="bg-teal-500 text-slate-900 text-[11px] font-black tracking-widest px-3 py-1.5 rounded-full shadow-sm shrink-0 uppercase">
-            AI
-          </div>
-          <form className="flex-1 flex items-center h-full relative" onSubmit={handleSubmit}>
-             <input 
-               ref={inputRef}
-               type="text"
-               value={query}
-               onChange={e => setQuery(e.target.value)}
-               placeholder="Ask anything... 'Show wards with highest methane risk'"
-               className="w-full bg-transparent text-slate-100 text-[15px] font-medium placeholder-slate-500 focus:outline-none px-2 h-full"
-               autoComplete="off"
-             />
-             <button 
-               type="submit" 
-               disabled={!query.trim() || isLoading} 
-               className="p-2 ml-2 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-colors shrink-0 flex items-center justify-center border border-teal-500/20"
-             >
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-             </button>
-          </form>
-        </div>
-      </div>
+      {/* Expanded Input Bar */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-auto bg-slate-900/95 backdrop-blur-xl border border-slate-800 flex items-center h-[52px] px-4 gap-3 rounded-lg shadow-lg"
+          >
+            <form className="flex-1 flex items-center h-full gap-2" onSubmit={handleSubmit}>
+              <input 
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Ask anything..."
+                className="w-full bg-transparent text-slate-100 text-sm font-medium placeholder-slate-500 focus:outline-none"
+                autoComplete="off"
+              />
+              <button 
+                type="submit" 
+                disabled={!query.trim() || isLoading} 
+                className="p-1.5 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors shrink-0 flex items-center justify-center border border-teal-500/20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </form>
+            <button
+              onClick={() => setIsExpanded(false)}
+              className="p-1.5 text-slate-400 hover:text-slate-200 rounded-md hover:bg-slate-800/50 transition-colors shrink-0"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Icon Button */}
+      <motion.button
+        onClick={() => setIsExpanded(!isExpanded)}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="pointer-events-auto w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow self-end"
+        aria-label="Toggle AI query"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      </motion.button>
     </div>
   );
 }
