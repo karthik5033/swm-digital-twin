@@ -14,6 +14,7 @@ interface DumpSite {
   risk: 'high' | 'medium' | 'low';
   area_sqm: number;
   ward: string;
+  detected?: string;
 }
 
 interface Zone {
@@ -398,24 +399,22 @@ export default function SmartMap() {
       });
 
       // ═══════════════════════════════════════════════════════════════
-      // FIX 6: DWCC Sites — proper markers with pulse ring
+      // DWCC Sites — convert DumpSite[] array → GeoJSON FeatureCollection
       // ═══════════════════════════════════════════════════════════════
-      dumps.features.push({
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: [77.6364, 12.9116] },
-          properties: {
-             id: "DWCC_REAL_1",
-             name: "HSR Layout Sector 2 DWCC",
-             address: "No.174, 27th Main",
-             capacity_tpd: 1.0,
-             risk: "low",
-             ward: "174"
-          }
-      });
+      const dumpFeatures = (dumps as DumpSite[]).map((d) => ({
+        type: 'Feature' as const,
+        geometry: { type: 'Point' as const, coordinates: [d.lon, d.lat] },
+        properties: {
+          id: d.id,
+          risk: d.risk,
+          area_sqm: d.area_sqm,
+          ward: d.ward,
+        },
+      }));
 
       m.addSource('dumps-source', {
         type: 'geojson',
-        data: dumps,
+        data: { type: 'FeatureCollection', features: dumpFeatures },
       });
 
       // Pulse halo for high-risk dumps -> large DWCC
