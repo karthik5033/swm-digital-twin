@@ -11,11 +11,13 @@ const MAIN_LINKS = [
   { href: '/map', label: 'Map' },
   { href: '/osm', label: 'OSM' },
   { href: '/simulation', label: 'Simulation' },
-  { href: '/methodology', label: 'Methodology' },
   { href: '/routes', label: 'Routes' },
-  { href: '/report', label: 'Report' },
   { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
   { href: '/forecast', label: '🔮 Forecast' },
+  { href: '/methodology', label: 'Methodology' },
+  { href: '/impact', label: 'Impact' },
+  { href: '/wards', label: 'Wards' },
+  { href: '/report', label: 'Report' },
 ];
 
 const FEATURES_LINKS = [
@@ -96,51 +98,44 @@ export default function Navbar() {
 
   return (
     <nav className="relative flex items-center justify-between p-4 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50">
-      <Link href="/" onClick={() => setIsOpen(false)} className="font-extrabold text-2xl tracking-tight text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-2">
-        <span className="text-xl">🛰️</span> AstraCity
-      </Link>
-      
-      <div className="flex items-center gap-2 md:gap-6">
-        
-        {/* Global API Indicator */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border-slate-300 border font-medium text-xs">
+      {/* LEFT: Logo + API badge + Dark mode toggle */}
+      <div className="flex items-center gap-2">
+        <Link href="/" onClick={() => setIsOpen(false)} className="font-extrabold text-2xl tracking-tight text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-2">
+          <span className="text-xl">🛰️</span> AstraCity
+        </Link>
+
+        {/* API Status Badge — next to logo */}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border-slate-300 border font-medium text-xs ml-2">
           <span className={`w-2 h-2 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500 animate-pulse' : apiStatus === 'checking' ? 'bg-amber-500' : 'bg-red-500'}`}></span>
           <span className="text-slate-600">
             {apiStatus === 'online' ? 'API Online' : apiStatus === 'checking' ? 'Checking...' : 'API Offline'}
           </span>
         </div>
 
-        {/* Dark Mode Toggle */}
+        {/* Dark Mode Toggle — between brand and nav */}
         <button 
           onClick={toggleTheme} 
-          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors text-slate-600"
+          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors text-slate-600 ml-1"
           aria-label="Toggle dark mode"
         >
           <motion.div initial={false} animate={{ rotate: isDark ? 180 : 0 }} transition={{ duration: 0.5, ease: "backOut" }}>
             {isDark ? <span className="text-xl">☀️</span> : <span className="text-xl">🌙</span>}
           </motion.div>
         </button>
+      </div>
+      
+      <div className="flex items-center gap-2 md:gap-6">
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-500">
           {MAIN_LINKS.map(link => (
-            <div key={link.href} className="flex items-center">
-              {link.label === 'Report' && (
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="mr-2 ml-4 bg-slate-100 text-slate-600 hover:bg-slate-200 w-7 h-7 rounded-full flex items-center justify-center transition-colors text-xs font-black shadow-sm"
-                  aria-label="Data Sources"
-                >
-                  ⓘ
-                </button>
-              )}
-              <Link 
-                href={link.href} 
-                className={`px-3 py-1.5 rounded-lg transition-all duration-200 ${isActive(link.href) ? 'text-slate-900 font-bold bg-slate-100/60' : 'hover:text-slate-900 hover:bg-slate-100/40'}`}
-              >
-                {link.label}
-              </Link>
-            </div>
+            <Link 
+              key={link.href}
+              href={link.href} 
+              className={`px-3 py-1.5 rounded-lg transition-all duration-200 ${isActive(link.href) ? 'text-slate-900 font-bold bg-slate-100/60' : 'hover:text-slate-900 hover:bg-slate-100/40'}`}
+            >
+              {link.label}
+            </Link>
           ))}
 
           {/* FEATURES DROPDOWN */}
@@ -192,6 +187,16 @@ export default function Navbar() {
               )}
             </AnimatePresence>
           </div>
+
+          {/* ⓘ Info Button — VERY LAST after all links */}
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="ml-2 w-7 h-7 rounded-full flex items-center justify-center transition-colors text-sm font-bold text-slate-600 hover:bg-slate-100"
+            style={{ border: '1.5px solid #cbd5e1', fontSize: '14px', width: '28px', height: '28px' }}
+            aria-label="Data Sources"
+          >
+            ⓘ
+          </button>
         </div>
 
         {/* Mobile Hamburger */}

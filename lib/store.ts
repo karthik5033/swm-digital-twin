@@ -7,8 +7,6 @@ interface AppState {
   toggleLayer: (layer: LayerId) => void;
   selectedWardId: string | null;
   setSelectedWardId: (id: string | null) => void;
-  highlightedWards: string[];
-  setHighlightedWards: (wards: string[]) => void;
   filteredWards: string[];
   setFilteredWards: (wards: string[]) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,8 +36,6 @@ export const useStore = create<AppState>((set) => ({
   })),
   selectedWardId: null,
   setSelectedWardId: (id) => set({ selectedWardId: id }),
-  highlightedWards: [],
-  setHighlightedWards: (wards) => set({ highlightedWards: wards }),
   filteredWards: [],
   setFilteredWards: (wards) => set({ filteredWards: wards }),
   newSyntheticDumps: [],
