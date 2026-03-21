@@ -724,6 +724,120 @@ export default function MapContainer() {
       };
       animateFlow();
 
+      // ===== HSR ZONE GRID (5x5) =====
+      const createHSRGrid = () => {
+        const minLon = 77.622725, maxLon = 77.669342, minLat = 12.897941, maxLat = 12.931016;
+        const cols = 5, rows = 5;
+        const lonStep = (maxLon - minLon) / cols;
+        const latStep = (maxLat - minLat) / rows;
+        const features: any[] = [];
+        let zoneNum = 1;
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            features.push({
+              type: 'Feature',
+              properties: {
+                zone_id: `Z${String(zoneNum).padStart(2, '0')}`,
+                buildings: Math.floor(100 + Math.random() * 400),
+                population: Math.floor(400 + Math.random() * 1600),
+                waste_total_tons: (0.5 + Math.random() * 3).toFixed(2),
+                wet_waste: (0.3 + Math.random() * 1.8).toFixed(2),
+                dry_waste: (0.15 + Math.random() * 0.9).toFixed(2),
+                risk_level: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'][Math.floor(Math.random() * 4)]
+              },
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[
+                  [minLon + i * lonStep, minLat + j * latStep],
+                  [minLon + (i + 1) * lonStep, minLat + j * latStep],
+                  [minLon + (i + 1) * lonStep, minLat + (j + 1) * latStep],
+                  [minLon + i * lonStep, minLat + (j + 1) * latStep],
+                  [minLon + i * lonStep, minLat + j * latStep]
+                ]]
+              }
+            });
+            zoneNum++;
+          }
+        }
+        return { type: 'FeatureCollection' as const, features };
+      };
+
+      const zoneGridData = createHSRGrid();
+
+      map.current!.addSource('hsr-zones', { type: 'geojson', data: zoneGridData as any });
+
+      map.current!.addLayer({
+        id: 'hsr-zones-fill',
+        type: 'fill',
+        source: 'hsr-zones',
+        minzoom: 13,
+        paint: {
+          'fill-color': [
+            'match', ['get', 'risk_level'],
+            'CRITICAL', 'rgba(239,68,68,0.5)',
+            'HIGH', 'rgba(249,115,22,0.4)',
+            'MEDIUM', 'rgba(234,179,8,0.3)',
+            'LOW', 'rgba(34,197,94,0.2)',
+            'rgba(148,163,184,0.2)'
+          ],
+          'fill-outline-color': '#ffffff'
+        }
+      });
+
+      map.current!.addLayer({
+        id: 'hsr-zones-outline',
+        type: 'line',
+        source: 'hsr-zones',
+        minzoom: 13,
+        paint: {
+          'line-color': '#ffffff',
+          'line-width': 1.5,
+          'line-opacity': 0.7
+        }
+      });
+
+      map.current!.addLayer({
+        id: 'hsr-zones-labels',
+        type: 'symbol',
+        source: 'hsr-zones',
+        minzoom: 13,
+        layout: {
+          'text-field': ['concat', ['get', 'zone_id'], '\n', ['get', 'buildings'], ' bldgs\n', ['get', 'waste_total_tons'], 'T/day'],
+          'text-size': 10,
+          'text-anchor': 'center'
+        },
+        paint: {
+          'text-color': '#ffffff',
+          'text-halo-color': '#000000',
+          'text-halo-width': 1
+        }
+      });
+
+      // Zone click popup
+      map.current!.on('click', 'hsr-zones-fill', (e: any) => {
+        if (!e.features || !e.features.length) return;
+        const p = e.features[0].properties;
+        const riskColor = p.risk_level === 'CRITICAL' ? '#ef4444' : p.risk_level === 'HIGH' ? '#f97316' : p.risk_level === 'MEDIUM' ? '#eab308' : '#22c55e';
+        new maplibregl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(`
+            <div style="padding:12px;min-width:200px;font-family:Inter,sans-serif;color:#0f172a">
+              <h3 style="color:#0d9488;margin:0 0 8px;font-size:15px;font-weight:900">
+                \ud83d\udccd ${p.zone_id} \u2014 HSR Layout
+              </h3>
+              <p style="margin:4px 0">\ud83c\udfe2 Buildings: <b>${p.buildings}</b></p>
+              <p style="margin:4px 0">\ud83d\udc65 Population: <b>${p.population}</b></p>
+              <p style="margin:4px 0">\ud83d\uddd1\ufe0f Daily Waste: <b>${p.waste_total_tons}T</b></p>
+              <p style="margin:4px 0">\ud83c\udf0a Wet: <b>${p.wet_waste}T</b> \u2192 Bio-meth</p>
+              <p style="margin:4px 0">\u267b\ufe0f Dry: <b>${p.dry_waste}T</b> \u2192 DWCC</p>
+              <p style="margin:4px 0">\u26a0\ufe0f Risk: <b style="color:${riskColor}">${p.risk_level}</b></p>
+            </div>
+          `)
+          .addTo(map.current!);
+      });
+      map.current!.on('mouseenter', 'hsr-zones-fill', () => { if (map.current) map.current.getCanvas().style.cursor = 'pointer'; });
+      map.current!.on('mouseleave', 'hsr-zones-fill', () => { if (map.current) map.current.getCanvas().style.cursor = ''; });
+
       setMapLoaded(true);
     });
 
@@ -806,6 +920,18 @@ export default function MapContainer() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-50/80 to-transparent z-[1]" />
       <LayerToggle />
       <WardSidebar />
+
+      {/* Zoom to HSR Layout button */}
+      <button
+        onClick={() => {
+          if (map.current) {
+            map.current.flyTo({ center: [77.6410, 12.9116], zoom: 13.5, duration: 1500 });
+          }
+        }}
+        className="absolute top-4 right-4 z-[10] bg-white/90 hover:bg-white backdrop-blur-md border border-slate-200 text-slate-700 hover:text-teal-600 px-3 py-2 rounded-xl text-xs font-bold shadow-lg transition-all hover:shadow-xl flex items-center gap-1.5"
+      >
+        <span>🔍</span> Zoom to HSR Layout
+      </button>
 
       {/* Waste Intensity Heatmap Legend - bottom right */}
       <div className="absolute bottom-6 right-6 z-[10] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-xl p-3 shadow-2xl text-white text-xs flex flex-col items-center min-w-[140px]">
