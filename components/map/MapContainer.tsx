@@ -270,8 +270,6 @@ export default function MapContainer() {
       map.current!.addSource('lulc-source', { type: 'geojson', data: LULC_GEOJSON });
       map.current!.addSource('mainRoute-source', { type: 'geojson', data: MAIN_ROUTE_GEOJSON });
       map.current!.addSource('autoRoutes-source', { type: 'geojson', data: AUTO_ROUTES_GEOJSON });
-      map.current!.addSource('auto-dots', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-      map.current!.addSource('main-dot', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
       map.current!.addSource('agara-source', { type: 'geojson', data: AGARA_GEOJSON });
       map.current!.addSource('agara-buffer', { type: 'geojson', data: AGARA_BUFFER_GEOJSON });
       map.current!.addSource('agara-lines', { type: 'geojson', data: AGARA_LINES_GEOJSON });
@@ -555,24 +553,6 @@ export default function MapContainer() {
         layout: { visibility: 'visible' }
       });
 
-      // 11. Animated Auto Dots
-      map.current!.addLayer({
-        id: 'autoRoutes-dots',
-        type: 'circle',
-        source: 'auto-dots',
-        paint: { 'circle-radius': 5, 'circle-color': '#f97316', 'circle-stroke-width': 1.5, 'circle-stroke-color': '#fff' },
-        layout: { visibility: 'visible' } // same group as autoRoutes
-      });
-
-      // 12. Animated Main Truck Dot
-      map.current!.addLayer({
-        id: 'mainRoute-dot',
-        type: 'circle',
-        source: 'main-dot',
-        paint: { 'circle-radius': 9, 'circle-color': '#3b82f6', 'circle-stroke-width': 2, 'circle-stroke-color': '#fff', 'circle-pitch-alignment':'map' },
-        layout: { visibility: 'visible' } // same group as mainRoute
-      });
-
       // 13. Buildings Layer (Real 9,471 Polygons via dynamic fetch)
       fetch('/data/buildings_osm.geojson')
         .then(res => res.json())
@@ -695,34 +675,6 @@ export default function MapContainer() {
         </div>
       `);
 
-      let t = 0;
-      const animateFlow = () => {
-        t += 0.003; 
-        if (!map.current) return;
-        
-        const autoFeatures = AUTO_ROUTES_GEOJSON.features.map((f: any, i: number) => {
-           // The routes are now full circular polygons spanning outwards and tracking back to the hub.
-           const pt = interpolatePoint(f.geometry.coordinates, (t * 2 + (i * 0.15)));
-           return { type: 'Feature', geometry: { type: 'Point', coordinates: pt }, properties: {} };
-        });
-        
-        const mainLine = MAIN_ROUTE_GEOJSON.features[0].geometry.coordinates;
-        const mainTruckDot = interpolatePoint(mainLine, (t * 0.5));
-
-        const adSource = map.current.getSource('auto-dots') as maplibregl.GeoJSONSource;
-        if (adSource) adSource.setData({ type: 'FeatureCollection', features: autoFeatures });
-        
-        const mdSource = map.current.getSource('main-dot') as maplibregl.GeoJSONSource;
-        if (mdSource) mdSource.setData({ type: 'FeatureCollection', features: [ { type: 'Feature', geometry: { type: 'Point', coordinates: mainTruckDot }, properties: {} } ] });
-        
-        // Agara ripples (opacity 0.4 to 0.9)
-        if (map.current.getLayer('agaraLake-line')) {
-          map.current.setPaintProperty('agaraLake-line', 'line-opacity', Math.sin(t * 15) * 0.25 + 0.65);
-        }
-
-        animationRef.current = requestAnimationFrame(animateFlow);
-      };
-      animateFlow();
 
       // ===== HSR ZONE GRID (5x5) =====
       const createHSRGrid = () => {
