@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "methane_plants",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.540727778000075, 13.084772222000026, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.650711111000078, 12.896183333000067, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.626697222000075, 12.872922222000057, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.580366667000078, 12.932491667000022, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.614044444000058, 12.933802778000029, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.563294444000064, 13.021313889000055, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.5805, 12.976875, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.576705556000036, 12.965877778000049, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.64071111100003, 12.960922222000022, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.614061111000069, 12.933791667000037, 0.0 ] } },
+{ "type": "Feature", "properties": { "OID_": 0, "Name": "Placemark", "FolderPath": "Document/bio_mithanization_unit", "SymbolID": 0, "AltMode": -1, "Base": 0.0, "Snippet": null, "PopupInfo": null, "HasLabel": -1, "LabelID": 0 }, "geometry": { "type": "Point", "coordinates": [ 77.579977778000057, 12.936266667000041, 0.0 ] } }
+]
+}

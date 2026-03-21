@@ -1,0 +1,143 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.649028,
+          12.91263,
+          0.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.646882,
+          12.922184300000026,
+          0.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.64544950000004,
+          12.918109800000025,
+          0.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.64754850000008,
+          12.912182100000052,
+          0.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.633119,
+          12.905361300000038,
+          0.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OID_": 0,
+        "Name": "Placemark",
+        "FolderPath": "BBMP dry waste collection centres",
+        "SymbolID": 0,
+        "AltMode": -1,
+        "Base": 0.0,
+        "Snippet": null,
+        "PopupInfo": null,
+        "HasLabel": -1,
+        "LabelID": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.64077220000007,
+          12.899074700000028,
+          0.0
+        ]
+      }
+    }
+  ]
+}

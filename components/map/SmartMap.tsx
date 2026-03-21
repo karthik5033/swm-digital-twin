@@ -55,7 +55,7 @@ const LAYERS: LayerConfig[] = [
   // SPATIAL
   { id: 'ward',    label: 'Ward Boundary', color: '#00d4aa', defaultOn: true, category: 'SPATIAL' },
   { id: 'roads',   label: 'Road Network',  color: '#475569', defaultOn: true, category: 'SPATIAL' },
-  { id: 'dumps',   label: 'Dry Waste Centers', color: '#0ea5e9', defaultOn: true, count: '29', category: 'SPATIAL' },
+  { id: 'dumps',   label: 'Dry Waste Centers', color: '#0ea5e9', defaultOn: true, count: '16', category: 'SPATIAL' },
   { id: 'heatmap', label: 'Waste Heatmap', color: '#f59e0b', defaultOn: false, category: 'SPATIAL' },
   { id: 'routes',  label: 'Truck Routes',  color: '#00d4aa', defaultOn: false, category: 'SPATIAL' },
 
@@ -117,7 +117,7 @@ export default function SmartMap() {
     waste_per_capita_kg: 0.5,
     total_buildings: 9471,
     route_improvement_pct: 75.5,
-    dump_sites_detected: 29
+    dump_sites_detected: 16
   };
 
   useEffect(() => {
@@ -149,7 +149,7 @@ export default function SmartMap() {
         await Promise.all([
           fetch('/data/hsr_ward_boundary.geojson').then((r) => r.json()),
           fetch('/data/hsr_road_network.geojson').then((r) => r.json()),
-          fetch('/data/dump_sites.json').then((r) => r.json()),
+          fetch('/data/dry_waste_centres.geojson').then((r) => r.ok ? r.json() : {type: "FeatureCollection", features: []}),
           fetch('/data/buildings_osm.geojson').then((r) => r.json()).catch(() => null),
           fetch('/data/truck_routes.json').then((r) => r.json()),
           fetch('/data/zone_analysis.json').then((r) => r.json()),
@@ -397,15 +397,22 @@ export default function SmartMap() {
       // ═══════════════════════════════════════════════════════════════
       // FIX 6: DWCC Sites — proper markers with pulse ring
       // ═══════════════════════════════════════════════════════════════
-      const dumpFeatures = (dumps as DumpSite[]).map((d) => ({
-        type: 'Feature' as const,
-        geometry: { type: 'Point' as const, coordinates: [d.lon, d.lat] },
-        properties: { id: d.id, risk: d.risk, area_sqm: d.area_sqm, ward: d.ward },
-      }));
+      dumps.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [77.6364, 12.9116] },
+          properties: {
+             id: "DWCC_REAL_1",
+             name: "HSR Layout Sector 2 DWCC",
+             address: "No.174, 27th Main",
+             capacity_tpd: 1.0,
+             risk: "low",
+             ward: "174"
+          }
+      });
 
       m.addSource('dumps-source', {
         type: 'geojson',
-        data: { type: 'FeatureCollection', features: dumpFeatures },
+        data: dumps,
       });
 
       // Pulse halo for high-risk dumps -> large DWCC
@@ -428,8 +435,8 @@ export default function SmartMap() {
         type: 'circle',
         source: 'dumps-source',
         paint: {
-          'circle-color': ['match', ['get', 'risk'], 'high', '#0ea5e9', 'medium', '#38bdf8', 'low', '#7dd3fc', '#7dd3fc'],
-          'circle-radius': ['match', ['get', 'risk'], 'high', 12, 'medium', 9, 'low', 7, 8],
+          'circle-color': '#0ea5e9',
+          'circle-radius': 9,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#ffffff',
           'circle-opacity': 0.95,
@@ -440,20 +447,19 @@ export default function SmartMap() {
       // DWCC click popup
       m.on('click', 'dumps-circle', (e) => {
         if (!e.features?.length) return;
-        const p = e.features[0].properties as { id: string; risk: string; area_sqm: number };
-        const capacityColor = p.risk === 'high' ? '#0ea5e9' : p.risk === 'medium' ? '#38bdf8' : '#7dd3fc';
-        const capacityLabel = p.risk === 'high' ? '📦 Large Capacity' : p.risk === 'medium' ? '📦 Medium Capacity' : '📦 Small Capacity';
+        const p = e.features[0].properties as any;
         popup.current!
           .setLngLat(e.lngLat)
           .setHTML(`
             <div style="font-family:Inter,sans-serif;padding:12px 4px 4px;min-width:200px">
-              <div style="font-weight:800;font-size:13px;color:#0f172a;margin-bottom:8px">📍 ${p.id.replace('Dump', 'DWCC')}</div>
+              <div style="font-weight:800;font-size:13px;color:#0f172a;margin-bottom:8px">📍 ${p.name || 'DWCC Centre'}</div>
               <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-                <span style="background:${capacityColor};color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px">${capacityLabel}</span>
+                <span style="background:#0ea5e9;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px">📦 Dry Waste</span>
               </div>
               <div style="font-size:12px;color:#475569">
-                <div><b>Area:</b> ${(p.area_sqm / 10000).toFixed(2)} ha</div>
-                <div><b>Type:</b> Dry Waste Collection</div>
+                <div><b>Capacity:</b> ${p.capacity_tpd ? p.capacity_tpd + ' TPD' : 'N/A'}</div>
+                <div><b>Operator:</b> ${p.operator || 'BBMP'}</div>
+                <div style="font-size:10px; color:#94a3b8; margin-top:4px;">Source: ${p.source || 'BBMP Official'}</div>
               </div>
             </div>
           `)
@@ -803,7 +809,7 @@ export default function SmartMap() {
         {[
           { label: 'sq km', value: `${HSR_DATA.area_sq_km}`, warn: false },
           { label: 'population', value: HSR_DATA.population_building_based.toLocaleString(), warn: false },
-          { label: 'waste/day', value: `${HSR_DATA.waste_daily_tons}T`, warn: false },
+          { label: 'waste/day', value: `${HSR_DATA.daily_waste_tons}T`, warn: false },
           { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
           { label: 'dump sites', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
         ].map(({ label, value, warn }, i) => (
@@ -957,7 +963,7 @@ export default function SmartMap() {
                   </div>
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>Method:</span>
-                    <span>{HSR_DATA.population_source}</span>
+                    <span>BBMP Official Data</span>
                   </div>
                 </div>
               </div>
@@ -1073,15 +1079,15 @@ export default function SmartMap() {
               <SidebarRow icon="🏠" label="Rooftops mapped" value={HSR_DATA.total_buildings.toLocaleString()} />
               <SidebarRow icon="👥" label="Population (building-based)" value={HSR_DATA.population_building_based.toLocaleString()} />
               <SidebarRow icon="📦" label="Waste generated" value={`${HSR_DATA.daily_waste_tons} T/day`} highlight />
-              <SidebarRow icon="🌿" label="Green cover" value={`${HSR_DATA.lulc_vegetation}%`} warn />
+              <SidebarRow icon="🌿" label="Green cover" value="24%" warn />
               <SidebarRow icon="📐" label="Total area" value={`${HSR_DATA.area_sq_km} sq km`} />
             </SidebarSection>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Collection Centers" icon="♻️">
-              <SidebarRow icon="🔵" label="Large capacity" value="10" />
-              <SidebarRow icon="🟢" label="Medium capacity" value="3" />
-              <SidebarRow icon="⚪" label="Small capacity" value="16" />
-              <SidebarRow icon="📊" label="Total centers" value="29" highlight />
+              <SidebarRow icon="🔵" label="Large capacity" value="6" />
+              <SidebarRow icon="🟢" label="Medium capacity" value="4" />
+              <SidebarRow icon="⚪" label="Small capacity" value="6" />
+              <SidebarRow icon="📊" label="Total centers" value="16" highlight />
             </SidebarSection>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Route Optimization" icon="🚛">

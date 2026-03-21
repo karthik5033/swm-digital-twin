@@ -9,38 +9,8 @@ import WardSidebar from './WardSidebar';
 
 /* --- REAL HSR LAYOUT DATA LOADED DYNAMICALLY --- */
 
-const DUMPS_GEOJSON: any = {
-  type: 'FeatureCollection',
-  features: [
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6410, 12.9116] }, properties: { name: 'D1 HSR Main', capacity: '65% full', status: 'Warning' } },
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6380, 12.9180] }, properties: { name: 'D2 Agara', capacity: '78% full', status: 'Critical' } },
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6450, 12.9050] }, properties: { name: 'D3 BDA Complex', capacity: '45% full', status: 'Normal' } }
-  ]
-};
-
-const DRY_WASTE_GEOJSON: any = {
-  type: 'FeatureCollection',
-  features: [
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6390, 12.9150] }, properties: { name: 'Centre 1', capacity: '2 tons/day' } },
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6420, 12.9200] }, properties: { name: 'Centre 2', capacity: '1.5 tons/day' } },
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6440, 12.9080] }, properties: { name: 'Centre 3', capacity: '3 tons/day' } }
-  ]
-};
-
-const PROCESSING_GEOJSON: any = {
-  type: 'FeatureCollection',
-  features: [
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6460, 12.9130] }, properties: { type: 'Composting', capacity: '5 tons/day' } },
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6380, 12.9090] }, properties: { type: 'Material Recovery', capacity: '8 tons/day' } }
-  ]
-};
-
-const METHANE_GEOJSON: any = {
-  type: 'FeatureCollection',
-  features: [
-    { type: 'Feature', geometry: { type: 'Point', coordinates: [77.6400, 12.9160] }, properties: { name: 'HSR Bio Plant', output: '500 kg methane/day' } }
-  ]
-};
+const DUMPS_GEOJSON: any = { type: 'FeatureCollection', features: [] };
+const PROCESSING_GEOJSON: any = { type: 'FeatureCollection', features: [] };
 
 const OPEN_SPACES_GEOJSON: any = {
   type: 'FeatureCollection',
@@ -252,7 +222,32 @@ export default function MapContainer() {
 
     map.current.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
-    map.current.on('load', () => {
+    map.current.on('load', async () => {
+
+      function filterToHSR(geojsonData: any) {
+        if (!geojsonData || !geojsonData.features) return { type: 'FeatureCollection' as const, features: [] };
+        return {
+          type: 'FeatureCollection' as const,
+          features: geojsonData.features.filter(
+            (feature: any) => {
+              let lon, lat;
+              const geom = feature.geometry;
+              if (geom && geom.type === 'Point') {
+                lon = geom.coordinates[0];
+                lat = geom.coordinates[1];
+              } else {
+                return false;
+              }
+              return (
+                lon >= 77.622725 &&
+                lon <= 77.669342 &&
+                lat >= 12.897941 &&
+                lat <= 12.931016
+              );
+            }
+          )
+        };
+      }
       map.current?.resize();
 
       // HSR boundary
@@ -268,11 +263,7 @@ export default function MapContainer() {
         },
       });
 
-      // Add sources
-      map.current!.addSource('dumps-source', { type: 'geojson', data: DUMPS_GEOJSON });
-      map.current!.addSource('dryWaste-source', { type: 'geojson', data: DRY_WASTE_GEOJSON });
-      map.current!.addSource('processing-source', { type: 'geojson', data: PROCESSING_GEOJSON });
-      map.current!.addSource('methane-source', { type: 'geojson', data: METHANE_GEOJSON });
+      // Add sources (dumps and processing will be added after fetch)
 
       map.current!.addSource('openSpaces-source', { type: 'geojson', data: OPEN_SPACES_GEOJSON });
       map.current!.addSource('segregation-source', { type: 'geojson', data: SEGREGATION_GEOJSON });
@@ -363,41 +354,67 @@ export default function MapContainer() {
         });
 
       // Add Layers
-      // 1. Dumpyards (red circles)
-      map.current!.addLayer({
-        id: 'dumps',
-        type: 'circle',
-        source: 'dumps-source',
-        paint: { 'circle-radius': 10, 'circle-color': '#ef4444', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
-        layout: { visibility: 'visible' }
-      });
+      // Add Layers dynamically
+      try {
+        const dwccRaw = await fetch('/data/hsr_dry_waste_centres.geojson').then(r => r.ok ? r.json() : {type: "FeatureCollection", features: []});
+        const dwccHSR = filterToHSR(dwccRaw);
 
-      // 2. Dry Waste Centres (blue circles)
-      map.current!.addLayer({
-        id: 'dryWaste',
-        type: 'circle',
-        source: 'dryWaste-source',
-        paint: { 'circle-radius': 8, 'circle-color': '#3b82f6', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
-        layout: { visibility: 'visible' }
-      });
+        const methRaw = await fetch('/data/hsr_methane_plants.geojson').then(r => r.ok ? r.json() : {type: "FeatureCollection", features: []});
+        const methHSR = filterToHSR(methRaw);
 
-      // 3. Processing Units (green circles)
-      map.current!.addLayer({
-        id: 'processing',
-        type: 'circle',
-        source: 'processing-source',
-        paint: { 'circle-radius': 8, 'circle-color': '#10b981', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
-        layout: { visibility: 'visible' }
-      });
+        const procRaw = await fetch('/data/hsr_processing_units.geojson').then(r => r.ok ? r.json() : {type: "FeatureCollection", features: []});
+        const procHSR = filterToHSR(procRaw);
 
-      // 4. Methane Plants (orange circles)
-      map.current!.addLayer({
-        id: 'methane',
-        type: 'circle',
-        source: 'methane-source',
-        paint: { 'circle-radius': 8, 'circle-color': '#f97316', 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
-        layout: { visibility: 'visible' }
-      });
+        const dumpRaw = await fetch('/data/dump_sites.json').then(r => r.ok ? r.json() : {type: "FeatureCollection", features: []});
+        const dumpHSR = filterToHSR(dumpRaw);
+
+        console.log('HSR Layout layers loaded:');
+        console.log('DWCCs:', dwccHSR.features.length);
+        console.log('Bio-meth:', methHSR.features.length);
+        console.log('Processing:', procHSR.features.length);
+        console.log('Dumpyards:', dumpHSR.features.length);
+
+        // Sources
+        map.current!.addSource('dwcc-source', { type: 'geojson', data: dwccHSR });
+        map.current!.addSource('bio-meth-source', { type: 'geojson', data: methHSR });
+        map.current!.addSource('processing-source', { type: 'geojson', data: procHSR });
+        map.current!.addSource('dumps-source', { type: 'geojson', data: dumpHSR });
+
+        // Add Layers
+        map.current!.addLayer({
+          id: 'dryWaste',
+          type: 'circle',
+          source: 'dwcc-source',
+          paint: { 'circle-color': '#3b82f6', 'circle-radius': 10, 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+          layout: { visibility: activeLayers['dryWaste'] ? 'visible' : 'none' }
+        });
+
+        map.current!.addLayer({
+          id: 'methane',
+          type: 'circle',
+          source: 'bio-meth-source',
+          paint: { 'circle-color': '#f97316', 'circle-radius': 12, 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+          layout: { visibility: activeLayers['methane'] ? 'visible' : 'none' }
+        });
+
+        map.current!.addLayer({
+          id: 'processing',
+          type: 'circle',
+          source: 'processing-source',
+          paint: { 'circle-color': '#22c55e', 'circle-radius': 10, 'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff' },
+          layout: { visibility: activeLayers['processing'] ? 'visible' : 'none' }
+        });
+
+        map.current!.addLayer({
+          id: 'dumps',
+          type: 'circle',
+          source: 'dumps-source',
+          paint: { 'circle-color': '#ef4444', 'circle-radius': 12, 'circle-stroke-width': 3, 'circle-stroke-color': '#ffffff' },
+          layout: { visibility: activeLayers['dumps'] ? 'visible' : 'none' }
+        });
+      } catch (e) {
+        console.error("Error loading layers", e);
+      }
 
       // 5. Real Zone Labels (from building_report.json)
       fetch('/building_report.json')
@@ -639,10 +656,10 @@ export default function MapContainer() {
         map.current!.on('mouseleave', layerId, () => { if (map.current) map.current.getCanvas().style.cursor = ''; });
       };
 
-      setupPopup('dumps', p => `<strong>🔴 ${p.name}</strong><br/>Capacity: ${p.capacity}<br/>Status: <b>${p.status}</b>`);
-      setupPopup('dryWaste', p => `<strong>🔵 ${p.name}</strong><br/>Capacity: ${p.capacity}`);
-      setupPopup('processing', p => `<strong>🟢 ${p.type}</strong><br/>Capacity: ${p.capacity}`);
-      setupPopup('methane', p => `<strong>🟠 ${p.name}</strong><br/>Output: ${p.output}`);
+      setupPopup('dryWaste', p => `"Dry Waste Collection Centre<br/><span style='font-size:10px; color:#64748b;'>Source: BBMP Official Data</span>"`);
+      setupPopup('methane', p => `"Bio-methanisation Plant<br/>Wet waste processing<br/><span style='font-size:10px; color:#64748b;'>Source: BBMP Official Data</span>"`);
+      setupPopup('processing', p => `"Waste Processing Unit<br/><span style='font-size:10px; color:#64748b;'>Source: BBMP Official Data</span>"`);
+      setupPopup('dumps', p => `"Illegal Dumpyard<br/><span style='font-size:10px; color:#64748b;'>Source: BBMP Official Data</span>"`);
       // ...existing code...
       setupPopup('agaraLake-fill', () => `
         <div style="font-family:Inter,sans-serif;font-size:12px;width:240px;color:#0f172a;">
@@ -755,6 +772,11 @@ export default function MapContainer() {
         if (map.current?.getLayer('agaraBuffer-line')) map.current.setLayoutProperty('agaraBuffer-line', 'visibility', displayVal);
         if (map.current?.getLayer('agaraLines')) map.current.setLayoutProperty('agaraLines', 'visibility', displayVal);
         if (map.current?.getLayer('agaraLines-labels')) map.current.setLayoutProperty('agaraLines-labels', 'visibility', displayVal);
+      } else if (layerId === 'dryWaste' || layerId === 'methane' || layerId === 'compost') {
+        if (map.current?.getLayer(layerId)) {
+          map.current.setLayoutProperty(layerId, 'visibility', displayVal);
+          if (map.current.getLayer(`${layerId}-label`)) map.current.setLayoutProperty(`${layerId}-label`, 'visibility', displayVal);
+        }
       } else if (managedLayers.includes(layerId) && map.current?.getLayer(layerId)) {
         map.current.setLayoutProperty(layerId, 'visibility', displayVal);
         // Also toggle the animated dots for those routes
