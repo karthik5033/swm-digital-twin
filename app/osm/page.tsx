@@ -248,7 +248,7 @@ export default function OsmAnalysisPage() {
                         <td className="py-4 px-6 text-right font-mono text-slate-500">{row.pct}</td>
                       </tr>
                     ))}
-                    <tr className="bg-teal-600/10 border-t border-teal-600/20">
+                    <tr className="bg-teal-600/5 border-t border-teal-600/10">
                       <td className="py-5 px-6 font-bold text-slate-900">TOTAL GENERATED</td>
                       <td className="py-5 px-6 text-right font-mono font-bold text-slate-900">-</td>
                       <td className="py-5 px-6 text-right font-mono font-bold text-teal-700">{HSR_DATA.waste_daily_kg.toLocaleString()} kg</td>

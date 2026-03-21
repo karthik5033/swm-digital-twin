@@ -54,7 +54,7 @@ const insightsTable = [
 
 export default function LulcAnalysisPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-teal-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-teal-100 overflow-x-hidden">
       <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
@@ -121,7 +121,7 @@ export default function LulcAnalysisPage() {
                 </a>
               </div>
               
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 mb-4 p-4 text-center">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 mb-4 p-4 text-center">
                 <Image 
                   src="/data/lulc_map.png" 
                   alt="HSR Layout LULC Map"

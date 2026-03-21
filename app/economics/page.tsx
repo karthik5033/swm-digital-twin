@@ -87,12 +87,12 @@ export default function EconomicsPage() {
                 <div className="bg-rose-50 border border-rose-100 p-5 rounded-xl font-mono">
                   <div className="text-rose-600 text-xs mb-2 uppercase font-bold">Before AstraCity</div>
                   <div className="text-slate-700 text-lg">({distBefore} ÷ {mileage}) × ₹{fuelPrice}</div>
-                  <div className="text-2xl font-black text-rose-600 mt-2">₹{Math.round(fuelCostBefore).toLocaleString('en-IN')} <span className="text-sm font-normal text-rose-400">/day</span></div>
+                  <div className="text-2xl font-black text-rose-600 mt-2">₹{Math.round(fuelCostBefore).toLocaleString('en-IN')} <span className="text-sm font-normal text-rose-600">/day</span></div>
                 </div>
                 <div className="bg-emerald-50 border border-emerald-100 p-5 rounded-xl font-mono">
                   <div className="text-emerald-600 text-xs mb-2 uppercase font-bold">After AstraCity</div>
                   <div className="text-slate-700 text-lg">({distAfter} ÷ {mileage}) × ₹{fuelPrice}</div>
-                  <div className="text-2xl font-black text-emerald-600 mt-2">₹{Math.round(fuelCostAfter).toLocaleString('en-IN')} <span className="text-sm font-normal text-emerald-400">/day</span></div>
+                  <div className="text-2xl font-black text-emerald-600 mt-2">₹{Math.round(fuelCostAfter).toLocaleString('en-IN')} <span className="text-sm font-normal text-emerald-600">/day</span></div>
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@ export default function EconomicsPage() {
               <div className="bg-indigo-50 border border-indigo-100 p-5 rounded-xl font-mono h-[calc(100%-104px)] flex flex-col justify-center">
                  <div className="text-indigo-600 text-xs mb-2 uppercase font-bold">Route Optimization Result</div>
                  <div className="text-slate-700 text-lg">(({distBefore} - {distAfter}) ÷ {distBefore}) × 100</div>
-                 <div className="text-4xl font-black text-indigo-600 mt-2">+{efficiencyGain.toFixed(1)}% <span className="text-lg font-normal text-indigo-400">Efficiency</span></div>
+                 <div className="text-4xl font-black text-indigo-600 mt-2">+{efficiencyGain.toFixed(1)}% <span className="text-lg font-normal text-indigo-600">Efficiency</span></div>
               </div>
             </div>
 
@@ -119,7 +119,7 @@ export default function EconomicsPage() {
         {/* METRICS COMPARISON TABLE (HERO) */}
         <motion.section variants={fadeInUp} className="relative">
           <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-[2rem] blur opacity-10"></div>
-          <div className="bg-white/90 backdrop-blur-xl border border-slate-200 rounded-[2rem] p-8 md:p-12 shadow-2xl relative">
+          <div className="bg-white/90 backdrop-blur-xl border border-slate-200 rounded-[2rem] p-8 md:p-12 shadow-lg relative">
             
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -143,7 +143,7 @@ export default function EconomicsPage() {
                   </tr>
                   <tr>
                     <td className="py-6 text-slate-500 text-lg md:text-xl font-medium">Efficiency Gain</td>
-                    <td className="py-6 text-slate-300 text-center md:text-left text-lg">—</td>
+                    <td className="py-6 text-slate-600 text-center md:text-left text-lg">—</td>
                     <td className="py-6 text-emerald-600 text-center md:text-left">+ {efficiencyGain.toFixed(1)}%</td>
                   </tr>
                 </tbody>
@@ -227,7 +227,7 @@ export default function EconomicsPage() {
                </div>
              </div>
 
-             <div className="bg-white/80 backdrop-blur-sm border border-slate-200 p-6 md:p-8 rounded-2xl max-w-sm relative z-10 shadow-sm">
+             <div className="bg-white/95 backdrop-blur-sm border border-slate-200 p-6 md:p-8 rounded-2xl max-w-sm relative z-10 shadow-sm">
                <div className="text-teal-600 font-bold text-lg uppercase tracking-wider mb-2 text-center">Conclusion</div>
                <div className="text-slate-700 font-medium text-center italic">
                  "Our system reduces operational cost instantly by minimizing travel distance and vastly improving collection efficiency."

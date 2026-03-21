@@ -87,10 +87,10 @@ export default function AnalysisPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 p-6 pb-24 md:p-12 font-sans selection:bg-teal-500/30 overflow-hidden relative">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-6 pb-24 md:p-12 font-sans selection:bg-teal-100 overflow-hidden relative">
       {/* Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-teal-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div 
         className="max-w-7xl mx-auto relative z-10"
@@ -191,8 +191,8 @@ export default function AnalysisPage() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-gradient-to-br from-teal-500/20 to-blue-500/20 backdrop-blur-xl border border-teal-500/30 p-8 rounded-3xl h-full flex flex-col justify-center">
-                    <h4 className="text-teal-400 font-bold uppercase tracking-wider text-xs mb-2">Pedestrian Metrics</h4>
+                  <div className="bg-gradient-to-br from-teal-500/10 to-blue-500/10 backdrop-blur-xl border border-teal-500/30 p-8 rounded-3xl h-full flex flex-col justify-center">
+                    <h4 className="text-teal-600 font-bold uppercase tracking-wider text-xs mb-2">Pedestrian Metrics</h4>
                     <div className="text-5xl font-black mb-2 flex items-baseline gap-1">
                       25.1<span className="text-2xl text-teal-500">%</span>
                     </div>
@@ -292,15 +292,15 @@ export default function AnalysisPage() {
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-white border border-slate-200 shadow-md p-6 rounded-3xl text-center">
-                  <div className="text-3xl font-black text-emerald-400 mb-1">11</div>
+                  <div className="text-3xl font-black text-emerald-600 mb-1">11</div>
                   <div className="text-xs uppercase tracking-widest text-slate-600">Bio Units</div>
                 </div>
                 <div className="bg-white border border-slate-200 shadow-md p-6 rounded-3xl text-center">
-                  <div className="text-3xl font-black text-blue-400 mb-1">336</div>
+                  <div className="text-3xl font-black text-blue-600 mb-1">336</div>
                   <div className="text-xs uppercase tracking-widest text-slate-600">Dry Centers</div>
                 </div>
                 <div className="bg-white border border-slate-200 shadow-md p-6 rounded-3xl text-center relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-3xl font-black text-red-400 mb-1 relative z-10">3</div>
                   <div className="text-xs uppercase tracking-widest text-slate-600 relative z-10">Landfills</div>
                 </div>
@@ -334,7 +334,7 @@ export default function AnalysisPage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20 p-8 rounded-3xl flex items-start gap-4">
+              <div className="bg-gradient-to-r from-red-500/5 to-orange-500/5 border border-red-500/10 p-8 rounded-3xl flex items-start gap-4">
                 <div className="text-3xl mt-1">⚠️</div>
                 <div>
                   <h4 className="text-red-400 font-bold text-lg mb-2">Critical Methane Hotspots Detected</h4>
@@ -342,10 +342,10 @@ export default function AnalysisPage() {
                     Geospatial analysis flags the following raw coordinates as high-risk methane emitters due to the presence of large open-air dumps targeting municipal solid waste near the city periphery.
                   </p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs text-orange-200">
-                    <li className="bg-black/30 px-3 py-2 rounded-lg">13.153942°N, 77.668878°E (Dumpyard)</li>
-                    <li className="bg-black/30 px-3 py-2 rounded-lg">13.103950°N, 77.646467°E (Dumpyard)</li>
-                    <li className="bg-black/30 px-3 py-2 rounded-lg">13.103583°N, 77.645922°E (Dumpyard)</li>
-                    <li className="bg-black/30 px-3 py-2 rounded-lg">12.973860°N, 77.441004°E (Processing)</li>
+                    <li className="bg-slate-50 px-3 py-2 rounded-lg">13.153942°N, 77.668878°E (Dumpyard)</li>
+                    <li className="bg-slate-50 px-3 py-2 rounded-lg">13.103950°N, 77.646467°E (Dumpyard)</li>
+                    <li className="bg-slate-50 px-3 py-2 rounded-lg">13.103583°N, 77.645922°E (Dumpyard)</li>
+                    <li className="bg-slate-50 px-3 py-2 rounded-lg">12.973860°N, 77.441004°E (Processing)</li>
                   </ul>
                 </div>
               </div>
@@ -368,7 +368,7 @@ export default function AnalysisPage() {
                     <h3 className="text-2xl font-bold mb-1">BBMP Waste Composition Trend</h3>
                     <p className="text-slate-600 text-sm font-light">Source: BBMP Official Reports 1999–2013</p>
                   </div>
-                  <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-2 text-green-400 text-xs font-bold uppercase tracking-wider">
+                  <div className="bg-green-500/5 border border-green-500/30 rounded-xl px-4 py-2 text-green-400 text-xs font-bold uppercase tracking-wider">
                     Official Data
                   </div>
                 </div>
@@ -391,7 +391,7 @@ export default function AnalysisPage() {
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="mt-4 bg-green-500/10 border border-green-500/20 rounded-2xl p-4 text-sm text-green-300 font-light leading-relaxed">
+                <div className="mt-4 bg-green-500/5 border border-green-500/10 rounded-2xl p-4 text-sm text-green-300 font-light leading-relaxed">
                   ✨ <strong>Key Insight:</strong> Organic waste increased from 42% (1999) to 61% (2013) as Bengaluru’s food culture grew. This validates HSR Layout’s high bio-methanisation demand and justifies our infrastructure routing decisions.
                 </div>
               </div>
@@ -444,16 +444,16 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* C: Infrastructure Matching Table */}
-                <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-3xl p-6 flex flex-col">
-                  <h3 className="text-xl font-bold mb-1 text-teal-400">Infrastructure vs Demand</h3>
+                <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-3xl p-6 flex flex-col">
+                  <h3 className="text-xl font-bold mb-1 text-teal-600">Infrastructure vs Demand</h3>
                   <p className="text-slate-600 text-sm mb-5">Capacity check: HSR Layout waste routing</p>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-slate-200">
-                          <th className="text-left py-2 px-2 text-teal-400 font-bold text-xs uppercase tracking-wider">Type</th>
-                          <th className="text-left py-2 px-2 text-teal-400 font-bold text-xs uppercase tracking-wider">Amount</th>
-                          <th className="text-left py-2 px-2 text-teal-400 font-bold text-xs uppercase tracking-wider">Destination</th>
+                          <th className="text-left py-2 px-2 text-teal-600 font-bold text-xs uppercase tracking-wider">Type</th>
+                          <th className="text-left py-2 px-2 text-teal-600 font-bold text-xs uppercase tracking-wider">Amount</th>
+                          <th className="text-left py-2 px-2 text-teal-600 font-bold text-xs uppercase tracking-wider">Destination</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-200">
@@ -473,7 +473,7 @@ export default function AnalysisPage() {
                     </table>
                   </div>
                   <div className="mt-5 space-y-3">
-                    <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3 text-xs">
+                    <div className="bg-green-500/5 border border-green-500/10 rounded-xl p-3 text-xs">
                       <div className="flex justify-between items-center mb-1">
                         <span className="text-green-400 font-bold">Bio-meth capacity:</span>
                         <span className="text-green-300 font-mono">65 TPD (BBMP)</span>
@@ -483,14 +483,14 @@ export default function AnalysisPage() {
                         <span className="text-green-400 font-bold">14.10T ✔ Covered</span>
                       </div>
                     </div>
-                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-xs">
+                    <div className="bg-blue-500/5 border border-blue-500/10 rounded-xl p-3 text-xs">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-blue-400 font-bold">DWCC capacity:</span>
+                        <span className="text-blue-600 font-bold">DWCC capacity:</span>
                         <span className="text-blue-300 font-mono">~500kg × 16 = 8T</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-slate-600">HSR dry demand:</span>
-                        <span className="text-blue-400 font-bold">6.94T ✔ Covered</span>
+                        <span className="text-blue-600 font-bold">6.94T ✔ Covered</span>
                       </div>
                     </div>
                   </div>
@@ -521,10 +521,10 @@ export default function AnalysisPage() {
                 {/* Generation Box */}
                 <div className="flex justify-center mb-4">
                   <div className="bg-slate-50 border-2 border-teal-500 rounded-2xl px-8 py-4 text-center min-w-[220px]">
-                    <div className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-2">Generation</div>
+                    <div className="text-teal-600 font-bold text-xs uppercase tracking-widest mb-2">Generation</div>
                     <div className="text-slate-900 font-bold">46,219 residents</div>
                     <div className="text-slate-600 text-sm">× 0.5 kg/day (CPCB)</div>
-                    <div className="text-amber-400 font-black text-2xl mt-1">23.1 tons/day</div>
+                    <div className="text-amber-600 font-black text-2xl mt-1">23.1 tons/day</div>
                   </div>
                 </div>
 
@@ -532,7 +532,7 @@ export default function AnalysisPage() {
                 <div className="flex justify-center mb-4">
                   <div className="flex flex-col items-center gap-0">
                     <div className="w-0.5 h-6 bg-teal-500/60" />
-                    <div className="text-teal-400 text-xs font-bold">SPLIT</div>
+                    <div className="text-teal-600 text-xs font-bold">SPLIT</div>
                     <div className="w-0.5 h-6 bg-teal-500/60" />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ export default function AnalysisPage() {
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                   {[
                     { emoji: '🟢', label: 'WET', pct: '61%', tons: '14.1T', bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-400', dest: 'Bio-methanisation', destSub: '(2 units)' },
-                    { emoji: '🔵', label: 'DRY', pct: '30%', tons: '6.9T',  bg: 'bg-blue-50', border: 'border-blue-500',  text: 'text-blue-400',  dest: 'DWCC centres',    destSub: '(16 centres)' },
+                    { emoji: '🔵', label: 'DRY', pct: '30%', tons: '6.9T',  bg: 'bg-blue-50', border: 'border-blue-500',  text: 'text-blue-600',  dest: 'DWCC centres',    destSub: '(16 centres)' },
                     { emoji: '🔴', label: 'HAZ', pct: '5%',  tons: '1.2T',  bg: 'bg-red-50', border: 'border-red-500',   text: 'text-red-400',   dest: 'Special',         destSub: 'Contractor' },
                     { emoji: '⚪', label: 'OTHER', pct: '4%',  tons: '0.9T',  bg: 'bg-slate-100', border: 'border-gray-500',  text: 'text-slate-600',  dest: 'Street',          destSub: 'Sweeping' },
                   ].map(w => (
@@ -561,22 +561,22 @@ export default function AnalysisPage() {
                   ))}
                 </div>
 
-                <div className="text-center text-xs text-gray-500 mt-2 italic">Sources: BBMP 2013 composition data · CPCB 0.5kg/person/day rate</div>
+                <div className="text-center text-xs text-slate-500 mt-2 italic">Sources: BBMP 2013 composition data · CPCB 0.5kg/person/day rate</div>
               </div>
 
               {/* B+C+D+E: 2-column grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* B: Collection Schedule */}
-                <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
-                  <h3 className="text-lg font-bold mb-1 text-teal-400">HSR Collection Schedule</h3>
-                  <p className="text-gray-500 text-xs mb-4">Source: hsrcitizenforum.in</p>
+                <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
+                  <h3 className="text-lg font-bold mb-1 text-teal-600">HSR Collection Schedule</h3>
+                  <p className="text-slate-500 text-xs mb-4">Source: hsrcitizenforum.in</p>
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-slate-200">
-                        <th className="text-left py-2 text-teal-400 font-bold text-xs uppercase tracking-wide">Waste Type</th>
-                        <th className="text-left py-2 text-teal-400 font-bold text-xs uppercase tracking-wide">Frequency</th>
-                        <th className="text-left py-2 text-teal-400 font-bold text-xs uppercase tracking-wide">Vehicle</th>
+                        <th className="text-left py-2 text-teal-600 font-bold text-xs uppercase tracking-wide">Waste Type</th>
+                        <th className="text-left py-2 text-teal-600 font-bold text-xs uppercase tracking-wide">Frequency</th>
+                        <th className="text-left py-2 text-teal-600 font-bold text-xs uppercase tracking-wide">Vehicle</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
@@ -587,7 +587,7 @@ export default function AnalysisPage() {
                       ].map((r, i) => (
                         <tr key={i} className="hover:bg-slate-50">
                           <td className="py-3 text-slate-900 font-medium">{r.type}</td>
-                          <td className="py-3 text-amber-400 font-mono font-bold text-xs">{r.freq}</td>
+                          <td className="py-3 text-amber-600 font-mono font-bold text-xs">{r.freq}</td>
                           <td className="py-3 text-slate-600 text-xs">{r.vehicle}</td>
                         </tr>
                       ))}
@@ -596,13 +596,13 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* C: DWCC Capacity */}
-                <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
-                  <h3 className="text-lg font-bold mb-1 text-blue-400">DWCC Capacity Analysis</h3>
-                  <p className="text-gray-500 text-xs mb-4">Source: bbmp.gov.in</p>
+                <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
+                  <h3 className="text-lg font-bold mb-1 text-blue-600">DWCC Capacity Analysis</h3>
+                  <p className="text-slate-500 text-xs mb-4">Source: bbmp.gov.in</p>
                   <div className="space-y-3 text-sm mb-5">
                     <div className="flex justify-between"><span className="text-slate-600">16 DWCCs × 2.5 TPD avg:</span><span className="text-slate-900 font-bold">40 TPD total</span></div>
-                    <div className="flex justify-between"><span className="text-slate-600">Dry waste demand:</span><span className="text-blue-400 font-bold">6.9 TPD</span></div>
-                    <div className="flex justify-between"><span className="text-slate-600">Utilisation:</span><span className="text-amber-400 font-bold">17.5%</span></div>
+                    <div className="flex justify-between"><span className="text-slate-600">Dry waste demand:</span><span className="text-blue-600 font-bold">6.9 TPD</span></div>
+                    <div className="flex justify-between"><span className="text-slate-600">Utilisation:</span><span className="text-amber-600 font-bold">17.5%</span></div>
                     <div className="flex justify-between"><span className="text-slate-600">Surplus capacity:</span><span className="text-green-400 font-bold">33.1 TPD</span></div>
                   </div>
                   <div className="text-xs text-slate-600 mb-2">16 DWCCs — 40 TPD capacity</div>
@@ -610,10 +610,10 @@ export default function AnalysisPage() {
                     <div className="h-full bg-gradient-to-r from-teal-500 to-teal-400 rounded-full transition-all" style={{ width: '17.5%' }} />
                   </div>
                   <div className="flex justify-between text-xs mt-1">
-                    <span className="text-teal-400 font-bold">17.5% utilized</span>
-                    <span className="text-gray-500">82.5% headroom</span>
+                    <span className="text-teal-600 font-bold">17.5% utilized</span>
+                    <span className="text-slate-500">82.5% headroom</span>
                   </div>
-                  <div className="mt-3 text-xs text-gray-500 italic">Significant headroom for population growth</div>
+                  <div className="mt-3 text-xs text-slate-500 italic">Significant headroom for population growth</div>
                 </div>
 
                 {/* D: Landfill Diversion */}
@@ -642,15 +642,15 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* E: City Context */}
-                <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
-                  <h3 className="text-lg font-bold mb-1 text-indigo-400">HSR Layout in City Context</h3>
-                  <p className="text-gray-500 text-xs mb-4">vs Bengaluru average</p>
+                <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-3xl p-6">
+                  <h3 className="text-lg font-bold mb-1 text-indigo-600">HSR Layout in City Context</h3>
+                  <p className="text-slate-500 text-xs mb-4">vs Bengaluru average</p>
                   <table className="w-full text-sm mb-4">
                     <thead>
                       <tr className="border-b border-slate-200">
                         <th className="text-left py-2 text-slate-600 font-bold text-xs uppercase">Metric</th>
-                        <th className="text-center py-2 text-teal-400 font-bold text-xs uppercase">HSR</th>
-                        <th className="text-center py-2 text-indigo-400 font-bold text-xs uppercase">Bengaluru</th>
+                        <th className="text-center py-2 text-teal-600 font-bold text-xs uppercase">HSR</th>
+                        <th className="text-center py-2 text-indigo-600 font-bold text-xs uppercase">Bengaluru</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
@@ -662,14 +662,14 @@ export default function AnalysisPage() {
                       ].map((r, i) => (
                         <tr key={i} className="hover:bg-slate-50">
                           <td className="py-2.5 text-slate-700">{r.metric}</td>
-                          <td className="py-2.5 text-center text-teal-400 font-bold">{r.hsr}</td>
-                          <td className="py-2.5 text-center text-indigo-300">{r.blr}</td>
+                          <td className="py-2.5 text-center text-teal-600 font-bold">{r.hsr}</td>
+                          <td className="py-2.5 text-center text-indigo-700">{r.blr}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 text-xs text-indigo-300 leading-relaxed">
-                    HSR Layout&apos;s 80% diversion rate exceeds Bengaluru&apos;s city average of 47% (1,530/3,250 TPD). <span className="text-gray-500">Source: BBMP NGT report</span>
+                  <div className="bg-indigo-500/5 border border-indigo-500/10 rounded-xl p-3 text-xs text-indigo-700 leading-relaxed">
+                    HSR Layout&apos;s 80% diversion rate exceeds Bengaluru&apos;s city average of 47% (1,530/3,250 TPD). <span className="text-slate-500">Source: BBMP NGT report</span>
                   </div>
                 </div>
               </div>
@@ -704,10 +704,10 @@ export default function AnalysisPage() {
               {/* B: 4 Metric Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
-                  { color: 'teal',    val: '3,548 m³',   label: 'CH₄ produced/day',      sub: '0.25 m³/kg × 14,190 kg wet',  sub2: 'Source: IPCC 2006',             bg: 'from-teal-900/40', border: 'border-teal-500/40',    text: 'text-teal-400' },
+                  { color: 'teal',    val: '3,548 m³',   label: 'CH₄ produced/day',      sub: '0.25 m³/kg × 14,190 kg wet',  sub2: 'Source: IPCC 2006',             bg: 'from-teal-900/40', border: 'border-teal-500/40',    text: 'text-teal-600' },
                   { color: 'green',   val: '21,285 kWh', label: 'Energy potential/day',  sub: 'Powers ~7,095 homes/day',      sub2: '6 kWh per m³ CH₄',            bg: 'from-green-900/40', border: 'border-green-500/40',  text: 'text-green-400' },
-                  { color: 'blue',    val: '71.1 tons',  label: 'CO₂ equivalent/day',    sub: 'CH₄ GWP = 28× CO₂ (IPCC AR5)', sub2: 'Captured = prevented',          bg: 'from-blue-900/40',  border: 'border-blue-500/40',   text: 'text-blue-400' },
-                  { color: 'amber',   val: '₹5.19 Cr',    label: 'Carbon credits/year',   sub: '25,959 tons CO₂e × ₹2,000/ton', sub2: 'India carbon market 2024',      bg: 'from-amber-900/40', border: 'border-amber-500/40',  text: 'text-amber-400' },
+                  { color: 'blue',    val: '71.1 tons',  label: 'CO₂ equivalent/day',    sub: 'CH₄ GWP = 28× CO₂ (IPCC AR5)', sub2: 'Captured = prevented',          bg: 'from-blue-900/40',  border: 'border-blue-500/40',   text: 'text-blue-600' },
+                  { color: 'amber',   val: '₹5.19 Cr',    label: 'Carbon credits/year',   sub: '25,959 tons CO₂e × ₹2,000/ton', sub2: 'India carbon market 2024',      bg: 'from-amber-900/40', border: 'border-amber-500/40',  text: 'text-amber-600' },
                 ].map((card, i) => (
                   <div key={i} className={`bg-gradient-to-b ${card.bg} to-transparent border ${card.border} rounded-3xl p-6`}>
                     <div className={`${card.text} font-black text-3xl mb-1`}>{card.val}</div>
@@ -720,7 +720,7 @@ export default function AnalysisPage() {
 
               {/* C: Biogas Flow Diagram */}
               <div className="bg-white border border-slate-200 shadow-md rounded-3xl p-8">
-                <h3 className="text-xl font-bold text-center text-emerald-400 mb-8">Biogas Flow: Waste → Energy</h3>
+                <h3 className="text-xl font-bold text-center text-emerald-600 mb-8">Biogas Flow: Waste → Energy</h3>
                 <div className="flex flex-col items-center gap-2">
                   {/* Wet Waste */}
                   <div className="bg-green-50 border-2 border-green-500 rounded-2xl px-8 py-3 text-center min-w-[200px]">
@@ -730,21 +730,21 @@ export default function AnalysisPage() {
                   <div className="w-0.5 h-6 bg-green-500/50" /><div className="text-green-400 text-xs">▼</div>
                   {/* Bio-meth */}
                   <div className="bg-slate-50 border-2 border-teal-500 rounded-2xl px-8 py-3 text-center min-w-[200px]">
-                    <div className="text-teal-400 font-bold text-xs uppercase tracking-wider">Bio-methanisation</div>
+                    <div className="text-teal-600 font-bold text-xs uppercase tracking-wider">Bio-methanisation</div>
                     <div className="text-slate-900 font-bold">2 units in HSR Layout</div>
                   </div>
-                  <div className="w-0.5 h-6 bg-teal-500/50" /><div className="text-teal-400 text-xs">▼</div>
+                  <div className="w-0.5 h-6 bg-teal-500/50" /><div className="text-teal-600 text-xs">▼</div>
                   {/* Split */}
                   <div className="grid grid-cols-2 gap-8 w-full max-w-md">
                     <div className="flex flex-col items-center gap-2">
                       <div className="bg-blue-50 border-2 border-blue-500 rounded-2xl p-4 text-center w-full">
-                        <div className="text-blue-400 font-bold text-xs">CH₄ Gas</div>
+                        <div className="text-blue-600 font-bold text-xs">CH₄ Gas</div>
                         <div className="text-slate-900 font-black text-lg">3,548 m³</div>
                         <div className="text-blue-300 text-xs">/day</div>
                       </div>
-                      <div className="w-0.5 h-5 bg-blue-500/50" /><div className="text-blue-400 text-xs">▼</div>
+                      <div className="w-0.5 h-5 bg-blue-500/50" /><div className="text-blue-600 text-xs">▼</div>
                       <div className="bg-blue-50 border border-blue-500/50 rounded-xl p-3 text-center w-full">
-                        <div className="text-amber-400 font-black text-base">21,285 kWh</div>
+                        <div className="text-amber-600 font-black text-base">21,285 kWh</div>
                         <div className="text-slate-600 text-xs">energy/day</div>
                         <div className="text-green-400 text-xs mt-1">→ ~7,095 homes</div>
                       </div>
@@ -763,26 +763,26 @@ export default function AnalysisPage() {
               {/* D: Infrastructure Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div className="bg-white border-2 border-teal-500/40 rounded-3xl p-6">
-                  <div className="text-teal-400 font-black text-lg mb-2">Swachagraha Kalika Kendra</div>
+                  <div className="text-teal-600 font-black text-lg mb-2">Swachagraha Kalika Kendra</div>
                   <div className="text-slate-600 text-xs mb-3">📍 Sector 4, HSR Layout BBMP Park</div>
                   <p className="text-slate-700 text-sm leading-relaxed">&ldquo;One-of-a-kind Composting Learning Centre with live models of community and home composting units.&rdquo;</p>
-                  <div className="text-xs text-gray-500 mt-3 italic">Source: Wikipedia + OpenCity</div>
+                  <div className="text-xs text-slate-500 mt-3 italic">Source: Wikipedia + OpenCity</div>
                 </div>
                 <div className="bg-white border-2 border-amber-500/40 rounded-3xl p-6">
-                  <div className="text-amber-400 font-black text-lg mb-2">HSR Bio-meth Units</div>
+                  <div className="text-amber-600 font-black text-lg mb-2">HSR Bio-meth Units</div>
                   <div className="space-y-1 text-sm mb-3">
                     <div className="flex justify-between"><span className="text-slate-600">Active units:</span><span className="text-slate-900 font-bold">2</span></div>
                     <div className="flex justify-between"><span className="text-slate-600">Capacity:</span><span className="text-slate-900 font-bold">10 TPD</span></div>
-                    <div className="flex justify-between"><span className="text-slate-600">Current load:</span><span className="text-amber-400 font-bold">14.10 TPD</span></div>
+                    <div className="flex justify-between"><span className="text-slate-600">Current load:</span><span className="text-amber-600 font-bold">14.10 TPD</span></div>
                   </div>
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-3 py-2 text-xs text-amber-300">⚠️ Near capacity &mdash; Kudlu plant will add capacity</div>
+                  <div className="bg-amber-500/5 border border-amber-500/30 rounded-xl px-3 py-2 text-xs text-amber-300">⚠️ Near capacity &mdash; Kudlu plant will add capacity</div>
                 </div>
                 <div className="bg-white border-2 border-blue-500/40 rounded-3xl p-6">
-                  <div className="text-blue-400 font-black text-lg mb-2">Kudlu Biogas Plant</div>
+                  <div className="text-blue-600 font-black text-lg mb-2">Kudlu Biogas Plant</div>
                   <div className="text-slate-600 text-xs mb-2">📍 Kudlu (adjacent to HSR Layout)</div>
-                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl px-3 py-2 text-xs text-blue-300 mb-3">🔨 Under construction</div>
+                  <div className="bg-blue-500/5 border border-blue-500/30 rounded-xl px-3 py-2 text-xs text-blue-300 mb-3">🔨 Under construction</div>
                   <p className="text-slate-700 text-sm leading-relaxed">Large biogas plant being built near HSR Layout &mdash; will handle overflow wet waste from HSR. Significant capacity expansion incoming.</p>
-                  <div className="text-xs text-gray-500 mt-3 italic">Source: Deccan Herald</div>
+                  <div className="text-xs text-slate-500 mt-3 italic">Source: Deccan Herald</div>
                 </div>
               </div>
 
@@ -790,7 +790,7 @@ export default function AnalysisPage() {
               <div className="bg-white border border-slate-200 shadow-md rounded-3xl p-8">
                 <h3 className="text-xl font-bold mb-6 text-center">HSR Layout vs Open Dump Scenario</h3>
                 <div className="grid grid-cols-2 gap-0 border border-slate-200 shadow-md rounded-2xl overflow-hidden text-sm">
-                  <div className="bg-green-900/20 p-4 border-r border-slate-200 shadow-md">
+                  <div className="bg-green-900/10 p-4 border-r border-slate-200 shadow-md">
                     <div className="text-green-400 font-black text-lg mb-3">HSR Layout ✅</div>
                     {['0 open dumpyards','All CH₄ captured','Energy generated','Carbon credits earned','Zero smell / disease'].map((t,i) => (
                       <div key={i} className="flex items-center gap-2 py-1.5 text-slate-700 border-b border-slate-200 shadow-sm last:border-0">
@@ -798,7 +798,7 @@ export default function AnalysisPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="bg-red-900/20 p-4">
+                  <div className="bg-red-900/10 p-4">
                     <div className="text-red-400 font-black text-lg mb-3">Open Dump ❌</div>
                     {['Uncontrolled CH₄','28× CO₂ warming','Energy wasted','Carbon liability','Health hazard'].map((t,i) => (
                       <div key={i} className="flex items-center gap-2 py-1.5 text-slate-700 border-b border-slate-200 shadow-sm last:border-0">
@@ -807,7 +807,7 @@ export default function AnalysisPage() {
                     ))}
                   </div>
                 </div>
-                <div className="mt-4 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl px-5 py-3 text-sm text-indigo-300 text-center italic">
+                <div className="mt-4 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl px-5 py-3 text-sm text-indigo-700 text-center italic">
                   HSR Layout&apos;s zero-dumpyard status makes it a model ward for Bengaluru&apos;s SWM reform agenda.
                 </div>
               </div>

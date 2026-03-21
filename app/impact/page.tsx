@@ -13,19 +13,19 @@ import { HSR_DATA } from "@/lib/constants";
 
 // --- Icons ---
 const FuelIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21v-6"/><path d="M15 21v-6"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21v-6"/><path d="M15 21v-6"/></svg>
 );
 const TrashIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
 );
 const LeafIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
 );
 const ActivityIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
 );
 const HardHatIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 18V15c0-3.3 2.7-6 6-6h8c3.3 0 6 2.7 6 6v3"/><path d="M12 9V5"/><path d="M12 5C9.8 5 8 6.8 8 9"/><path d="M12 5c2.2 0 4 1.8 4 4"/><path d="M20 22v-4"/><path d="M4 22v-4"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 18V15c0-3.3 2.7-6 6-6h8c3.3 0 6 2.7 6 6v3"/><path d="M12 9V5"/><path d="M12 5C9.8 5 8 6.8 8 9"/><path d="M12 5c2.2 0 4 1.8 4 4"/><path d="M20 22v-4"/><path d="M4 22v-4"/></svg>
 );
 
 function AnimatedCounter({ value, decimals = 1, prefix = "", suffix = "" }: { value: number, decimals?: number, prefix?: string, suffix?: string }) {
@@ -200,7 +200,7 @@ export default function ImpactDashboard() {
                     <h3 className="font-bold text-slate-500 uppercase tracking-widest text-xs">{card.title}</h3>
                   </div>
                   <div className="text-4xl font-black text-slate-900 tracking-tight mb-2">
-                    {card.value}<span className="text-lg text-slate-400 font-bold">{card.unit}</span>
+                    {card.value}<span className="text-lg text-slate-500 font-bold">{card.unit}</span>
                   </div>
                   <p className="text-sm font-medium text-slate-500 leading-relaxed">
                     {card.desc}
@@ -293,7 +293,7 @@ export default function ImpactDashboard() {
                <h3 className="text-slate-600 font-bold text-base">Haz + Other (9%)</h3>
                <div className="text-3xl font-black text-slate-900">{(HSR_DATA.waste_hazardous_tons + HSR_DATA.waste_other_tons).toFixed(2)}T<span className="text-sm text-slate-500 font-normal"> / day</span></div>
                <p className="text-slate-600 text-sm leading-relaxed">{HSR_DATA.waste_hazardous_pct}% Hazardous to special contractor. {HSR_DATA.waste_other_pct}% Other to street sweep.</p>
-               <div className="text-xs text-slate-400 italic">Source: BBMP SWM Rules 2023</div>
+               <div className="text-xs text-slate-500 italic">Source: BBMP SWM Rules 2023</div>
              </div>
            </div>
            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3 text-xs text-amber-700 font-medium italic">
@@ -331,7 +331,7 @@ export default function ImpactDashboard() {
                   <LineChart data={populationData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                     <XAxis dataKey="year" tick={{ fill: '#64748b', fontWeight: 600 }} />
-                    <YAxis yAxisId="left" tickFormatter={(val: any) => `${(val/1000).toFixed(0)}k`} tick={{ fill: '#64748b', fontWeight: 600 }} />
+                    <YAxis yAxisId="left" tickFormatter={(val: any) => `${(val/500).toFixed(0)}k`} tick={{ fill: '#64748b', fontWeight: 600 }} />
                     <YAxis yAxisId="right" orientation="right" tickFormatter={(val: any) => `${val}t`} tick={{ fill: '#64748b', fontWeight: 600 }} />
                     <Tooltip 
                       cursor={{ stroke: '#cbd5e1', strokeWidth: 2 }} 
@@ -535,25 +535,25 @@ export default function ImpactDashboard() {
           <h2 className="text-3xl font-extrabold text-slate-900 mb-6">Two-Tier Collection System — HSR Layout</h2>
           
           {/* Flow Diagram */}
-          <div className="w-full bg-slate-900 border border-slate-200 rounded-3xl p-8 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between text-center gap-4">
+          <div className="w-full bg-slate-100 border border-slate-200 rounded-3xl p-8 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between text-center gap-4">
              <div className="flex flex-col items-center">
                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl border border-slate-200 mb-2 shadow-inner">🏠</div>
-               <span className="text-white font-bold text-sm">Houses</span>
+               <span className="text-slate-900 font-bold text-sm">Houses</span>
              </div>
-             <span className="text-teal-400 font-extrabold text-xl">→</span>
+             <span className="text-teal-600 font-extrabold text-xl">→</span>
              <div className="flex flex-col items-center">
-               <div className="w-16 h-16 bg-orange-500/20 text-orange-400 rounded-full flex items-center justify-center text-2xl border border-orange-500/50 mb-2">🛺</div>
-               <span className="text-white font-bold text-sm">Auto (Sub Roads)</span>
+               <div className="w-16 h-16 bg-orange-500/10 text-orange-400 rounded-full flex items-center justify-center text-2xl border border-orange-500/50 mb-2">🛺</div>
+               <span className="text-slate-900 font-bold text-sm">Auto (Sub Roads)</span>
              </div>
-             <span className="text-teal-400 font-extrabold text-xl">→</span>
+             <span className="text-teal-600 font-extrabold text-xl">→</span>
              <div className="flex flex-col items-center">
-               <div className="w-16 h-16 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center text-2xl border border-blue-500/50 mb-2">🚛</div>
-               <span className="text-white font-bold text-sm">Truck Hub (Main Rd)</span>
+               <div className="w-16 h-16 bg-blue-500/10 text-blue-600 rounded-full flex items-center justify-center text-2xl border border-blue-500/50 mb-2">🚛</div>
+               <span className="text-slate-900 font-bold text-sm">Truck Hub (Main Rd)</span>
              </div>
-             <span className="text-teal-400 font-extrabold text-xl">→</span>
+             <span className="text-teal-600 font-extrabold text-xl">→</span>
              <div className="flex flex-col items-center">
-               <div className="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-2xl border border-emerald-500/50 mb-2">🏭</div>
-               <span className="text-white font-bold text-sm">Processing Unit</span>
+               <div className="w-16 h-16 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center text-2xl border border-emerald-500/50 mb-2">🏭</div>
+               <span className="text-slate-900 font-bold text-sm">Processing Unit</span>
              </div>
           </div>
 
@@ -616,12 +616,12 @@ export default function ImpactDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Infrastructure Efficiency */}
             <div className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 text-sm font-mono text-emerald-100 shadow-sm">
-              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>⚡</span> Infrastructure Efficiency</h3>
+              <h3 className="text-slate-900 font-bold text-base mb-4 flex items-center gap-2"><span>⚡</span> Infrastructure Efficiency</h3>
               <div className="grid grid-cols-1 gap-y-3">
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">DWCC Utilisation:</span><span className="text-white font-bold">17.5% (16 DWCCs)</span></div>
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Bio-meth load:</span><span className="text-amber-400 font-bold">14.2T / 65T capacity = 21.8%</span></div>
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Landfill diversion:</span><span className="text-emerald-300 font-bold">80%</span></div>
-                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-emerald-200">Open dumpyards:</span><span className="text-emerald-300 font-bold">0 ✔</span></div>
+                <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-emerald-200">DWCC Utilisation:</span><span className="text-slate-900 font-bold">17.5% (16 DWCCs)</span></div>
+                <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-emerald-200">Bio-meth load:</span><span className="text-amber-600 font-bold">14.2T / 65T capacity = 21.8%</span></div>
+                <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-emerald-200">Landfill diversion:</span><span className="text-emerald-300 font-bold">80%</span></div>
+                <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-emerald-200">Open dumpyards:</span><span className="text-emerald-300 font-bold">0 ✔</span></div>
                 <div className="flex justify-between pb-2"><span className="text-emerald-200">Methane risk:</span><span className="text-emerald-300 font-bold">LOW ✅</span></div>
               </div>
               <div className="mt-4 bg-emerald-800/50 border border-emerald-700/50 rounded-xl p-3 text-xs text-emerald-100 leading-relaxed">
@@ -736,24 +736,24 @@ export default function ImpactDashboard() {
 
         {/* SECTION 7: SCALE-UP IMPLICATIONS */}
         <section className="mb-20">
-          <div className="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-900 border border-slate-200 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <h2 className="text-3xl font-extrabold text-white mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
-            <p className="text-center font-medium text-emerald-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.42Cr total value/year · 198 wards × ₹9.42Cr = ₹1,865 Crores</p>
+          <div className="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-900 border border-slate-200 rounded-3xl p-8 shadow-lg relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[100px] rounded-full pointer-events-none" />
+            <h2 className="text-3xl font-extrabold text-slate-900 mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
+            <p className="text-center font-medium text-emerald-600 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.42Cr total value/year · 198 wards × ₹9.42Cr = ₹1,865 Crores</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-              <div className="bg-white/10 border border-white/20 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
+              <div className="bg-slate-100 border border-slate-300 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
                 <div className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-1">Total Population</div>
-                <div className="text-4xl font-black text-white">~1.4 Crores</div>
+                <div className="text-4xl font-black text-slate-900">~1.4 Crores</div>
               </div>
-              <div className="bg-white/10 border border-white/20 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
+              <div className="bg-slate-100 border border-slate-300 shadow-md rounded-2xl p-6 text-center backdrop-blur-sm">
                 <div className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-1">Daily Waste</div>
-                <div className="text-4xl font-black text-white">~6,500 Tons</div>
+                <div className="text-4xl font-black text-slate-900">~6,500 Tons</div>
               </div>
               <div className="bg-emerald-600 border border-emerald-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2 relative">
                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-700 opacity-50 rounded-2xl -z-10"></div>
-                <div className="text-xs font-bold text-white/80 uppercase tracking-widest mb-1">Potential Annual Value</div>
-                <div className="text-4xl font-black text-white">₹1,865 Cr</div>
+                <div className="text-xs font-bold text-slate-900/80 uppercase tracking-widest mb-1">Potential Annual Value</div>
+                <div className="text-4xl font-black text-slate-900">₹1,865 Cr</div>
               </div>
             </div>
           </div>

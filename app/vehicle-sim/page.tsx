@@ -684,7 +684,7 @@ export default function VehicleSimulationPage() {
             {[
               { label: 'On Route', value: stats.filter(v=>!v.done).length, color: '#3b82f6' },
               { label: 'Delivered', value: doneCount, color: '#22c55e' },
-              { label: 'Waste Collected', value: `${(totalCollected/1000).toFixed(1)}T`, color: '#f59e0b' },
+              { label: 'Waste Collected', value: `${(totalCollected/500).toFixed(1)}T`, color: '#f59e0b' },
             ].map(s => (
               <div key={s.label} style={{ background: 'rgba(10,15,26,0.88)', backdropFilter: 'blur(8px)',
                 border: `1px solid ${s.color}33`, borderRadius: 10, padding: '8px 14px', minWidth: 130 }}>

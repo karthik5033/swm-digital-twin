@@ -22,10 +22,10 @@ export default function EnginePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050914] text-slate-900 font-sans selection:bg-indigo-500/30 overflow-x-hidden relative">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 overflow-x-hidden relative">
       {/* Background Orbs */}
-      <div className="fixed top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-teal-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
+      <div className="fixed top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-teal-500/5 rounded-full blur-[150px] pointer-events-none z-0" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/5 rounded-full blur-[150px] pointer-events-none z-0" />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }} 
@@ -45,40 +45,40 @@ export default function EnginePage() {
         {/* SECTION 1: WASTE ESTIMATION MODEL */}
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 text-2xl font-black">1</div>
+            <div className="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-500/30 flex items-center justify-center text-teal-600 text-2xl font-black">1</div>
             <h2 className="text-3xl font-extrabold text-slate-900">Waste Estimation Model</h2>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div className="lg:col-span-3 bg-slate-50/80 backdrop-blur-xl border border-slate-200 shadow-md p-8 rounded-3xl shadow-2xl">
-              <h3 className="text-teal-400 font-mono text-sm tracking-widest uppercase mb-6">Algorithm Formula</h3>
-              <div className="bg-black/50 p-6 rounded-2xl border border-slate-200 shadow-sm font-mono text-lg md:text-xl overflow-x-auto text-slate-700">
-                <span className="text-teal-400">Waste</span> = (0.45 * <span className="text-indigo-400">P</span>) + (2.0 * <span className="text-pink-400">C</span>) * <span className="text-orange-400">M</span>
+            <div className="lg:col-span-3 bg-slate-50/80 backdrop-blur-xl border border-slate-200 shadow-md p-8 rounded-3xl shadow-lg">
+              <h3 className="text-teal-600 font-mono text-sm tracking-widest uppercase mb-6">Algorithm Formula</h3>
+              <div className="bg-slate-100 p-6 rounded-2xl border border-slate-200 shadow-sm font-mono text-lg md:text-xl overflow-x-auto text-slate-700">
+                <span className="text-teal-600">Waste</span> = (0.45 * <span className="text-indigo-600">P</span>) + (2.0 * <span className="text-pink-600">C</span>) * <span className="text-orange-400">M</span>
               </div>
               
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="text-indigo-400 font-bold mb-1">P = Population</div>
+                  <div className="text-indigo-600 font-bold mb-1">P = Population</div>
                   <div className="text-slate-600 text-sm font-light">Derived from density × 4.2 ppl/house</div>
                 </div>
                 <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="text-pink-400 font-bold mb-1">C = Commercial Score</div>
+                  <div className="text-pink-600 font-bold mb-1">C = Commercial Score</div>
                   <div className="text-slate-600 text-sm font-light">Road density * 0.4 + major_roads * 3.0</div>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-2 bg-gradient-to-br from-indigo-500/10 to-pink-500/10 backdrop-blur-xl border border-indigo-500/20 p-8 rounded-3xl shadow-2xl flex flex-col justify-between">
+            <div className="lg:col-span-2 bg-gradient-to-br from-indigo-500/5 to-pink-500/5 backdrop-blur-xl border border-indigo-500/10 p-8 rounded-3xl shadow-lg flex flex-col justify-between">
               <div>
-                <h3 className="text-indigo-400 font-mono text-sm tracking-widest uppercase mb-4">Multipliers (M)</h3>
+                <h3 className="text-indigo-600 font-mono text-sm tracking-widest uppercase mb-4">Multipliers (M)</h3>
                 <ul className="space-y-4">
                   <li className="flex justify-between items-center bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm">
                     <span className="text-slate-700">Rainfall &gt; 10mm</span>
-                    <span className="text-rose-400 font-mono font-bold">+15% (1.15x)</span>
+                    <span className="text-rose-600 font-mono font-bold">+15% (1.15x)</span>
                   </li>
                   <li className="flex justify-between items-center bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm">
                     <span className="text-slate-700">Rainfall &gt; 25mm</span>
-                    <span className="text-rose-400 font-mono font-bold">+30% (1.30x)</span>
+                    <span className="text-rose-600 font-mono font-bold">+30% (1.30x)</span>
                   </li>
                   <li className="flex justify-between items-center bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm">
                     <span className="text-slate-700">Festival (Diwali)</span>
@@ -93,7 +93,7 @@ export default function EnginePage() {
         {/* SECTION 2: VEHICLE CAPACITY ANALYSIS */}
         <section className="space-y-6 pt-8 border-t border-slate-200 shadow-md">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-2xl font-black">2</div>
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-500/30 flex items-center justify-center text-indigo-600 text-2xl font-black">2</div>
             <h2 className="text-3xl font-extrabold text-slate-900">Vehicle Capacity Analysis</h2>
           </div>
           <p className="text-slate-600 font-light max-w-3xl">
@@ -108,7 +108,7 @@ export default function EnginePage() {
                 <div key={idx} className="bg-slate-50/80 border border-slate-200 shadow-md p-6 rounded-3xl shadow-xl flex flex-col h-full hover:border-indigo-500/30 transition-colors">
                   <div className="flex justify-between items-start mb-6">
                     <h3 className="text-xl font-bold font-mono text-slate-900">{truck.truck_id.replace('_', ' ')}</h3>
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${isDanger ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${isDanger ? 'bg-orange-500/10 text-orange-400 border border-orange-500/30' : 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/30'}`}>
                       {truck.stops} Stops
                     </span>
                   </div>
@@ -118,7 +118,7 @@ export default function EnginePage() {
                       <span className="text-slate-600">Load Utilization</span>
                       <span className="font-bold text-slate-900">{truck.total_waste_kg} / 5000 kg</span>
                     </div>
-                    <div className="w-full h-3 bg-black/50 rounded-full overflow-hidden border border-slate-200 shadow-sm">
+                    <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200 shadow-sm">
                       <div 
                         className={`h-full rounded-full transition-all duration-1000 ${isDanger ? 'bg-gradient-to-r from-orange-500 to-rose-500' : 'bg-gradient-to-r from-teal-500 to-emerald-500'}`} 
                         style={{ width: `${Math.min(capPct, 100)}%` }} 
@@ -127,13 +127,13 @@ export default function EnginePage() {
                   </div>
 
                   <div className="mt-auto grid grid-cols-2 gap-4">
-                    <div className="bg-black/30 p-3 rounded-xl border border-slate-200 shadow-sm">
-                      <div className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Distance</div>
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm">
+                      <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Distance</div>
                       <div className="text-lg font-bold text-slate-900">{truck.route_distance_km} km</div>
                     </div>
-                    <div className="bg-black/30 p-3 rounded-xl border border-slate-200 shadow-sm">
-                      <div className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Efficiency</div>
-                      <div className="text-lg font-bold text-indigo-400">{Math.round(truck.total_waste_kg / truck.route_distance_km)} kg/km</div>
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-sm">
+                      <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Efficiency</div>
+                      <div className="text-lg font-bold text-indigo-600">{Math.round(truck.total_waste_kg / truck.route_distance_km)} kg/km</div>
                     </div>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function EnginePage() {
         {/* SECTION 3: ROUTE OPTIMIZATION LOGIC */}
         <section className="space-y-6 pt-8 border-t border-slate-200 shadow-md">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-400 text-2xl font-black">3</div>
+            <div className="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-600 text-2xl font-black">3</div>
             <h2 className="text-3xl font-extrabold text-slate-900">Route Optimization Intelligence</h2>
           </div>
           
@@ -161,19 +161,19 @@ export default function EnginePage() {
               </p>
               
               <div className="space-y-3 font-mono text-sm">
-                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-rose-500/20 text-rose-300">
+                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-rose-500/10 text-rose-300">
                   <span>[Excluded Networks]</span>
                   <span>&apos;footway&apos;, &apos;path&apos;, &apos;steps&apos;</span>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-teal-500/20">
+                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-teal-500/10">
                   <span className="text-slate-600">Trunk / Highway (0.5x speed factor)</span>
-                  <span className="text-teal-400 font-bold">Preferred</span>
+                  <span className="text-teal-600 font-bold">Preferred</span>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-zinc-500/50">
+                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
                   <span className="text-slate-600">Residential (1.0x speed factor)</span>
                   <span className="text-zinc-400 font-bold">Standard</span>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-orange-500/20">
+                <div className="flex justify-between items-center bg-white p-3 rounded-lg border border-orange-500/10">
                   <span className="text-slate-600">Service Road (1.2x speed factor)</span>
                   <span className="text-orange-400 font-bold">Penalized</span>
                 </div>
@@ -184,13 +184,13 @@ export default function EnginePage() {
               <h3 className="text-xl font-bold mb-4 text-slate-900">Mathematical Graph Execution</h3>
               <div className="space-y-4">
                 <div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Graph Nodes Processed</div>
-                  <div className="text-4xl font-black text-indigo-400">5,475</div>
+                  <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">Graph Nodes Processed</div>
+                  <div className="text-4xl font-black text-indigo-600">5,475</div>
                 </div>
-                <div className="w-full h-px bg-white/10" />
+                <div className="w-full h-px bg-slate-100" />
                 <div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Graph Edges Mapped</div>
-                  <div className="text-4xl font-black text-pink-400">6,525</div>
+                  <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">Graph Edges Mapped</div>
+                  <div className="text-4xl font-black text-pink-600">6,525</div>
                 </div>
                 <div className="text-slate-600 text-sm mt-4 font-light leading-relaxed">
                   Leveraging absolute Cartesian distances wrapped with the speed friction coefficients to derive minimum spanning trees back to the Depot at processing_centers[0].

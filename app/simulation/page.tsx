@@ -11,22 +11,22 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 // --- Icons ---
 const SettingsIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
 );
 const WasteIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
 );
 const MapIcon = () => (
-   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+   <svg xmlns="http://www.w3.org/1000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
 );
 const TrendingDownIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
 );
 const CloudIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+  <svg xmlns="http://www.w3.org/1000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
 );
 const SpinnerIcon = () => (
-  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/1000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
 );
 
 function AnimatedNumber({ value }: { value: number }) {
@@ -173,13 +173,13 @@ export default function SimulationPanel() {
 
   const renderMetricDiff = (current: number, base: number) => {
     const diffNum = current - base;
-    if (Math.abs(diffNum) < 0.1) return <span className="text-gray-400 bg-white/10 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">0% vs normal</span>;
+    if (Math.abs(diffNum) < 0.1) return <span className="text-slate-500 bg-slate-100 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">0% vs normal</span>;
     const percentChange = ((diffNum / base) * 100).toFixed(1);
     const isIncrease = diffNum > 0;
     
     const colorClass = isIncrease 
-      ? 'text-rose-400 bg-rose-500/20 border border-rose-500/30' 
-      : 'text-emerald-400 bg-emerald-500/20 border border-emerald-500/30';
+      ? 'text-rose-600 bg-rose-50 border border-rose-500/30' 
+      : 'text-emerald-600 bg-emerald-500/10 border border-emerald-500/30';
       
     return (
       <span className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${colorClass}`}>
@@ -189,122 +189,122 @@ export default function SimulationPanel() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050914] text-white p-4 md:p-8 font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8 font-sans relative overflow-x-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 relative z-10">
-        <div className="fixed top-[10%] left-[0%] w-[40vw] h-[40vw] bg-teal-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
-        <div className="fixed bottom-[10%] right-[0%] w-[40vw] h-[40vw] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
+        <div className="fixed top-[10%] left-[0%] w-[40vw] h-[40vw] bg-teal-500/5 rounded-full blur-[150px] pointer-events-none z-0" />
+        <div className="fixed bottom-[10%] right-[0%] w-[40vw] h-[40vw] bg-indigo-500/5 rounded-full blur-[150px] pointer-events-none z-0" />
         
         {/* LEFT PANEL */}
-        <div className="w-full md:w-[35%] bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col gap-8 h-fit">
-          <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-            <div className="bg-teal-500/20 text-teal-400 p-2.5 rounded-lg border border-teal-500/30">
+        <div className="w-full md:w-[35%] bg-white border border-slate-200 backdrop-blur-xl rounded-2xl p-6 shadow-xl flex flex-col gap-8 h-fit">
+          <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
+            <div className="bg-teal-50 text-teal-600 p-2.5 rounded-lg border border-teal-500/30">
               <SettingsIcon />
             </div>
             <div>
-                <h2 className="text-xl font-extrabold tracking-tight text-white">HSR Layout Scenarios</h2>
-                <p className="text-xs font-bold text-gray-400 mt-1 uppercase">Predictive AI Model</p>
+                <h2 className="text-xl font-extrabold tracking-tight text-slate-900">HSR Layout Scenarios</h2>
+                <p className="text-xs font-bold text-slate-500 mt-1 uppercase">Predictive AI Model</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-6">
 
             {/* REAL DATA BASELINE CARD */}
-            <div className="bg-black/40 border border-teal-500/20 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
-              <div className="flex items-center gap-2 mb-3 text-gray-200 font-bold text-sm">
-                <span className="text-teal-400"><Activity className="w-4 h-4 inline-block mr-1"/></span> Verified Building-Based Data
+            <div className="bg-slate-50 border border-teal-500/10 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-600">
+              <div className="flex items-center gap-2 mb-3 text-slate-800 font-bold text-sm">
+                <span className="text-teal-600"><Activity className="w-4 h-4 inline-block mr-1"/></span> Verified Building-Based Data
               </div>
-              <div className="mb-2 border-b border-white/5 pb-2">
-                <div className="flex justify-between"><span className="text-gray-400">Population:</span> <span className="text-gray-200 font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Houses:</span> <span className="text-slate-300">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Apts:</span> <span className="text-slate-300">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Offices:</span> <span className="text-slate-300">39 × 15 = {HSR_DATA.population_offices}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Hospitals:</span> <span className="text-slate-300">2 × 50 = {HSR_DATA.population_hospitals}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Schools:</span> <span className="text-slate-300">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Others:</span> <span className="text-slate-300">30 × 3 = {HSR_DATA.population_others}</span></div>
+              <div className="mb-2 border-b border-slate-100 pb-2">
+                <div className="flex justify-between"><span className="text-slate-500">Population:</span> <span className="text-slate-800 font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500">Method:</span> <span className="text-slate-600">Buildings × household size</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-600">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-600">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-600">39 × 15 = {HSR_DATA.population_offices}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Hospitals:</span> <span className="text-slate-600">2 × 50 = {HSR_DATA.population_hospitals}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-600">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-600">30 × 3 = {HSR_DATA.population_others}</span></div>
               </div>
-              <div className="mb-2 border-b border-white/5 pb-2">
-                <div className="flex justify-between"><span className="text-gray-400">Per capita:</span> <span className="text-gray-200">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Daily Waste:</span> <span className="text-gray-200 font-bold text-amber-400">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
+              <div className="mb-2 border-b border-slate-100 pb-2">
+                <div className="flex justify-between"><span className="text-slate-500">Per capita:</span> <span className="text-slate-800">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
+                <div className="flex justify-between"><span className="text-slate-500">Daily Waste:</span> <span className="text-slate-800 font-bold text-amber-600">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
               </div>
-              <div className="mb-3 border-b border-white/5 pb-3">
+              <div className="mb-3 border-b border-slate-100 pb-3">
                 <div className="text-teal-500 font-bold mb-1">Composition (BBMP 2013 Official):</div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">🟢 Wet {HSR_DATA.waste_wet_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanisation</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">🔵 Dry {HSR_DATA.waste_dry_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → 16 DWCC centres</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">🔴 Haz {HSR_DATA.waste_hazardous_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_hazardous_tons}T → Special contractor</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">⚪ Other {HSR_DATA.waste_other_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons}T → Street sweep</span></div>
-                <div className="text-gray-400 ml-2 mt-1 text-[9px] italic">BBMP data: wet rose 42% (1999) → 61% (2013). Bio-meth critical.</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🟢 Wet {HSR_DATA.waste_wet_pct}%:</span> <span className="text-slate-600">{HSR_DATA.waste_wet_tons}T → Bio-methanisation</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔵 Dry {HSR_DATA.waste_dry_pct}%:</span> <span className="text-slate-600">{HSR_DATA.waste_dry_tons}T → 16 DWCC centres</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔴 Haz {HSR_DATA.waste_hazardous_pct}%:</span> <span className="text-slate-600">{HSR_DATA.waste_hazardous_tons}T → Special contractor</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">⚪ Other {HSR_DATA.waste_other_pct}%:</span> <span className="text-slate-600">{HSR_DATA.waste_other_tons}T → Street sweep</span></div>
+                <div className="text-slate-500 ml-2 mt-1 text-[9px] italic">BBMP data: wet rose 42% (1999) → 61% (2013). Bio-meth critical.</div>
               </div>
               <div className="mb-2">
                 <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.waste_daily_tons}T base:</div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Heavy rain:</span> <span className="text-slate-300">23.1 × 1.15 = 26.6T</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.1 × 1.28 = 29.6T</span></div>
-                <div className="flex justify-between"><span className="text-gray-400 ml-2">Worst case:</span> <span className="text-slate-300">23.1 × 1.49 = 34.4T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-600">23.1 × 1.15 = 26.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-600">23.1 × 1.28 = 29.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-600">23.1 × 1.49 = 34.4T</span></div>
               </div>
-              <div className="text-[10px] text-gray-400 text-right mt-2 pt-2 border-t border-white/10">Source: CPCB + Census 2011 Karnataka</div>
+              <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-200">Source: CPCB + Census 2011 Karnataka</div>
 
               {/* Climate block */}
-              <div className="mt-3 border-t border-white/5 pt-3">
+              <div className="mt-3 border-t border-slate-100 pt-3">
                 <div className="text-emerald-500 font-bold mb-1 text-xs uppercase tracking-wider">Climate Impact (IPCC 2006)</div>
-                <div className="flex justify-between text-xs"><span className="text-gray-400">CH₄ produced:</span> <span className="text-teal-300">3,548 m³/day</span></div>
-                <div className="flex justify-between text-xs"><span className="text-gray-400">CO₂ equivalent:</span> <span className="text-blue-300">71.1 T/day captured</span></div>
-                <div className="flex justify-between text-xs"><span className="text-gray-400">Energy output:</span> <span className="text-amber-300">21,285 kWh/day</span></div>
-                <div className="flex justify-between text-xs"><span className="text-gray-400">Methane risk:</span> <span className="text-green-400 font-bold">LOW <CheckCircle2 className="w-3 h-3 inline-block ml-1 text-emerald-400"/> (0 dumps)</span></div>
-                <div className="text-[9px] text-gray-400 mt-1 italic">CH₄ GWP = 28× CO₂ (IPCC AR5) · 6 kWh/m³</div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CH₄ produced:</span> <span className="text-teal-700">3,548 m³/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CO₂ equivalent:</span> <span className="text-blue-300">71.1 T/day captured</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Energy output:</span> <span className="text-amber-300">21,285 kWh/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Methane risk:</span> <span className="text-green-400 font-bold">LOW <CheckCircle2 className="w-3 h-3 inline-block ml-1 text-emerald-600"/> (0 dumps)</span></div>
+                <div className="text-[9px] text-slate-500 mt-1 italic">CH₄ GWP = 28× CO₂ (IPCC AR5) · 6 kWh/m³</div>
               </div>
             </div>
 
             {/* HSR Scenario: Demolition Spikes */}
-            <div className="flex items-center justify-between bg-white border border-white/10 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
+            <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
-                <span className="text-sm font-bold text-gray-300">Building Demolition Phase</span>
-                <span className="text-xs font-medium text-gray-400">Massive C&D waste spike (+40%) from BDA Complex rebuild</span>
+                <span className="text-sm font-bold text-slate-700">Building Demolition Phase</span>
+                <span className="text-xs font-medium text-slate-500">Massive C&D waste spike (+40%) from BDA Complex rebuild</span>
               </div>
               <button 
                 onClick={() => setDemolition(!demolition)}
-                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${demolition ? 'bg-teal-500' : 'bg-white/10'}`}
+                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${demolition ? 'bg-teal-500' : 'bg-slate-100'}`}
               >
                 <div className={`absolute top-1 left-1 bg-white w-5 h-5 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)] transform transition-transform duration-300 ${demolition ? 'translate-x-7' : 'translate-x-0'}`} />
               </button>
             </div>
 
             {/* HSR Scenario: Apartment Addition */}
-            <div className="flex items-center justify-between bg-white border border-white/10 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
+            <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
-                <span className="text-sm font-bold text-gray-300">New Apartment Complex</span>
-                <span className="text-xs font-medium text-gray-400">Addition of +500 units near Sector 2 borders</span>
+                <span className="text-sm font-bold text-slate-700">New Apartment Complex</span>
+                <span className="text-xs font-medium text-slate-500">Addition of +500 units near Sector 2 borders</span>
               </div>
               <button 
                 onClick={() => setApartments(!apartments)}
-                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${apartments ? 'bg-teal-500' : 'bg-white/10'}`}
+                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${apartments ? 'bg-teal-500' : 'bg-slate-100'}`}
               >
                 <div className={`absolute top-1 left-1 bg-white w-5 h-5 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)] transform transition-transform duration-300 ${apartments ? 'translate-x-7' : 'translate-x-0'}`} />
               </button>
             </div>
 
             {/* HSR Scenario: Open Space Encroachment */}
-            <div className="flex items-center justify-between bg-white border border-white/10 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
+            <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
-                <span className="text-sm font-bold text-gray-300">Open Space Encroachment</span>
-                <span className="text-xs font-medium text-gray-400">Illegal dumping high risk simulation near Agara Lake</span>
+                <span className="text-sm font-bold text-slate-700">Open Space Encroachment</span>
+                <span className="text-xs font-medium text-slate-500">Illegal dumping high risk simulation near Agara Lake</span>
               </div>
               <button 
                 onClick={() => setEncroachment(!encroachment)}
-                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${encroachment ? 'bg-teal-500' : 'bg-white/10'}`}
+                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${encroachment ? 'bg-teal-500' : 'bg-slate-100'}`}
               >
                 <div className={`absolute top-1 left-1 bg-white w-5 h-5 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)] transform transition-transform duration-300 ${encroachment ? 'translate-x-7' : 'translate-x-0'}`} />
               </button>
             </div>
 
             {/* HSR Scenario: Fleet Optimization */}
-            <div className="flex items-center justify-between bg-white border border-white/10 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
+            <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
               <div className="flex flex-col gap-1 max-w-[70%]">
-                <span className="text-sm font-bold text-gray-300">Expand Collection Fleet</span>
-                <span className="text-xs font-medium text-gray-400">Add +2 extra auto vehicles to Sub Roads. Cost: ₹800/d</span>
+                <span className="text-sm font-bold text-slate-700">Expand Collection Fleet</span>
+                <span className="text-xs font-medium text-slate-500">Add +2 extra auto vehicles to Sub Roads. Cost: ₹800/d</span>
               </div>
               <button 
                 onClick={() => setExtraAutos(!extraAutos)}
-                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${extraAutos ? 'bg-teal-500' : 'bg-white/10'}`}
+                className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${extraAutos ? 'bg-teal-500' : 'bg-slate-100'}`}
               >
                 <div className={`absolute top-1 left-1 bg-white w-5 h-5 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)] transform transition-transform duration-300 ${extraAutos ? 'translate-x-7' : 'translate-x-0'}`} />
               </button>
@@ -313,7 +313,7 @@ export default function SimulationPanel() {
             {/* Segregation Improvement Slider */}
             <div className="flex flex-col gap-3 mt-4">
               <div className="flex justify-between items-center">
-                <label className="text-sm font-bold text-gray-400 uppercase tracking-wider">Segregation Drive</label>
+                <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Segregation Drive</label>
                 <span className="text-teal-700 font-extrabold bg-teal-50 px-2 py-1 rounded-md text-sm border border-teal-500/30">+{segregation}% Improvement</span>
               </div>
               <input 
@@ -321,7 +321,7 @@ export default function SimulationPanel() {
                 min="0" max="50" step="10" 
                 value={segregation}
                 onChange={(e) => setSegregation(Number(e.target.value))}
-                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-teal-600 hover:accent-teal-500 transition-all"
+                className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-teal-600 hover:accent-teal-500 transition-all"
               />
               <div className="text-xs text-emerald-600 font-bold bg-emerald-50 border border-emerald-100 px-3 py-2 rounded-lg mt-1 text-center">
                 If segregation improves 10% → block waste reduces 8%
@@ -333,7 +333,7 @@ export default function SimulationPanel() {
           <button
             onClick={handleRunSimulation}
             disabled={isRunning}
-            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-gray-200 font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
+            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-slate-800 font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
           >
             {isRunning ? (
               <>
@@ -358,119 +358,119 @@ export default function SimulationPanel() {
             <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration: 0.5}} className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 h-full relative z-10">
               
               {/* Card 1: Waste Generated */}
-            <div className="flex flex-col justify-between bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-white/20 transition-all">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="flex flex-col justify-between bg-white border border-slate-200 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-slate-300 transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 blur-[80px] rounded-full pointer-events-none" />
               <div className="flex justify-between items-start mb-6 z-10">
-                <div className="p-3 bg-teal-500/20 rounded-xl border border-teal-500/30 text-teal-400 shadow-sm">
+                <div className="p-3 bg-teal-50 rounded-xl border border-teal-500/30 text-teal-600 shadow-sm">
                   <WasteIcon />
                 </div>
                 {renderMetricDiff(metrics.wasteGenerated, baselineValues.wasteGenerated)}
               </div>
               <div className="z-10">
-                <h3 className="text-gray-400 text-sm font-extrabold uppercase tracking-wider mb-2">Waste Generated</h3>
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Waste Generated</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter">
                     <AnimatedNumber value={metrics.wasteGenerated} />
                   </span>
-                  <span className="text-gray-400 text-sm font-bold">tons/day</span>
+                  <span className="text-slate-500 text-sm font-bold">tons/day</span>
                 </div>
               </div>
             </div>
 
             {/* Card 2: Dumps Predicted */}
-            <div className="flex flex-col justify-between bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-white/20 transition-all">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="flex flex-col justify-between bg-white border border-slate-200 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-slate-300 transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 blur-[80px] rounded-full pointer-events-none" />
               <div className="flex justify-between items-start mb-6 z-10">
-                <div className="p-3 bg-rose-500/20 rounded-xl border border-rose-500/30 text-rose-400 shadow-sm">
+                <div className="p-3 bg-rose-50 rounded-xl border border-rose-500/30 text-rose-600 shadow-sm">
                   <MapIcon />
                 </div>
                 {renderMetricDiff(metrics.dumpsPredicted, baselineValues.dumpsPredicted)}
               </div>
               <div className="z-10">
-                <h3 className="text-gray-400 text-sm font-extrabold uppercase tracking-wider mb-2">Dumps Predicted</h3>
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Dumps Predicted</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter">
                     <AnimatedNumber value={metrics.dumpsPredicted} />
                   </span>
-                  <span className="text-gray-400 text-sm font-bold">sites</span>
+                  <span className="text-slate-500 text-sm font-bold">sites</span>
                 </div>
               </div>
             </div>
 
             {/* Card 3: Landfill Inflow */}
-            <div className="flex flex-col justify-between bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-white/20 transition-all">
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-500/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="flex flex-col justify-between bg-white border border-slate-200 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-slate-300 transition-all">
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-500/5 blur-[80px] rounded-full pointer-events-none" />
               <div className="flex justify-between items-start mb-6 z-10">
-                <div className="p-3 bg-amber-500/20 rounded-xl border border-amber-500/30 text-amber-400 shadow-sm">
+                <div className="p-3 bg-amber-50 rounded-xl border border-amber-500/30 text-amber-600 shadow-sm">
                   <TrendingDownIcon />
                 </div>
                 {renderMetricDiff(metrics.landfillInflow, baselineValues.landfillInflow)}
               </div>
               <div className="z-10">
-                <h3 className="text-gray-400 text-sm font-extrabold uppercase tracking-wider mb-2">Landfill Inflow (%)</h3>
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Landfill Inflow (%)</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter">
                     <AnimatedNumber value={metrics.landfillInflow} />
                   </span>
-                  <span className="text-gray-400 text-sm font-bold">tons/day</span>
+                  <span className="text-slate-500 text-sm font-bold">tons/day</span>
                 </div>
-                <div className="text-xs text-gray-400 mt-2 font-bold bg-white/5 inline-block px-2 py-1 rounded-md border border-white/10">
+                <div className="text-xs text-slate-500 mt-2 font-bold bg-slate-50 inline-block px-2 py-1 rounded-md border border-slate-200">
                   {((metrics.landfillInflow / metrics.wasteGenerated) * 100).toFixed(1)}% of total generated waste
                 </div>
               </div>
             </div>
 
             {/* Card 4: Methane Projection */}
-            <div className="flex flex-col justify-between bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-white/20 transition-all">
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="flex flex-col justify-between bg-white border border-slate-200 backdrop-blur-xl rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-slate-300 transition-all">
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/5 blur-[80px] rounded-full pointer-events-none" />
               <div className="flex justify-between items-start mb-6 z-10">
-                <div className="p-3 bg-indigo-500/20 rounded-xl border border-indigo-500/30 text-indigo-400 shadow-sm">
+                <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-500/30 text-indigo-600 shadow-sm">
                   <CloudIcon />
                 </div>
                 {renderMetricDiff(metrics.methaneProjection, baselineValues.methaneProjection)}
               </div>
               <div className="z-10">
-                <h3 className="text-gray-400 text-sm font-extrabold uppercase tracking-wider mb-2">Methane Projection</h3>
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Methane Projection</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter">
                     <AnimatedNumber value={metrics.methaneProjection} />
                   </span>
-                  <span className="text-gray-400 text-sm font-bold">tons/month</span>
+                  <span className="text-slate-500 text-sm font-bold">tons/month</span>
                 </div>
               </div>
             </div>
 
             {/* TWO-TIER METRICS (Fleet Coverage) */}
             <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-6">
-              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-white/10 flex flex-col justify-between">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/20 blur-[80px] rounded-full pointer-events-none" />
-                <h3 className="text-gray-400 text-xs font-extrabold uppercase tracking-wider mb-2">Sub Road Coverage</h3>
+              <div className="bg-slate-100 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-200 flex flex-col justify-between">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 blur-[80px] rounded-full pointer-events-none" />
+                <h3 className="text-slate-500 text-xs font-extrabold uppercase tracking-wider mb-2">Sub Road Coverage</h3>
                 <div className="flex items-baseline gap-2 mt-auto">
-                  <span className="text-4xl font-black text-gray-200 tracking-tighter">
+                  <span className="text-4xl font-black text-slate-800 tracking-tighter">
                     <AnimatedNumber value={metrics.subRoadCoverage} />%
                   </span>
                 </div>
-                {extraAutos && <div className="text-teal-400 text-xs font-bold mt-2">Coverage improved from 89%</div>}
+                {extraAutos && <div className="text-teal-600 text-xs font-bold mt-2">Coverage improved from 89%</div>}
               </div>
               
-              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-white/10 flex flex-col justify-between">
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-rose-500/20 blur-[80px] rounded-full pointer-events-none" />
-                <h3 className="text-gray-400 text-xs font-extrabold uppercase tracking-wider mb-2">Daily Fleet Cost</h3>
+              <div className="bg-slate-100 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-200 flex flex-col justify-between">
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-rose-50 blur-[80px] rounded-full pointer-events-none" />
+                <h3 className="text-slate-500 text-xs font-extrabold uppercase tracking-wider mb-2">Daily Fleet Cost</h3>
                 <div className="flex items-baseline gap-2 mt-auto">
-                  <span className="text-4xl font-black text-gray-200 tracking-tighter">
+                  <span className="text-4xl font-black text-slate-800 tracking-tighter">
                     ₹<AnimatedNumber value={metrics.costPerDay} />
                   </span>
                 </div>
-                {extraAutos && <div className="text-rose-400 text-xs font-bold mt-2">+₹800/d constraint added</div>}
+                {extraAutos && <div className="text-rose-600 text-xs font-bold mt-2">+₹800/d constraint added</div>}
               </div>
             </div>
 
             {/* ALERT SECTION */}
             {metrics.riskLevel !== 'LOW' && (
               <div className={`col-span-1 sm:col-span-2 rounded-2xl p-6 shadow-md border group hover:shadow-lg transition-all ${
-                metrics.riskLevel === 'CRITICAL' ? 'bg-rose-500/10 border-rose-500/30 backdrop-blur-md' : 
-                metrics.riskLevel === 'HIGH' ? 'bg-orange-500/10 border-orange-500/30 backdrop-blur-md' : 
-                'bg-amber-500/10 border-amber-500/30 backdrop-blur-md'
+                metrics.riskLevel === 'CRITICAL' ? 'bg-rose-500/5 border-rose-500/30 backdrop-blur-md' : 
+                metrics.riskLevel === 'HIGH' ? 'bg-orange-500/5 border-orange-500/30 backdrop-blur-md' : 
+                'bg-amber-500/5 border-amber-500/30 backdrop-blur-md'
               }`}>
                  <h3 className={`text-sm font-extrabold uppercase tracking-wider mb-2 flex items-center gap-2 ${
                     metrics.riskLevel === 'CRITICAL' ? 'text-rose-600' : 
@@ -479,8 +479,8 @@ export default function SimulationPanel() {
                  }`}>
                     Risk Level: {metrics.riskLevel}
                  </h3>
-                 {metrics.alert && <p className="text-white text-sm font-bold mb-1">{metrics.alert}</p>}
-                 {metrics.recommendation && <p className="text-gray-400 text-sm">{metrics.recommendation}</p>}
+                 {metrics.alert && <p className="text-slate-900 text-sm font-bold mb-1">{metrics.alert}</p>}
+                 {metrics.recommendation && <p className="text-slate-500 text-sm">{metrics.recommendation}</p>}
               </div>
             )}
 
@@ -488,17 +488,17 @@ export default function SimulationPanel() {
           )}
 
           {/* Footer Area */}
-          <div className="flex flex-col sm:flex-row items-center justify-between bg-white border border-white/10 rounded-2xl p-6 mt-2 shadow-sm">
-            <p className="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mb-4 sm:mb-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between bg-white border border-slate-200 rounded-2xl p-6 mt-2 shadow-sm">
+            <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-sm mb-4 sm:mb-0">
               <span className="inline-block w-2.5 h-2.5 rounded-full bg-teal-500 mr-3 animate-pulse shadow-[0_0_10px_rgba(20,184,166,0.6)]" />
               HSR Layout ward-level behavioral AI model
             </p>
             <Link 
               href="/impact" 
-              className="bg-slate-50 hover:bg-slate-100 text-white px-6 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 border border-white/10 shadow-sm hover:shadow w-full sm:w-auto justify-center"
+              className="bg-slate-50 hover:bg-slate-100 text-slate-900 px-6 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 border border-slate-200 shadow-sm hover:shadow w-full sm:w-auto justify-center"
             >
               <span>View HSR Analytics Dashboard</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              <svg xmlns="http://www.w3.org/1000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </Link>
           </div>
         </div>

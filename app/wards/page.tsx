@@ -34,7 +34,7 @@ function getScoreColor(score: number) {
 function getTrendIcon(trend: string) {
   if (trend === 'up') return <span className="text-rose-600 font-bold">↑</span>;
   if (trend === 'down') return <span className="text-emerald-600 font-bold">↓</span>;
-  return <span className="text-slate-400 font-bold">→</span>;
+  return <span className="text-slate-500 font-bold">→</span>;
 }
 
 export default function WardsPage() {
@@ -139,20 +139,20 @@ export default function WardsPage() {
             </div>
             <div className="flex gap-4">
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-400 uppercase">Total Sectors</span>
+                <span className="text-xs font-bold text-slate-500 uppercase">Total Sectors</span>
                 <span className="text-xl font-bold text-slate-800">{wardScoresList.length}</span>
               </div>
               <div className="w-px bg-slate-200 hidden sm:block"></div>
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-400 uppercase">High Risk</span>
+                <span className="text-xs font-bold text-slate-500 uppercase">High Risk</span>
                 <span className="text-xl font-bold text-rose-500">{wardScoresList.filter(w => w.score < 40).length}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-400 uppercase">Medium</span>
+                <span className="text-xs font-bold text-slate-500 uppercase">Medium</span>
                 <span className="text-xl font-bold text-amber-500">{wardScoresList.filter(w => w.score >= 40 && w.score < 70).length}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-400 uppercase">Low Risk</span>
+                <span className="text-xs font-bold text-slate-500 uppercase">Low Risk</span>
                 <span className="text-xl font-bold text-emerald-600">{wardScoresList.filter(w => w.score >= 70).length}</span>
               </div>
             </div>
@@ -284,7 +284,7 @@ export default function WardsPage() {
                   </button>
                 )}
                 <div className="relative flex-1">
-                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" xmlns="http://www.w3.org/1000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                   <input 
                     type="text" 
                     placeholder="Search ward name..."
@@ -329,7 +329,7 @@ export default function WardsPage() {
                         >
                           <div className="flex items-center gap-1.5">
                             {header}
-                            <span className={`text-[10px] ${isSorted ? 'text-teal-600' : 'text-slate-300 opacity-0 group-hover:opacity-100'}`}>
+                            <span className={`text-[10px] ${isSorted ? 'text-teal-600' : 'text-slate-600 opacity-0 group-hover:opacity-100'}`}>
                               {sortDir === 'asc' ? '▲' : '▼'}
                             </span>
                           </div>
@@ -380,7 +380,7 @@ export default function WardsPage() {
                   }) : (
 
                     <tr>
-                      <td colSpan={7} className="px-4 py-12 text-center text-slate-400 font-medium">
+                      <td colSpan={7} className="px-4 py-12 text-center text-slate-500 font-medium">
                         No wards found matching the filters.
                       </td>
                     </tr>
@@ -429,7 +429,7 @@ function ZoneBlock({ zone, wards, selectedId, onClick }: { zone: string, wards: 
       <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">{zone}</span>
       <div className="flex flex-col w-full gap-2 min-h-[60px] justify-center items-center">
         {wards.length === 0 ? (
-          <div className="text-xs text-slate-400 italic">Empty</div>
+          <div className="text-xs text-slate-500 italic">Empty</div>
         ) : (
           wards.map(w => {
             const isSelected = w.id === selectedId;

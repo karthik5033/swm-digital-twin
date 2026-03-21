@@ -12,7 +12,7 @@ const GridZoneMap = dynamic(() => import('@/components/map/GridZoneMap'), {
     <div className="w-full h-full bg-slate-100 rounded-2xl border border-slate-200 flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-500 mx-auto mb-3" />
-        <p className="text-slate-400 text-sm font-medium">Loading Grid Map…</p>
+        <p className="text-slate-500 text-sm font-medium">Loading Grid Map…</p>
       </div>
     </div>
   ),
@@ -143,7 +143,7 @@ export default function GridWisePage() {
                 </span>
               </div>
               
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-50 border border-slate-200">
                 <GridZoneMap
                   selectedZoneId={selectedZone?.zone_id || null}
                   onZoneClick={(zoneId) => {
@@ -254,7 +254,7 @@ export default function GridWisePage() {
                       onClick={() => setFilterRisk(r)}
                       className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all ${
                         filterRisk === r 
-                          ? 'bg-teal-500 text-white shadow-sm' 
+                          ? 'bg-teal-500 text-slate-900 shadow-sm' 
                           : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                       }`}
                     >
@@ -381,7 +381,7 @@ export default function GridWisePage() {
                 <div key={dwcc} className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center hover:shadow-md transition-shadow">
                   <div className="text-xs font-mono font-bold text-teal-600 mb-2">{dwcc}</div>
                   <div className="text-2xl font-black text-slate-900 mb-1">{assigned.length}</div>
-                  <div className="text-[10px] font-bold text-slate-400 uppercase">zones</div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase">zones</div>
                   <div className="text-xs font-semibold text-slate-500 mt-2">{waste.toFixed(1)}T/day</div>
                 </div>
               );
