@@ -14,7 +14,6 @@ const MAIN_LINKS = [
   { href: '/methodology', label: 'Methodology' },
   { href: '/routes', label: 'Routes' },
   { href: '/report', label: 'Report' },
-  { href: '/routing', label: 'Routing' },
   { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
 ];
 

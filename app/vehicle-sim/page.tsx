@@ -318,7 +318,10 @@ export default function VehicleSimulationPage() {
       setMapReady(true);
     });
 
-    return () => { map.remove(); };
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
 
   // Toggle visibility
@@ -388,6 +391,8 @@ export default function VehicleSimulationPage() {
         console.warn(`OSRM failed for ${def.id}, using waypoints`, e);
       }
 
+      if (!mapRef.current) return; // Abort if component unmounted during fetch
+
       // Add route line to map
       routeFeatures.push({
         type: 'Feature',
@@ -420,8 +425,9 @@ export default function VehicleSimulationPage() {
 
     vehiclesRef.current = newVehicles;
 
+    if (!mapRef.current) return; // double check before source update
     // Update route lines on map
-    if (map.getSource('vehicle-routes')) {
+    if (typeof map.getSource === 'function' && map.getSource('vehicle-routes')) {
       (map.getSource('vehicle-routes') as maplibregl.GeoJSONSource).setData({
         type: 'FeatureCollection',
         features: routeFeatures
