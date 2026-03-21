@@ -80,11 +80,8 @@ for _ in range(n_samples):
     
     # True waste (ground truth)
     # Based on BBMP per-capita rates
-    base_waste = (
-        population * 0.00045 +
-        commercial_count * 0.0025 +
-        commercial_score * 0.001
-    )
+    base_waste = 23.26 # tons/day
+    # Source: CPCB 0.5kg × 46,517 people
     
     # Apply real-world factors
     if rainfall > 10:
