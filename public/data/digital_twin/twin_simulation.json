@@ -1,0 +1,227 @@
+{
+  "baseline": [
+    {
+      "day": 1,
+      "scenario": "baseline",
+      "rainfall_mm": 3.1,
+      "temperature_c": 24.3,
+      "total_waste_kg": 14079.2,
+      "total_waste_tons": 14.08,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 65.9
+    },
+    {
+      "day": 2,
+      "scenario": "baseline",
+      "rainfall_mm": 9.2,
+      "temperature_c": 28.5,
+      "total_waste_kg": 14079.2,
+      "total_waste_tons": 14.08,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 59.0
+    },
+    {
+      "day": 3,
+      "scenario": "baseline",
+      "rainfall_mm": 5.4,
+      "temperature_c": 26.5,
+      "total_waste_kg": 14079.2,
+      "total_waste_tons": 14.08,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 55.2
+    },
+    {
+      "day": 4,
+      "scenario": "baseline",
+      "rainfall_mm": 0.8,
+      "temperature_c": 29.9,
+      "total_waste_kg": 13375.1,
+      "total_waste_tons": 13.38,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 53.8
+    },
+    {
+      "day": 5,
+      "scenario": "baseline",
+      "rainfall_mm": 0,
+      "temperature_c": 28.1,
+      "total_waste_kg": 13375.1,
+      "total_waste_tons": 13.38,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 54.6
+    },
+    {
+      "day": 6,
+      "scenario": "baseline",
+      "rainfall_mm": 4.3,
+      "temperature_c": 30.1,
+      "total_waste_kg": 14079.2,
+      "total_waste_tons": 14.08,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01"
+      ],
+      "overloaded_count": 3,
+      "urgent_zones": 9,
+      "avg_fill_pct": 56.4
+    },
+    {
+      "day": 7,
+      "scenario": "baseline",
+      "rainfall_mm": 7.8,
+      "temperature_c": 25.6,
+      "total_waste_kg": 14079.2,
+      "total_waste_tons": 14.08,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01"
+      ],
+      "overloaded_count": 3,
+      "urgent_zones": 9,
+      "avg_fill_pct": 58.1
+    }
+  ],
+  "festival": [
+    {
+      "day": 1,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 3.2,
+      "temperature_c": 28.4,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02"
+      ],
+      "overloaded_count": 2,
+      "urgent_zones": 9,
+      "avg_fill_pct": 78.3
+    },
+    {
+      "day": 2,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 5.4,
+      "temperature_c": 29.8,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01"
+      ],
+      "overloaded_count": 3,
+      "urgent_zones": 9,
+      "avg_fill_pct": 82.1
+    },
+    {
+      "day": 3,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 8.3,
+      "temperature_c": 29.5,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01"
+      ],
+      "overloaded_count": 3,
+      "urgent_zones": 9,
+      "avg_fill_pct": 80.5
+    },
+    {
+      "day": 4,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 7.8,
+      "temperature_c": 30.7,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01"
+      ],
+      "overloaded_count": 3,
+      "urgent_zones": 9,
+      "avg_fill_pct": 79.0
+    },
+    {
+      "day": 5,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 9.9,
+      "temperature_c": 25.9,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01",
+        "TC_01"
+      ],
+      "overloaded_count": 4,
+      "urgent_zones": 9,
+      "avg_fill_pct": 77.4
+    },
+    {
+      "day": 6,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 9.4,
+      "temperature_c": 29.5,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01",
+        "TC_01"
+      ],
+      "overloaded_count": 4,
+      "urgent_zones": 9,
+      "avg_fill_pct": 77.1
+    },
+    {
+      "day": 7,
+      "scenario": "festival_ganesh",
+      "rainfall_mm": 7.4,
+      "temperature_c": 27.3,
+      "total_waste_kg": 18021.1,
+      "total_waste_tons": 18.02,
+      "overloaded_centers": [
+        "DWC_01",
+        "DWC_02",
+        "BMU_01",
+        "TC_01"
+      ],
+      "overloaded_count": 4,
+      "urgent_zones": 9,
+      "avg_fill_pct": 78.1
+    }
+  ]
+}

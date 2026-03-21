@@ -1,0 +1,97 @@
+=== PHASE 1: DATA PREPARATION ===
+Ward area: 727.4 ha
+Road segments: 2027
+Dump sites: 29
+Grid cells created: 59
+
+=== PHASE 2: FEATURE ENGINEERING ===
+Features computed for 59 grid cells
+Zone types:
+zone_type
+mixed          41
+residential    16
+commercial      2
+Total population: 30,545
+Base waste: 15601.5 kg/day
+
+=== PHASE 3: WASTE PREDICTION ===
+  Normal Day                14.08 tons/day  (max zone: 494 kg)
+  Heavy Rainfall            16.19 tons/day  (max zone: 569 kg)
+  Ganesh Chaturthi          18.02 tons/day  (max zone: 633 kg)
+  Rain + Festival           21.86 tons/day  (max zone: 768 kg)
+
+=== PHASE 4: DUMPYARD SIMULATION ===
+  Day 1: avg fill 75.6%  overloaded: 3
+  Day 2: avg fill 74.9%  overloaded: 3
+  Day 3: avg fill 71.0%  overloaded: 3
+  Day 4: avg fill 67.7%  overloaded: 3
+  Day 5: avg fill 66.7%  overloaded: 3
+  Day 6: avg fill 65.6%  overloaded: 3
+  Day 7: avg fill 64.6%  overloaded: 3
+  Day 1: avg fill 100.0%  overloaded: 5
+  Day 2: avg fill 100.0%  overloaded: 5
+  Day 3: avg fill 100.0%  overloaded: 5
+  Day 4: avg fill 100.0%  overloaded: 5
+  Day 5: avg fill 100.0%  overloaded: 5
+  Day 6: avg fill 100.0%  overloaded: 5
+  Day 7: avg fill 100.0%  overloaded: 5
+Simulation saved.
+
+=== PHASE 5: ROUTE OPTIMIZATION ===
+Usable road segments: 2027
+Graph nodes: 5475
+Graph edges: 6525
+Collection points (high waste zones): 24
+  Truck 1: 8 stops, 3050 kg, 12.5 km
+  Truck 2: 8 stops, 3115 kg, 9.6 km
+  Truck 3: 8 stops, 3104 kg, 15.9 km
+
+=== PHASE 6: DIGITAL TWIN LOOP ===
+  Day 1 [baseline]: 14.08T waste, 2 overloaded, 9 urgent zones
+  Day 2 [baseline]: 14.08T waste, 2 overloaded, 9 urgent zones
+  Day 3 [baseline]: 14.08T waste, 2 overloaded, 9 urgent zones
+  Day 4 [baseline]: 13.38T waste, 2 overloaded, 9 urgent zones
+  Day 5 [baseline]: 13.38T waste, 2 overloaded, 9 urgent zones
+  Day 6 [baseline]: 14.08T waste, 3 overloaded, 9 urgent zones
+  Day 7 [baseline]: 14.08T waste, 3 overloaded, 9 urgent zones
+  Day 1 [festival_ganesh]: 18.02T waste, 2 overloaded, 9 urgent zones
+  Day 2 [festival_ganesh]: 18.02T waste, 3 overloaded, 9 urgent zones
+  Day 3 [festival_ganesh]: 18.02T waste, 3 overloaded, 9 urgent zones
+  Day 4 [festival_ganesh]: 18.02T waste, 3 overloaded, 9 urgent zones
+  Day 5 [festival_ganesh]: 18.02T waste, 4 overloaded, 9 urgent zones
+  Day 6 [festival_ganesh]: 18.02T waste, 4 overloaded, 9 urgent zones
+  Day 7 [festival_ganesh]: 18.02T waste, 4 overloaded, 9 urgent zones
+
+=== PHASE 7: VISUALIZATIONS ===
+waste_heatmap_scenarios.png saved
+routes_and_risk.png saved
+twin_timeline.png saved
+zone_classification.png saved
+
+=== DIGITAL TWIN COMPLETE ===
+Grid cells analyzed: 59
+Population modeled: 30,545
+
+Scenario Comparison:
+  Normal Day                 14.08 tons/day
+  Heavy Rainfall             16.19 tons/day
+  Ganesh Chaturthi           18.02 tons/day
+  Rain + Festival            21.86 tons/day
+
+Route optimization:
+  Truck_1: 8 stops, 12.54 km, 3050 kg
+  Truck_2: 8 stops, 9.63 km, 3115 kg
+  Truck_3: 8 stops, 15.93 km, 3104 kg
+
+Output files saved to output/digital_twin/:
+  waste_heatmap_scenarios.png
+  routes_and_risk.png
+  twin_timeline.png
+  zone_classification.png
+  simulation_results.json
+  optimized_routes.json
+  twin_simulation.json
+  master_results.json
+  complete_grid_analysis.csv
+  grid_features.csv
+============================

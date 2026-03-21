@@ -1,0 +1,573 @@
+{
+  "processing_centers": [
+    {
+      "id": "DWC_01",
+      "name": "HSR Dry Waste Centre 1",
+      "type": "dry_waste_centre",
+      "lat": 12.912,
+      "lon": 77.638,
+      "capacity_kg_day": 2000,
+      "current_fill_pct": 45
+    },
+    {
+      "id": "DWC_02",
+      "name": "HSR Dry Waste Centre 2",
+      "type": "dry_waste_centre",
+      "lat": 12.922,
+      "lon": 77.652,
+      "capacity_kg_day": 1800,
+      "current_fill_pct": 62
+    },
+    {
+      "id": "BMU_01",
+      "name": "Bio-Methanisation Unit",
+      "type": "bio_methanisation",
+      "lat": 12.908,
+      "lon": 77.645,
+      "capacity_kg_day": 3000,
+      "current_fill_pct": 38
+    },
+    {
+      "id": "DY_01",
+      "name": "HSR Dumpyard",
+      "type": "dumpyard",
+      "lat": 12.93,
+      "lon": 77.66,
+      "capacity_kg_day": 5000,
+      "current_fill_pct": 71
+    },
+    {
+      "id": "TC_01",
+      "name": "Transfer Station North",
+      "type": "transfer_station",
+      "lat": 12.928,
+      "lon": 77.635,
+      "capacity_kg_day": 4000,
+      "current_fill_pct": 55
+    }
+  ],
+  "baseline_simulation": [
+    {
+      "day": 1,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 83.5,
+          "status": "overloaded",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 54.1,
+          "status": "normal",
+          "incoming_kg": 3402.9,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 40.4,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 75.6,
+      "overloaded_count": 3
+    },
+    {
+      "day": 2,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 48.9,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 25.8,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 74.9,
+      "overloaded_count": 3
+    },
+    {
+      "day": 3,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 43.7,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 11.2,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 71.0,
+      "overloaded_count": 3
+    },
+    {
+      "day": 4,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 38.5,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 0,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 67.7,
+      "overloaded_count": 3
+    },
+    {
+      "day": 5,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 33.3,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 0,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 66.7,
+      "overloaded_count": 3
+    },
+    {
+      "day": 6,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 28.1,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 0,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 65.6,
+      "overloaded_count": 3
+    },
+    {
+      "day": 7,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 2815.8,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3660.6,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 3914.0,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 22.9,
+          "status": "normal",
+          "incoming_kg": 3990.0,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 0,
+          "status": "normal",
+          "incoming_kg": 2815.8,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 64.6,
+      "overloaded_count": 3
+    }
+  ],
+  "worst_case_simulation": [
+    {
+      "day": 1,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 2,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 3,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 4,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 5,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 6,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    },
+    {
+      "day": 7,
+      "centers": {
+        "DWC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 4371.6,
+          "processed_kg": 1700.0
+        },
+        "DWC_02": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 5683.1,
+          "processed_kg": 1530.0
+        },
+        "BMU_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6076.5,
+          "processed_kg": 2550.0
+        },
+        "DY_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6194.5,
+          "processed_kg": 4250.0
+        },
+        "TC_01": {
+          "fill_pct": 100,
+          "status": "critical",
+          "incoming_kg": 6229.9,
+          "processed_kg": 3400.0
+        }
+      },
+      "total_fill_avg": 100.0,
+      "overloaded_count": 5
+    }
+  ],
+  "baseline_waste_kg": 14079.2,
+  "worst_case_waste_kg": 21857.9
+}

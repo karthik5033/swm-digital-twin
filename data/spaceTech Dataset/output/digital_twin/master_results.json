@@ -1,0 +1,44 @@
+{
+  "ward": "HSR Layout",
+  "city": "Bengaluru",
+  "grid_cells": 59,
+  "total_population": 30545,
+  "scenario_comparison": {
+    "baseline": {
+      "label": "Normal Day",
+      "total_kg": 14079.2,
+      "total_tons": 14.08,
+      "max_zone_kg": 494.5,
+      "high_waste_zones": 14
+    },
+    "heavy_rain": {
+      "label": "Heavy Rainfall",
+      "total_kg": 16191.0,
+      "total_tons": 16.19,
+      "max_zone_kg": 568.7,
+      "high_waste_zones": 14
+    },
+    "festival_ganesh": {
+      "label": "Ganesh Chaturthi",
+      "total_kg": 18021.1,
+      "total_tons": 18.02,
+      "max_zone_kg": 633.0,
+      "high_waste_zones": 14
+    },
+    "worst_case": {
+      "label": "Rain + Festival",
+      "total_kg": 21857.9,
+      "total_tons": 21.86,
+      "max_zone_kg": 767.7,
+      "high_waste_zones": 14
+    }
+  },
+  "processing_centers": 5,
+  "truck_routes": 3,
+  "zone_breakdown": {
+    "mixed": 41,
+    "residential": 16,
+    "commercial": 2
+  },
+  "simulation_days": 7
+}
