@@ -391,8 +391,9 @@ export default function SmartMap() {
       <div className="shrink-0 bg-[#0a0f1a] border-b border-white/10 px-6 py-2 flex items-center justify-center gap-8 text-xs font-semibold tracking-wide">
         {[
           { label: 'mapped', value: '704 ha' },
+          { label: 'buildings analyzed', value: '9,471' },
           { label: 'dumps detected', value: '29' },
-          { label: 'waste/day', value: '12.25T' },
+          { label: 'waste/day', value: '19.78T' },
           { label: 'route saving', value: '75.5%' },
           { label: '⚠️ lake at risk', value: '1', warn: true },
         ].map(({ label, value, warn }) => (

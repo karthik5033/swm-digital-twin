@@ -135,10 +135,10 @@ export default function ImpactDashboard() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { title: "Total Population", icon: <ActivityIcon />, value: "2,20,000", unit: "", desc: "2026 Census Estimate" },
-                { title: "Daily Waste", icon: <TrashIcon />, value: "99", unit: " tons/day", desc: "Total waste generated" },
-                { title: "Households", icon: <HardHatIcon />, value: "55,000", unit: "", desc: "Mapped residential units" },
-                { title: "Per Capita Target", icon: <LeafIcon />, value: "0.45", unit: " kg/day", desc: "Waste per person inside HSR" }
+                { title: "Total Buildings", icon: <HardHatIcon />, value: "9,471", unit: "", desc: "Mapped across HSR" },
+                { title: "Total Daily Waste", icon: <TrashIcon />, value: "19.78", unit: " tons/day", desc: "Calculated from OSM" },
+                { title: "Residential Houses", icon: <ActivityIcon />, value: "8,998", unit: "", desc: "95% of total buildings" },
+                { title: "Commercial & IT", icon: <LeafIcon />, value: "176", unit: "", desc: "Main bulk generators" }
               ].map((card, idx) => (
                 <motion.div 
                   key={idx}
@@ -167,6 +167,26 @@ export default function ImpactDashboard() {
             </div>
           )}
         </section>
+
+        {/* Special Building Alerts */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-red-800 dark:text-red-300 mb-2 flex items-center gap-2">🏥 Hospital Alert</h4>
+            <p className="text-sm text-red-700 dark:text-red-400 font-medium">Only 2 medical facilities in HSR Layout generating ~240 kg/day bio-medical waste. Both located in zones B2 and C1.</p>
+          </div>
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-2">📚 Schools Alert</h4>
+            <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">15 educational institutions detected generating ~300 kg/day paper/dry waste. Peak waste: exam seasons.</p>
+          </div>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-blue-800 dark:text-blue-300 mb-2 flex items-center gap-2">🏪 Commercial Alert</h4>
+            <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">137 commercial units on main roads generating ~340 kg/day dry/plastic waste. Concentrated in zones B2 and C3.</p>
+          </div>
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-3xl p-5 shadow-sm">
+            <h4 className="font-extrabold text-emerald-800 dark:text-emerald-300 mb-2 flex items-center gap-2">💻 IT Office Alert</h4>
+            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">39 IT offices detected generating ~700 kg/day e-waste + dry waste. Dedicated e-waste collection recommended.</p>
+          </div>
+        </div>
 
         {/* NEW SECTION: Growth Analysis & Insights */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
@@ -302,16 +322,19 @@ export default function ImpactDashboard() {
             <h2 className="text-xl font-extrabold text-slate-800 dark:text-white mb-4">Zone Breakdown</h2>
             <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
               <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-                <tr><th className="px-4 py-3">Zone</th><th className="px-4 py-3">Population</th><th className="px-4 py-3">Waste/day</th><th className="px-4 py-3">Segregation</th><th className="px-4 py-3">Status</th></tr>
+                <tr><th className="px-4 py-3">Zone</th><th className="px-4 py-3">Buildings</th><th className="px-4 py-3">Waste/day</th><th className="px-4 py-3">Dominant Type</th><th className="px-4 py-3">Status</th></tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                 {[
-                  { z: "HSR Main", b: "55,000", w: "24.7t", sp: "25%", s: "Critical", c: "bg-red-100 text-red-700" },
-                  { z: "BDA Complex", b: "42,000", w: "18.9t", sp: "45%", s: "Poor", c: "bg-rose-100 text-rose-700" },
-                  { z: "Agara", b: "38,000", w: "17.1t", sp: "60%", s: "Average", c: "bg-amber-100 text-amber-700" },
-                  { z: "Somasundara", b: "48,000", w: "21.6t", sp: "75%", s: "Good", c: "bg-emerald-100 text-emerald-700" },
-                  { z: "7th Sector", b: "37,000", w: "16.7t", sp: "90%", s: "Excellent", c: "bg-green-100 text-green-700" },
-                  { z: "Total", b: "2,20,000", w: "99.0t", sp: "-", s: "Warning", c: "bg-orange-100 text-orange-700" }
+                  { z: "B2", b: "2,189", w: "5.1t", sp: "Residential (146 sqm avg)", s: "High", c: "bg-rose-100 text-rose-700" },
+                  { z: "C3", b: "2,082", w: "4.8t", sp: "Residential (131 sqm avg)", s: "High", c: "bg-rose-100 text-rose-700" },
+                  { z: "B3", b: "1,734", w: "4.0t", sp: "Residential (137 sqm avg)", s: "Medium", c: "bg-amber-100 text-amber-700" },
+                  { z: "B1", b: "1,383", w: "3.2t", sp: "Residential (154 sqm avg)", s: "Medium", c: "bg-amber-100 text-amber-700" },
+                  { z: "C2", b: "554", w: "1.3t", sp: "Residential (236 sqm avg)", s: "Low", c: "bg-green-100 text-green-700" },
+                  { z: "C1", b: "276", w: "0.6t", sp: "Residential (263 sqm avg)", s: "Low", c: "bg-green-100 text-green-700" },
+                  { z: "D4", b: "203", w: "0.5t", sp: "Mixed (398 sqm avg)", s: "Low", c: "bg-green-100 text-green-700" },
+                  { z: "C4", b: "158", w: "0.4t", sp: "Residential (146 sqm avg)", s: "Low", c: "bg-green-100 text-green-700" },
+                  { z: "Total", b: "9,471", w: "19.78t", sp: "City Overlap", s: "Warning", c: "bg-orange-100 text-orange-700" }
                 ].map((r, i) => (
                   <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="px-4 py-3 font-bold text-slate-800 dark:text-white">{r.z}</td>

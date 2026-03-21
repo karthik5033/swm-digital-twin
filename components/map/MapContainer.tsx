@@ -7,42 +7,7 @@ import { useStore } from '@/lib/store';
 import LayerToggle from './LayerToggle';
 import WardSidebar from './WardSidebar';
 
-/* --- MOCK HSR LAYOUT DATA --- */
-const generateBuildings = () => {
-  const features: any[] = [];
-  let counts = { small: 342, medium: 213, large: 129, commercial: 76 };
-  const addBldg = (type: string, areaMin: number, areaMax: number, cType: string) => {
-    const area = Math.floor(Math.random() * (areaMax - areaMin + 1)) + areaMin;
-    let finalType = type;
-    if (cType === 'commercial') {
-      const types = ['Commercial Shop', 'Commercial/Mall', 'Restaurant', 'Hospital', 'School', 'IT Office'];
-      finalType = types[Math.floor(Math.random() * types.length)];
-    }
-    
-    features.push({
-      type: 'Feature',
-      geometry: { type: 'Point', coordinates: [77.630 + Math.random() * 0.025, 12.900 + Math.random() * 0.025] },
-      properties: {
-        type: finalType,
-        area,
-        category: cType, // useful for tracking classification string if needed
-        floors: Math.floor(area / 100) + 1,
-        dailyWaste: (area * 0.02).toFixed(1),
-        wasteType: '60% Organic, 30% Dry',
-        route: `AR-${Math.floor(Math.random() * 10) + 1}`,
-        distance: Math.floor(Math.random() * 800) + 50
-      }
-    });
-  };
-
-  for(let i=0; i<counts.small; i++) addBldg('Residential House', 50, 99, 'small');
-  for(let i=0; i<counts.medium; i++) addBldg('Residential House', 100, 199, 'medium');
-  for(let i=0; i<counts.large; i++) addBldg('Apartment', 200, 499, 'large');
-  for(let i=0; i<counts.commercial; i++) addBldg('Commercial', 500, 1200, 'commercial');
-
-  return { type: 'FeatureCollection', features };
-};
-const BUILDINGS_GEOJSON: any = generateBuildings();
+/* --- REAL HSR LAYOUT DATA LOADED DYNAMICALLY --- */
 
 const DUMPS_GEOJSON: any = {
   type: 'FeatureCollection',
@@ -517,39 +482,47 @@ export default function MapContainer() {
         layout: { visibility: 'visible' } // same group as mainRoute
       });
 
-      // 13. Buildings Layer
-      map.current!.addSource('buildings-source', { type: 'geojson', data: BUILDINGS_GEOJSON });
-      map.current!.addLayer({
-        id: 'buildings',
-        type: 'circle',
-        source: 'buildings-source',
-        paint: {
-          'circle-radius': [
-            'interpolate', ['linear'], ['get', 'area'],
-            0, 3,
-            50, 4,
-            100, 6,
-            200, 8,
-            500, 10,
-            1000, 14
-          ],
-          'circle-color': [
-            'case',
-            ['==', ['get', 'type'], 'Restaurant'], '#dc2626',
-            ['==', ['get', 'type'], 'Hospital'], '#f97316',
-            ['==', ['get', 'type'], 'School'], '#22c55e',
-            ['==', ['get', 'type'], 'IT Office'], '#14b8a6',
-            ['==', ['get', 'type'], 'Commercial/Mall'], '#f97316',
-            ['==', ['get', 'type'], 'Commercial Shop'], '#eab308',
-            ['>=', ['get', 'area'], 100], '#a855f7',
-            '#3b82f6'
-          ],
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#ffffff',
-          'circle-opacity': 0.8
-        },
-        layout: { visibility: 'visible' }
-      });
+      // 13. Buildings Layer (Real 9,471 Polygons via dynamic fetch)
+      fetch('/data/buildings_osm.geojson')
+        .then(res => res.json())
+        .then(data => {
+          if (!map.current) return;
+          map.current.addSource('buildings-source', { type: 'geojson', data });
+          map.current.addLayer({
+            id: 'buildings',
+            type: 'fill',
+            source: 'buildings-source',
+            paint: {
+              'fill-color': [
+                'match',
+                ['get', 'building_type'],
+                'Residential (House)', '#f97316',
+                'Residential (Apartment)', '#ea580c',
+                'Commercial/Retail', '#3b82f6',
+                'Office/IT', '#1d4ed8',
+                'Hospital/Medical', '#ef4444',
+                'Educational', '#eab308',
+                'Religious', '#8b5cf6',
+                'Government/Civic', '#0d9488',
+                'Other/Unclassified', '#94a3b8',
+                '#f97316'
+              ],
+              'fill-opacity': 0.7,
+              'fill-outline-color': '#1e293b'
+            },
+            layout: { visibility: activeLayers['density'] ? 'visible' : 'none' }
+          });
+          
+          // Apply initial filter if any exists
+          if (bldgFilter !== 'All') {
+            const fe = 
+              bldgFilter === 'Houses Only' ? ['==', ['get', 'building_type'], 'Residential (House)'] :
+              bldgFilter === 'Large Only' ? ['in', ['get', 'building_type'], ['literal', ['Residential (Apartment)', 'Commercial/Retail', 'Office/IT', 'Hospital/Medical', 'Educational', 'Government/Civic']]] :
+              bldgFilter === 'Commercial Only' ? ['in', ['get', 'building_type'], ['literal', ['Commercial/Retail', 'Office/IT']]] : null;
+            if (fe) map.current.setFilter('buildings', fe as any);
+          }
+        })
+        .catch(err => console.error("Failed to load buildings_osm.geojson", err));
 
       // Add HTML Markers for Truck Hubs
       TRUCK_HUBS_GEOJSON.features.forEach((feature: any) => {
@@ -635,14 +608,13 @@ export default function MapContainer() {
       `);
       setupPopup('lulc', p => `<strong>📡 LULC Analysis</strong><br/>Classification: <b>${p.type}</b>${p.type === 'Open Bare Land' ? '<br/><span style="color:#f39c12">⚠️ High illegal dump risk</span>' : ''}`);
       setupPopup('buildings', p => `
-        <strong>🏢 Building Stats</strong><br/>
-        Type: ${p.type}<br/>
-        Size: ${p.area} sqm<br/>
-        Floors: ${p.floors}<br/>
-        Daily Waste: <b>${p.dailyWaste} kg</b><br/>
-        Waste Type: ${p.wasteType}<br/>
-        Collection: ${p.route}<br/>
-        Distance to hub: ${p.distance}m
+        <div style="font-family:Inter,sans-serif;color:#0f172a;min-width:180px">
+          <strong>🏢 Building Details</strong><br/>
+          Type: <b>${p.building_type || 'Unknown'}</b><br/>
+          Area: ${p.area_sqm ? Math.round(p.area_sqm) : 'N/A'} sqm<br/>
+          Floors: ${p.levels || 1}<br/>
+          Est. Waste: <b style="color:#10b981">${p.waste_kg_day ? p.waste_kg_day.toFixed(1) : 'N/A'} kg/day</b>
+        </div>
       `);
 
       let t = 0;
@@ -694,12 +666,14 @@ export default function MapContainer() {
     
     // Setup Layer Filter
     let filterExpr = null;
-    if (bldgFilter === 'Houses Only') filterExpr = ['<=', ['get', 'area'], 199];
-    else if (bldgFilter === 'Large Only') filterExpr = ['all', ['>=', ['get', 'area'], 200], ['<=', ['get', 'area'], 499]];
-    else if (bldgFilter === 'Commercial Only') filterExpr = ['>=', ['get', 'area'], 500];
+    if (bldgFilter === 'Houses Only') filterExpr = ['==', ['get', 'building_type'], 'Residential (House)'];
+    else if (bldgFilter === 'Large Only') filterExpr = ['in', ['get', 'building_type'], ['literal', ['Residential (Apartment)', 'Commercial/Retail', 'Office/IT', 'Hospital/Medical', 'Educational', 'Government/Civic']]];
+    else if (bldgFilter === 'Commercial Only') filterExpr = ['in', ['get', 'building_type'], ['literal', ['Commercial/Retail', 'Office/IT']]];
     
-    if (filterExpr) map.current.setFilter('buildings', filterExpr as any);
-    else map.current.setFilter('buildings', null);
+    if (map.current.getLayer('buildings')) {
+      if (filterExpr) map.current.setFilter('buildings', filterExpr as any);
+      else map.current.setFilter('buildings', null);
+    }
 
   }, [bldgFilter, mapLoaded]);
 
@@ -775,26 +749,26 @@ export default function MapContainer() {
         
         <div className="space-y-4 mb-5 text-xs font-medium">
           <div>
-            <div className="flex justify-between text-slate-300 mb-1"><span>🏠 Small Houses (&lt;100sqm)</span></div>
-            <div className="flex items-center gap-3"><div className="h-2 bg-blue-500 rounded-full w-[45%]" /> <span>45% | 342 buildings</span></div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏠 Residential Houses</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-orange-500 rounded-full w-[95%]" /> <span>95.0% | 8,998</span></div>
           </div>
           <div>
-            <div className="flex justify-between text-slate-300 mb-1"><span>🏘️ Medium Houses (100-200sqm)</span></div>
-            <div className="flex items-center gap-3"><div className="h-2 bg-purple-500 rounded-full w-[28%]" /> <span>28% | 213 buildings</span></div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏘️ Apartments</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-orange-600 rounded-full w-[15%]" /> <span>2.6% | 250</span></div>
           </div>
           <div>
-            <div className="flex justify-between text-slate-300 mb-1"><span>🏢 Large Buildings (200-500sqm)</span></div>
-            <div className="flex items-center gap-3"><div className="h-2 bg-purple-400 rounded-full w-[17%]" /> <span>17% | 129 buildings</span></div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏪 Commercial & IT</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-blue-500 rounded-full w-[10%]" /> <span>1.8% | 176</span></div>
           </div>
           <div>
-            <div className="flex justify-between text-slate-300 mb-1"><span>🏬 Commercial/Complex (&gt;500sqm)</span></div>
-            <div className="flex items-center gap-3"><div className="h-2 bg-orange-500 rounded-full w-[10%]" /> <span>10% | 76 buildings</span></div>
+            <div className="flex justify-between text-slate-300 mb-1"><span>🏥 Civic & Others</span></div>
+            <div className="flex items-center gap-3"><div className="h-2 bg-purple-500 rounded-full w-[5%]" /> <span>0.6% | 47</span></div>
           </div>
         </div>
         
         <div className="flex justify-between border-t border-slate-700/50 pt-3 text-sm mb-4">
           <span className="font-bold text-slate-400">Total Analyzed:</span>
-          <span className="font-black text-teal-400">760 buildings</span>
+          <span className="font-black text-teal-400">9,471 buildings</span>
         </div>
 
         <div className="flex flex-wrap gap-2">
