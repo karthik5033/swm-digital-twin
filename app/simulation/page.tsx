@@ -211,17 +211,17 @@ export default function SimulationPanel() {
                 <span>📡</span> Real Data — HSR Layout
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Ward Area:</span> <span className="text-white">10.01 sq km</span></div>
-                <div className="flex justify-between"><span className="text-slate-400">Population (2026):</span> <span className="text-white">2,20,000</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Census 2011:</span> <span className="text-slate-300">1,76,195</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Growth rate:</span> <span className="text-slate-300">8%/year</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Projection year:</span> <span className="text-slate-300">2026</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Ward Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Population (2025):</span> <span className="text-white">{HSR_DATA.population_2025.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Census 2011:</span> <span className="text-slate-300">{HSR_DATA.population_2011.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Growth rate:</span> <span className="text-slate-300">{HSR_DATA.growth_rate_pct}%/year</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Projection year:</span> <span className="text-slate-300">2025</span></div>
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">110 tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Wet (60%):</span> <span className="text-slate-300">66 tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Dry (35%):</span> <span className="text-slate-300">38.5 tons</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-4">Other (5%):</span> <span className="text-slate-300">5.5 tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">{HSR_DATA.daily_waste_tons} tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Wet (60%):</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons} tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Dry (35%):</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons} tons</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-4">Other (5%):</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons} tons</span></div>
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
                 <div className="flex justify-between"><span className="text-slate-400">Waste rate:</span> <span className="text-white">0.5 kg/person/day</span></div>

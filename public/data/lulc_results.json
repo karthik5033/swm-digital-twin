@@ -1,0 +1,25 @@
+{
+  "source": "HSR_Layout_SD.tif",
+  "image_size": "1002x740",
+  "bands": 3,
+  "classification": {
+    "built_up_percent": 61.9,
+    "vegetation_percent": 1.2,
+    "water_percent": 0.0,
+    "bare_land_percent": 0.0,
+    "other_percent": 36.9
+  },
+  "waste_implications": {
+    "built_up": "61.9% built surface \u2014 primary waste generation zone",
+    "bare_land": "Minimal bare land \u2014 HSR is fully developed",
+    "vegetation": "1.2% green cover \u2014 critically below WHO 9sqm/person standard",
+    "water": "Agara Lake + drainage channels \u2014 contamination monitoring zone"
+  },
+  "key_finding": "61.9% impervious surface confirms high waste generation density. No natural absorption capacity.",
+  "road_insight": {
+    "truck_accessible_pct": 17.4,
+    "auto_accessible_pct": 77.9,
+    "coverage_pct": 95.3
+  },
+  "methodology": "RGB spectral analysis on Sentinel data"
+}

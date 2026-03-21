@@ -5,6 +5,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import Image from 'next/image';
+import { HSR_DATA } from '@/lib/constants';
 
 const buildingData = {
   total: 9483,
@@ -62,11 +63,9 @@ const facilities = [
 ];
 
 const wasteTable = [
-  { type: "Residential (House)", count: "8,993", waste: "3,597", pct: "69.2%" },
-  { type: "Residential (Apt)", count: "243", waste: "729", pct: "14.0%" },
-  { type: "Commercial", count: "136", waste: "340", pct: "6.5%" },
-  { type: "Office/IT", count: "39", waste: "195", pct: "3.8%" },
-  { type: "Other types", count: "72", waste: "330", pct: "6.5%" },
+  { type: "Wet/Organic Waste", count: "-", waste: (HSR_DATA.waste_wet_tons * 1000).toLocaleString(), pct: "60%" },
+  { type: "Dry/Recyclable", count: "-", waste: (HSR_DATA.waste_dry_tons * 1000).toLocaleString(), pct: "35%" },
+  { type: "Hazardous/Other", count: "-", waste: (HSR_DATA.waste_other_tons * 1000).toLocaleString(), pct: "5%" },
 ];
 
 export default function OsmAnalysisPage() {
@@ -162,21 +161,21 @@ export default function OsmAnalysisPage() {
             >
               <h2 className="text-xl font-bold mb-4 text-[#00d4aa]">City View Context</h2>
               <p className="text-gray-300 text-lg leading-relaxed font-light mb-6">
-                HSR Layout contains <strong className="text-white">9,483 mapped structures</strong> covering <strong className="text-white">155 hectares</strong> — making it one of Bengaluru&apos;s most densely built wards with an average plot size of <strong className="text-white">163 sqm</strong>.
+                HSR Layout contains <strong className="text-white">{HSR_DATA.total_buildings.toLocaleString()} mapped structures</strong> covering <strong className="text-white">{HSR_DATA.area_sq_km} sq km ({HSR_DATA.area_hectares} hectares)</strong> — serving a projected population of <strong className="text-white">{HSR_DATA.population_2025.toLocaleString()} residents</strong>.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-[#f59e0b] font-black text-xl mb-1">13.5 bld/ha</div>
+                  <div className="text-[#f59e0b] font-black text-xl mb-1">{HSR_DATA.building_density_per_sqkm} /km²</div>
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Density</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-[#00d4aa] font-black text-xl mb-1">94.8% Res</div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Character</div>
+                  <div className="text-[#00d4aa] font-black text-xl mb-1">60/30/10</div>
+                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Res/Com/Mix</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-white font-black text-xl mb-1">7,081 m²</div>
-                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Largest Structure</div>
+                  <div className="text-white font-black text-xl mb-1">{HSR_DATA.daily_waste_tons} Tons</div>
+                  <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Daily Waste</div>
                 </div>
               </div>
             </motion.div>
@@ -286,16 +285,16 @@ export default function OsmAnalysisPage() {
                       </tr>
                     ))}
                     <tr className="bg-[#00d4aa]/10 border-t border-[#00d4aa]/30">
-                      <td className="py-4 px-6 font-bold text-white">TOTAL</td>
-                      <td className="py-4 px-6 text-right font-mono font-bold text-white">9,483</td>
-                      <td className="py-4 px-6 text-right font-mono font-bold text-[#00d4aa]">5,191 kg</td>
+                      <td className="py-4 px-6 font-bold text-white">TOTAL GENERATED</td>
+                      <td className="py-4 px-6 text-right font-mono font-bold text-white">-</td>
+                      <td className="py-4 px-6 text-right font-mono font-bold text-[#00d4aa]">{HSR_DATA.daily_waste_kg.toLocaleString()} kg</td>
                       <td className="py-4 px-6 text-right font-mono font-bold text-white">100%</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div className="p-4 bg-[#0a0f1e]/50 border-t border-gray-800 text-xs text-gray-500 font-mono tracking-wide">
-                Note: Residential waste = 0.4kg/unit/day | Commercial = 2.5kg/unit/day | Office = 5kg/unit/day
+                Note: Overall daily waste calculation based strictly on 0.5kg / capita standard for Census 2025.
               </div>
             </motion.div>
 

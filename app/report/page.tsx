@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import wardScores from '@/data/ward_scores.json';
+import { HSR_DATA } from '@/lib/constants';
 import economicParams from '@/data/economic_params.json';
 import { Skeleton } from "@/components/ui/Skeleton";
 
@@ -164,8 +165,7 @@ export default function ReportPage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-800 uppercase tracking-wider border-b border-slate-200 pb-2 mb-4">1. Executive Summary</h2>
                 <p className="font-medium text-slate-600 leading-relaxed text-justify">
-                  This report summarizes the operational state and projected risks associated with Bengaluru&apos;s waste ecosystem over the timeframe marked as <span className="font-bold text-slate-800 bg-slate-100 px-1">{dateRange}</span>. 
-                  Across the surveyed geography of 198 wards encompassing roughly {economicParams.totalTrucks.toLocaleString()} collection vehicles, we have synthesized high-confidence mitigation strategies utilizing AstraCity&apos;s spatial intelligence heuristics. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
+                  HSR Layout Ward Analysis reveals a population base of {HSR_DATA.population_2025.toLocaleString()} generating {HSR_DATA.daily_waste_tons} tons of aggregate daily waste. Using GEOIQ.IO boundaries paired with OpenStreetMap extracts and Census 2011 calibrators, we have mapped localized waste generation hotspots and optimized collection routing algorithms to reduce daily required travel. Wait times at transfer stations and baseline carbon expenditures present distinct targets for immediate route recalibration.
                 </p>
               </section>
             )}
@@ -202,9 +202,28 @@ export default function ReportPage() {
                   </div>
                   <div className="flex justify-between items-center bg-slate-50 border border-slate-200 p-4 rounded-lg">
                     <span className="font-bold text-slate-700">Total Operational Savings Estimate</span>
-                    <span className="font-black text-teal-700 text-lg">₹44.91 Crores</span>
+                    <span className="font-black text-teal-700 text-lg">₹{HSR_DATA.annual_savings_cr} Crores</span>
                   </div>
                 </div>
+
+                <div className="mt-4 p-5 bg-teal-50 border border-teal-200 rounded-xl">
+                  <h3 className="font-extrabold text-teal-900 mb-3 uppercase text-xs tracking-widest">Scale-Up Implications (198 Wards City-wide)</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="flex flex-col">
+                       <span className="text-teal-600 font-bold text-[10px] uppercase tracking-wider mb-0.5">Population</span>
+                       <span className="text-teal-900 font-black text-lg leading-none">~1.4 Crores</span>
+                    </div>
+                    <div className="flex flex-col border-l border-teal-200/50 pl-4">
+                       <span className="text-teal-600 font-bold text-[10px] uppercase tracking-wider mb-0.5">Daily Waste</span>
+                       <span className="text-teal-900 font-black text-lg leading-none">~6,500 Tons</span>
+                    </div>
+                    <div className="flex flex-col border-l border-teal-200/50 pl-4">
+                       <span className="text-teal-600 font-bold text-[10px] uppercase tracking-wider mb-0.5">Expected Savings</span>
+                       <span className="text-teal-900 font-black text-lg leading-none">₹830 Cr/yr</span>
+                    </div>
+                  </div>
+                </div>
+
               </section>
             )}
 

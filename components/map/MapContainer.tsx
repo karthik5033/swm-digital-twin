@@ -307,7 +307,7 @@ export default function MapContainer() {
             coords.forEach((c: any) => { x += c[0]; y += c[1]; });
             x /= n; y /= n;
             const type = f.properties.building_type;
-            let waste = wasteTypeMap[type] ?? 1.0;
+            let waste = (wasteTypeMap as any)[type] ?? 1.0;
             return {
               type: 'Feature',
               geometry: { type: 'Point', coordinates: [x, y] },

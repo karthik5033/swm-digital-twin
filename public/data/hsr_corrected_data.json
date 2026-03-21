@@ -1,0 +1,161 @@
+{
+  "ward": "HSR Layout",
+  "city": "Bengaluru",
+  "ward_number": "174",
+  "last_updated": "2025",
+  "area": {
+    "sq_km": 18.5,
+    "hectares": 1850.0,
+    "note": "From HSR_Layout_SD.tif coverage"
+  },
+  "population": {
+    "census_2011": 63033,
+    "male_2011": 93782,
+    "female_2011": 82413,
+    "growth_rate_pct": 4.5,
+    "projection_year": 2025,
+    "population_2025": 115000,
+    "density_per_sqkm": 6216,
+    "source": "Census 2011 Ward 174 + 4.5% growth"
+  },
+  "waste": {
+    "per_capita_kg_day": 0.5,
+    "total_kg_day": 57500.0,
+    "total_tons_day": 57.5,
+    "wet_kg_day": 34500.0,
+    "dry_kg_day": 20125.0,
+    "other_kg_day": 2875.0,
+    "standard": "CPCB Municipal Solid Waste"
+  },
+  "buildings": {
+    "total": 9471,
+    "density_per_sqkm": 511.9,
+    "type_breakdown": {
+      "Residential (House)": {
+        "count": 8998,
+        "pct": 95.0
+      },
+      "Residential (Apartment)": {
+        "count": 250,
+        "pct": 2.6
+      },
+      "Commercial/Retail": {
+        "count": 137,
+        "pct": 1.4
+      },
+      "Office/IT": {
+        "count": 39,
+        "pct": 0.4
+      },
+      "Educational": {
+        "count": 15,
+        "pct": 0.2
+      },
+      "Religious": {
+        "count": 10,
+        "pct": 0.1
+      },
+      "Hospital/Medical": {
+        "count": 2,
+        "pct": 0.0
+      },
+      "Government/Civic": {
+        "count": 3,
+        "pct": 0.0
+      },
+      "Other": {
+        "count": 17,
+        "pct": 0.2
+      }
+    },
+    "area_stats": {
+      "average_sqm": 163,
+      "median_sqm": 114.8,
+      "largest_sqm": 5836,
+      "total_footprint_ha": 154.4
+    },
+    "source": "OpenStreetMap buildings_osm.geojson"
+  },
+  "roads": {
+    "total_segments": 2027,
+    "density_per_sqkm": 109.6,
+    "type_breakdown": {
+      "trunk": {
+        "count": 38,
+        "pct": 1.9,
+        "vehicle": "Large Truck"
+      },
+      "primary": {
+        "count": 10,
+        "pct": 0.5,
+        "vehicle": "Large Truck"
+      },
+      "secondary": {
+        "count": 113,
+        "pct": 5.6,
+        "vehicle": "Truck"
+      },
+      "tertiary": {
+        "count": 191,
+        "pct": 9.4,
+        "vehicle": "Truck"
+      },
+      "residential": {
+        "count": 840,
+        "pct": 41.4,
+        "vehicle": "Auto Rickshaw"
+      },
+      "service": {
+        "count": 179,
+        "pct": 8.8,
+        "vehicle": "Auto Rickshaw"
+      },
+      "footway": {
+        "count": 509,
+        "pct": 25.1,
+        "vehicle": "Walk/Handcart"
+      },
+      "path": {
+        "count": 51,
+        "pct": 2.5,
+        "vehicle": "Walk/Handcart"
+      }
+    },
+    "two_tier_system": {
+      "truck_accessible": {
+        "segments": 352,
+        "percentage": 17.4,
+        "types": [
+          "trunk",
+          "primary",
+          "secondary",
+          "tertiary"
+        ]
+      },
+      "auto_accessible": {
+        "segments": 1579,
+        "percentage": 77.9,
+        "types": [
+          "residential",
+          "service",
+          "footway",
+          "path"
+        ]
+      },
+      "total_coverage_pct": 95.3
+    },
+    "source": "OpenStreetMap hsr_road_network.geojson"
+  },
+  "infrastructure": {
+    "dwcc_centers": 16,
+    "bio_methanisation_units": 2,
+    "dumpyards": 0,
+    "sectors": 7
+  },
+  "satellite": {
+    "image": "HSR_Layout_SD.tif",
+    "size_pixels": "1002x740",
+    "bands": 3,
+    "size_mb": 4.25
+  }
+}

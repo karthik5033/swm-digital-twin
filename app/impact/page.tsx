@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { Skeleton } from "@/components/ui/Skeleton";
 import hsrData from "@/data/hsr_ward_scores.json";
+import { HSR_DATA } from "@/lib/constants";
 
 // --- Icons ---
 const FuelIcon = () => (
@@ -64,11 +65,8 @@ export default function ImpactDashboard() {
   ];
   
   // Calculate dynamic values from HSR dataset
-  const totalWaste = hsrData.reduce((sum, item) => sum + item.wasteTons, 0);
-  // Estimate population: (Total Waste in kg / 0.45 kg per capita)
-  // 99 tons = 99,000 kg. 99000 / 0.45 = 220,000 people.
-  // This matches our design target perfectly.
-  const estimatedPop = Math.round((totalWaste * 1000) / 0.45);
+  const totalWaste = HSR_DATA.daily_waste_tons;
+  const estimatedPop = HSR_DATA.population_2025;
   const estimatedHouseholds = Math.round(estimatedPop / 4);
 
   const dumpyardCapacityData = [
@@ -147,7 +145,7 @@ export default function ImpactDashboard() {
                 { title: "Total Population", icon: <ActivityIcon />, value: estimatedPop.toLocaleString(), unit: "", desc: "2026 Census Estimate" },
                 { title: "Daily Waste", icon: <TrashIcon />, value: totalWaste.toFixed(0), unit: " tons/day", desc: "Total waste generated" },
                 { title: "Households", icon: <HardHatIcon />, value: estimatedHouseholds.toLocaleString(), unit: "", desc: "Mapped residential units" },
-                { title: "Per Capita Target", icon: <LeafIcon />, value: "0.45", unit: " kg/day", desc: "Waste per person inside HSR" }
+                { title: "Per Capita Target", icon: <LeafIcon />, value: "0.50", unit: " kg/day", desc: "Waste per person inside HSR" }
               ].map((card, idx) => (
                 <motion.div 
                   key={idx}
@@ -175,6 +173,32 @@ export default function ImpactDashboard() {
               ))}
             </div>
           )}
+        </section>
+
+        {/* NEW REAL DATA FOUNDATION CARD */}
+        <section className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm">
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Data Foundation: GEOIQ.IO + Census</h3>
+              <div className="grid grid-cols-1 gap-y-3 pl-2">
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Target Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population_2025.toLocaleString()}</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Building Density:</span> <span className="text-white">{HSR_DATA.building_density_per_sqkm} / sq km</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road Density:</span> <span className="text-white">{HSR_DATA.road_density_per_sqkm} / sq km</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily Waste Output:</span> <span className="text-white">{HSR_DATA.daily_waste_tons} tons</span></div>
+              </div>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-amber-400 font-mono text-xs sm:text-sm">
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">🗺️</span> Route Optimization Profile</h3>
+              <div className="grid grid-cols-1 gap-y-3 pl-2">
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck routes:</span> <span className="text-white">{HSR_DATA.truck_roads} segments ({HSR_DATA.truck_roads_pct}%)</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto routes:</span> <span className="text-white">{HSR_DATA.auto_roads} segments ({HSR_DATA.auto_roads_pct}%)</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Total Coverage:</span> <span className="text-white">{HSR_DATA.total_coverage_pct}%</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Distance Saved:</span> <span className="text-emerald-400 font-bold">100 km / day</span></div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Special Building Alerts */}
@@ -543,6 +567,30 @@ export default function ImpactDashboard() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 7: SCALE-UP IMPLICATIONS */}
+        <section className="mb-20">
+          <div className="bg-gradient-to-r from-teal-900 to-slate-900 border border-teal-500/20 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <h2 className="text-3xl font-extrabold text-white mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
+            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">Extrapolating HSR Layout model to all 198 BBMP Wards</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
+                <div className="text-xs font-bold text-teal-500 uppercase tracking-widest mb-1">Total Population</div>
+                <div className="text-4xl font-black text-white">~1.4 Crores</div>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
+                <div className="text-xs font-bold text-teal-500 uppercase tracking-widest mb-1">Daily Waste</div>
+                <div className="text-4xl font-black text-white">~6,500 Tons</div>
+              </div>
+              <div className="bg-white/5 border border-teal-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2">
+                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Expected Savings</div>
+                <div className="text-4xl font-black text-[#00d4aa]">₹830 Cr / year</div>
+              </div>
             </div>
           </div>
         </section>

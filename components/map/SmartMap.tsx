@@ -274,7 +274,7 @@ export default function SmartMap() {
                 ${props.risk === 'high' ? '⚠️ Priority collection zone — schedule daily pickup' : props.risk === 'medium' ? '📋 Standard collection — every 2 days' : '✅ Low priority — weekly collection sufficient'}
               </div>
               <div style="font-size:9px;color:#475569;margin-top:6px;text-align:center">
-                Population: Census 2011 projection · Waste: CPCB standard 0.5kg/person/day
+                Population: Census 2025 projection · Waste: CPCB standard 0.5kg/person/day
               </div>
             </div>
           `)
@@ -759,11 +759,11 @@ export default function SmartMap() {
       {/* ══════════════════════════════════════════════════════ */}
       <div className="shrink-0 bg-[#0a0f1a] border-b border-white/10 px-6 py-2 flex items-center justify-center gap-0 text-xs font-semibold tracking-wide">
         {[
-          { label: 'mapped', value: `${HSR_DATA.area_hectares} ha`, warn: false },
-          { label: 'population', value: HSR_DATA.population_2026.toLocaleString(), warn: false },
+          { label: 'mapped', value: `${HSR_DATA.area_sq_km} km²`, warn: false },
+          { label: 'population', value: HSR_DATA.population_2025.toLocaleString(), warn: false },
           { label: 'waste/day', value: `${HSR_DATA.daily_waste_tons}T`, warn: false },
           { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
-          { label: 'dumps detected', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
+          { label: 'dump sites', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
         ].map(({ label, value, warn }, i) => (
           <React.Fragment key={label}>
             {i > 0 && <span className="text-white/15 mx-4 select-none">|</span>}
@@ -899,19 +899,19 @@ export default function SmartMap() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-slate-300">
                     <span>2011 baseline:</span>
-                    <span className="font-mono font-bold text-white">1,76,195</span>
+                    <span className="font-mono font-bold text-white">{HSR_DATA.population_2011.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
-                    <span>2026 projection:</span>
-                    <span className="font-mono font-bold text-teal-400">2,20,000</span>
+                    <span>2025 projection:</span>
+                    <span className="font-mono font-bold text-teal-400">{HSR_DATA.population_2025.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
                     <span>Growth rate:</span>
-                    <span>8%/year</span>
+                    <span>{HSR_DATA.growth_rate_pct}%/year</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
                     <span>Density:</span>
-                    <span>21,978/sq km</span>
+                    <span>{HSR_DATA.population_density_per_sqkm}/sq km</span>
                   </div>
                 </div>
               </div>
@@ -923,22 +923,22 @@ export default function SmartMap() {
                 <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">DAILY WASTE (CPCB Standard)</div>
                 <div className="flex justify-between text-xs text-slate-300 font-bold mb-1">
                   <span>Total:</span>
-                  <span className="text-white">1,10,000 kg</span>
+                  <span className="text-white">{HSR_DATA.daily_waste_kg.toLocaleString()} kg</span>
                 </div>
-                <div className="text-[10px] text-slate-500 text-right -mt-1 mb-2">(110 tons/day)</div>
+                <div className="text-[10px] text-slate-500 text-right -mt-1 mb-2">({HSR_DATA.daily_waste_tons} tons/day)</div>
                 
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">🟢</span> Wet:</span>
-                    <span className="font-mono text-slate-400">66,000 kg (60%)</span>
+                    <span className="font-mono text-slate-400">{(HSR_DATA.waste_wet_tons * 1000).toLocaleString()} kg (60%)</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">🔵</span> Dry:</span>
-                    <span className="font-mono text-slate-400">38,500 kg (35%)</span>
+                    <span className="font-mono text-slate-400">{(HSR_DATA.waste_dry_tons * 1000).toLocaleString()} kg (35%)</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">⚪</span> Other:</span>
-                    <span className="font-mono text-slate-400">5,500 kg (5%)</span>
+                    <span className="font-mono text-slate-400">{(HSR_DATA.waste_other_tons * 1000).toLocaleString()} kg (5%)</span>
                   </div>
                 </div>
               </div>
@@ -1018,11 +1018,11 @@ export default function SmartMap() {
             </div>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Satellite Analysis" icon="🛰️">
-              <SidebarRow icon="🏠" label="Rooftops mapped" value={HSR_DATA.total_buildings_osm.toLocaleString()} />
-              <SidebarRow icon="👥" label="Population (2026)" value={HSR_DATA.population_2026.toLocaleString()} />
+              <SidebarRow icon="🏠" label="Rooftops mapped" value={HSR_DATA.total_buildings.toLocaleString()} />
+              <SidebarRow icon="👥" label="Population (2025)" value={HSR_DATA.population_2025.toLocaleString()} />
               <SidebarRow icon="📦" label="Waste generated" value={`${HSR_DATA.daily_waste_tons} T/day`} highlight />
               <SidebarRow icon="🌿" label="Green cover" value="4.0%" warn />
-              <SidebarRow icon="📐" label="Total area" value={`${HSR_DATA.area_hectares} ha`} />
+              <SidebarRow icon="📐" label="Total area" value={`${HSR_DATA.area_sq_km} sq km`} />
             </SidebarSection>
             <div className="h-px bg-white/10" />
             <SidebarSection title="Collection Centers" icon="♻️">
