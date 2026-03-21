@@ -127,7 +127,7 @@ export default function ImpactDashboard() {
 
   const populationData = [
     { year: '2001', population: 22500, waste: 11.2 },
-    { year: '2011', population: HSR_DATA.population, waste: HSR_DATA.daily_waste_tons },
+    { year: '2011', population: 110000, waste: 19.78 },
     { year: '2023', population: 58000, waste: 29.0 },
     { year: '2026', population: 65000, waste: 32.5 }
   ];
@@ -233,11 +233,11 @@ export default function ImpactDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-3xl p-5 shadow-sm">
             <h4 className="font-extrabold text-red-800 dark:text-red-300 mb-2 flex items-center gap-2">🏥 Hospital Alert</h4>
-            <p className="text-sm text-red-700 dark:text-red-400 font-medium">{HSR_DATA.population_breakdown.hospitals.count} medical facilities in HSR Layout generating ~{(HSR_DATA.population_breakdown.hospitals.total * 0.5).toFixed(0)} kg/day bio-medical waste. Both located in zones B2 and C1.</p>
+            <p className="text-sm text-red-700 dark:text-red-400 font-medium">2 medical facilities in HSR Layout generating ~250 kg/day bio-medical waste. Both located in zones B2 and C1.</p>
           </div>
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 shadow-sm">
             <h4 className="font-extrabold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-2">📚 Schools Alert</h4>
-            <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">{HSR_DATA.population_breakdown.schools.count} educational institutions detected generating ~{(HSR_DATA.population_breakdown.schools.total * 0.1).toFixed(0)} kg/day paper/dry waste. Peak waste: exam seasons.</p>
+            <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">14 educational institutions detected generating ~140 kg/day paper/dry waste. Peak waste: exam seasons.</p>
           </div>
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-3xl p-5 shadow-sm">
             <h4 className="font-extrabold text-blue-800 dark:text-blue-300 mb-2 flex items-center gap-2">🏪 Commercial Alert</h4>
@@ -245,7 +245,7 @@ export default function ImpactDashboard() {
           </div>
           <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-3xl p-5 shadow-sm">
             <h4 className="font-extrabold text-emerald-800 dark:text-emerald-300 mb-2 flex items-center gap-2">💻 IT Office Alert</h4>
-            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">{HSR_DATA.population_breakdown.offices.count} IT offices detected generating ~{(HSR_DATA.population_breakdown.offices.total * 0.2).toFixed(0)} kg/day e-waste + dry waste. Dedicated e-waste collection recommended.</p>
+            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">39 IT offices detected generating ~780 kg/day e-waste + dry waste. Dedicated e-waste collection recommended.</p>
           </div>
         </div>
 
