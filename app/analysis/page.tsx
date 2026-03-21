@@ -21,10 +21,17 @@ const BBMP_COMPOSITION_HISTORY = [
 ];
 
 const HSR_COMPOSITION_2026 = [
-  { name: '🟢 Wet/Organic', pct: 61, tons: 14.19, dest: 'Bio-methanisation units (2)', color: '#22c55e' },
-  { name: '🔵 Dry/Recycle', pct: 30, tons: 6.94,  dest: 'DWCC centres (16)',          color: '#3b82f6' },
+  { name: '🟢 Wet/Organic', pct: 61, tons: 14.10, dest: 'Bio-methanisation units (2)', color: '#22c55e' },
+  { name: '🔵 Dry/Recycle', pct: 30, tons: 6.93,  dest: 'DWCC centres (16)',          color: '#3b82f6' },
   { name: '🔴 Hazardous',   pct: 5,  tons: 1.16,  dest: 'Special contractor',          color: '#ef4444' },
   { name: '⚪ Other/Inert', pct: 4,  tons: 0.92,  dest: 'Street sweep / landfill',    color: '#6b7280' },
+];
+
+const LULC_DATA = [
+  { name: 'Built-up', value: 64.1, area: 11.85, color: '#e74c3c' },
+  { name: 'Vegetation', value: 17.6, area: 3.26, color: '#27ae60' },
+  { name: 'Open Land', value: 15.3, area: 2.83, color: '#f39c12' },
+  { name: 'Water', value: 3.0, area: 0.56, color: '#3498db' },
 ];
 
 const roadTypes = [
@@ -180,6 +187,50 @@ export default function AnalysisPage() {
                   <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-3xl">
                     <h4 className="text-sm text-gray-400 font-medium mb-1">Road Segments</h4>
                     <div className="text-2xl font-bold">2,027</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl">
+                <h3 className="text-2xl font-bold mb-6">LULC Land Use Classification</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div className="h-64 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={LULC_DATA}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={90}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {LULC_DATA.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <RechartsTooltip 
+                          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                          formatter={(value: any) => [`${value}%`]}
+                        />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="space-y-4">
+                    {LULC_DATA.map(item => (
+                      <div key={item.name} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/10">
+                        <div className="flex items-center gap-3">
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
+                          <span className="font-bold">{item.name}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-white font-black">{item.value}%</div>
+                          <div className="text-gray-400 text-xs">{item.area} km²</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -409,7 +460,7 @@ export default function AnalysisPage() {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-400">HSR wet demand:</span>
-                        <span className="text-green-400 font-bold">14.19T ✔ Covered</span>
+                        <span className="text-green-400 font-bold">14.10T ✔ Covered</span>
                       </div>
                     </div>
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-xs">
@@ -469,7 +520,7 @@ export default function AnalysisPage() {
                 {/* Four waste type boxes */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                   {[
-                    { emoji: '🟢', label: 'WET', pct: '61%', tons: '14.2T', bg: 'bg-[#14532d]', border: 'border-green-500', text: 'text-green-400', dest: 'Bio-methanisation', destSub: '(2 units)' },
+                    { emoji: '🟢', label: 'WET', pct: '61%', tons: '14.1T', bg: 'bg-[#14532d]', border: 'border-green-500', text: 'text-green-400', dest: 'Bio-methanisation', destSub: '(2 units)' },
                     { emoji: '🔵', label: 'DRY', pct: '30%', tons: '6.9T',  bg: 'bg-[#1e3a5f]', border: 'border-blue-500',  text: 'text-blue-400',  dest: 'DWCC centres',    destSub: '(16 centres)' },
                     { emoji: '🔴', label: 'HAZ', pct: '5%',  tons: '1.2T',  bg: 'bg-[#7f1d1d]', border: 'border-red-500',   text: 'text-red-400',   dest: 'Special',         destSub: 'Contractor' },
                     { emoji: '⚪', label: 'OTHER', pct: '4%',  tons: '0.9T',  bg: 'bg-[#374151]', border: 'border-gray-500',  text: 'text-gray-400',  dest: 'Street',          destSub: 'Sweeping' },
@@ -654,7 +705,7 @@ export default function AnalysisPage() {
                   {/* Wet Waste */}
                   <div className="bg-[#14532d] border-2 border-green-500 rounded-2xl px-8 py-3 text-center min-w-[200px]">
                     <div className="text-green-400 font-bold text-xs uppercase tracking-wider">Wet Waste Input</div>
-                    <div className="text-white font-black text-xl">14.19 T/day</div>
+                    <div className="text-white font-black text-xl">14.10 T/day</div>
                   </div>
                   <div className="w-0.5 h-6 bg-green-500/50" /><div className="text-green-400 text-xs">▼</div>
                   {/* Bio-meth */}
@@ -702,7 +753,7 @@ export default function AnalysisPage() {
                   <div className="space-y-1 text-sm mb-3">
                     <div className="flex justify-between"><span className="text-gray-400">Active units:</span><span className="text-white font-bold">2</span></div>
                     <div className="flex justify-between"><span className="text-gray-400">Capacity:</span><span className="text-white font-bold">10 TPD</span></div>
-                    <div className="flex justify-between"><span className="text-gray-400">Current load:</span><span className="text-amber-400 font-bold">14.19 TPD</span></div>
+                    <div className="flex justify-between"><span className="text-gray-400">Current load:</span><span className="text-amber-400 font-bold">14.10 TPD</span></div>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-3 py-2 text-xs text-amber-300">⚠️ Near capacity &mdash; Kudlu plant will add capacity</div>
                 </div>

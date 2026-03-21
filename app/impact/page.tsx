@@ -91,10 +91,10 @@ export default function ImpactDashboard() {
   ];
 
   const lulcData = [
-    { name: 'Built-up', value: 65, color: '#e74c3c' },
-    { name: 'Vegetation', value: 18, color: '#27ae60' },
-    { name: 'Open Land', value: 12, color: '#f39c12' },
-    { name: 'Water', value: 5, color: '#3498db' }
+    { name: 'Built-up', value: 64.1, color: '#e74c3c' },
+    { name: 'Vegetation', value: 17.6, color: '#27ae60' },
+    { name: 'Open Land', value: 15.3, color: '#f39c12' },
+    { name: 'Water', value: 3.0, color: '#3498db' }
   ];
 
   return (
@@ -181,13 +181,13 @@ export default function ImpactDashboard() {
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-inner text-teal-400 font-mono text-xs sm:text-sm">
               <h3 className="text-white font-bold mb-4 flex items-center gap-2"><span className="text-lg">📡</span> Official Waste Data</h3>
               <div className="grid grid-cols-1 gap-y-3 pl-2">
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population_building_based.toLocaleString()}</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1 mt-2"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.daily_waste_display}</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Wet ({HSR_DATA.waste_wet_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanation</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Dry ({HSR_DATA.waste_dry_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → DWCC recycling</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Haz ({HSR_DATA.waste_hazardous_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_hazardous_tons}T → Special handling</span></div>
-                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span className="text-slate-500 ml-4">Street ({HSR_DATA.waste_other_pct}%):</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons}T → Landfill</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Population:</span> <span className="text-white">{HSR_DATA.population.toLocaleString()}</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Daily waste:</span> <span className="text-white font-bold">{HSR_DATA.waste_daily_tons} tons</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Area:</span> <span className="text-white">{HSR_DATA.area_sq_km} sq km</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Buildings:</span> <span className="text-white">{HSR_DATA.buildings_total.toLocaleString()} ({HSR_DATA.buildings_density}/sq km)</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Road density:</span> <span className="text-white">{HSR_DATA.roads_density}/sq km</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Truck roads:</span> <span className="text-white">{HSR_DATA.roads_truck_pct}%</span></div>
+                <div className="flex justify-between border-b border-slate-700/50 pb-1"><span>Auto roads:</span> <span className="text-white">{HSR_DATA.roads_auto_pct}%</span></div>
               </div>
             </div>
 
@@ -229,7 +229,7 @@ export default function ImpactDashboard() {
              </div>
              
              <div className="flex-1 md:border-l border-indigo-500/20 md:pl-8 text-lg font-medium text-indigo-100 italic leading-relaxed">
-               "{HSR_DATA.population_building_based.toLocaleString()} residents across {HSR_DATA.total_buildings.toLocaleString()} buildings generating {HSR_DATA.daily_waste_display} — AstraCity's optimization reduces collection cost by ₹{HSR_DATA.annual_savings_cr}Cr/year for this ward alone."
+               "{HSR_DATA.population.toLocaleString()} residents across {HSR_DATA.buildings_total.toLocaleString()} buildings generating {HSR_DATA.waste_daily_tons} tons/day — AstraCity's optimization identifies ₹{HSR_DATA.savings_total_cr} Cr/year total value for this ward."
              </div>
           </div>
         </section>
@@ -341,7 +341,7 @@ export default function ImpactDashboard() {
           {/* SECTION 2: Building Type Breakdown */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
             <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white mb-2">Building Type Breakdown</h2>
-            <p className="text-sm text-slate-500 mb-6">Distribution of 45,000 structures in HSR</p>
+            <p className="text-sm text-slate-500 mb-6">Distribution of {HSR_DATA.buildings_total.toLocaleString()} structures in HSR</p>
             <div className="h-64 w-full">
               {mounted && (
                 <ResponsiveContainer>
@@ -350,7 +350,7 @@ export default function ImpactDashboard() {
                       {buildingTypeData.map((e, i) => <Cell key={i} fill={e.color} />)}
                     </Pie>
                     <Tooltip formatter={(value) => [`${value}%`, 'Share']} contentStyle={{ borderRadius: '12px' }} />
-                    <Legend wrapperStyle={{ fontWeight: 600, fontSize: '13px' }} formatter={(value, entry: any) => <span className="text-slate-700 dark:text-slate-300">{value} ({entry.payload.value === 70 ? '31,500' : entry.payload.value === 20 ? '9,000' : '4,500'})</span>} />
+                    <Legend wrapperStyle={{ fontWeight: 600, fontSize: '13px' }} formatter={(value, entry: any) => <span className="text-slate-700 dark:text-slate-300">{value} ({entry.payload.value === 64.1 ? '8,998' : entry.payload.value === 17.6 ? '3.2 km²' : 'Area'})</span>} />
                   </PieChart>
                 </ResponsiveContainer>
               )}
@@ -592,8 +592,8 @@ export default function ImpactDashboard() {
 
             {/* Annual Savings & Carbon Revenue Breakdown */}
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6">
-              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>💰</span> Annual Value identified: <span className="text-emerald-400">₹9.4 Crores</span></h3>
-              <p className="text-slate-400 text-xs mb-4">₹4.2Cr operational savings + ₹5.2Cr carbon credit value</p>
+              <h3 className="text-white font-bold text-base mb-4 flex items-center gap-2"><span>💰</span> Annual Value identified: <span className="text-emerald-400">₹9.42 Crores</span></h3>
+              <p className="text-slate-400 text-xs mb-4">₹4.23Cr operational + ₹5.19Cr carbon</p>
               
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                 <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
@@ -629,7 +629,7 @@ export default function ImpactDashboard() {
               </div>
 
               <div className="mt-4 bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs text-slate-400 leading-relaxed italic">
-                Note: Carbon credit revenue requires CDM/VCS registration. Operational savings of ₹4.2Cr are immediate.
+                Note: Carbon credit revenue requires CDM/VCS registration. Operational savings of ₹4.23Cr are immediate.
               </div>
             </div>
           </div>
@@ -658,16 +658,16 @@ export default function ImpactDashboard() {
 
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
               <div className="bg-rose-50 border border-rose-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
-                <p className="text-rose-800 font-bold text-lg leading-snug">65% built-up area generates 35kg waste per 100sqm daily</p>
+                <p className="text-rose-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_builtup}% built-up area generates 35kg waste per 100sqm daily</p>
               </div>
               <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
-                <p className="text-orange-800 font-bold text-lg leading-snug">12% open land =<br/>8 potential illegal dump sites</p>
+                <p className="text-orange-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_open}% open land =<br/>8 potential illegal dump sites</p>
               </div>
               <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
                 <p className="text-blue-800 font-bold text-lg leading-snug">Agara Lake buffer zone at high contamination risk</p>
               </div>
               <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 flex flex-col justify-center shadow-sm">
-                <p className="text-emerald-800 font-bold text-lg leading-snug">18% green cover helps reduce organic waste by 12%</p>
+                <p className="text-emerald-800 font-bold text-lg leading-snug">{HSR_DATA.lulc_vegetation}% green cover helps reduce organic waste by 12%</p>
               </div>
             </div>
             
@@ -678,16 +678,16 @@ export default function ImpactDashboard() {
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-rose-500"></span>Built-up</td><td className="px-4 py-4">8.45</td><td className="px-4 py-4 text-rose-600 font-bold">Very High</td><td className="px-4 py-4 text-amber-600 font-bold">Medium</td>
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-rose-500"></span>Built-up</td><td className="px-4 py-4">11.85</td><td className="px-4 py-4 text-rose-600 font-bold">Very High</td><td className="px-4 py-4 text-amber-600 font-bold">Medium</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-orange-500"></span>Open Land</td><td className="px-4 py-4">1.56</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-600 font-bold">Very High</td>
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-orange-500"></span>Open Land</td><td className="px-4 py-4">2.83</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-600 font-bold">Very High</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-emerald-600"></span>Vegetation</td><td className="px-4 py-4">2.34</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-emerald-600"></span>Vegetation</td><td className="px-4 py-4">3.26</td><td className="px-4 py-4 text-slate-500 font-bold">Low</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-blue-500"></span>Water</td><td className="px-4 py-4">0.65</td><td className="px-4 py-4 text-slate-400 font-bold">None</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
+                    <td className="px-4 py-4 font-bold flex items-center gap-2 text-slate-800 dark:text-white"><span className="block w-3 h-3 rounded-sm bg-blue-500"></span>Water</td><td className="px-4 py-4">0.56</td><td className="px-4 py-4 text-slate-400 font-bold">None</td><td className="px-4 py-4 text-red-500 font-bold">High</td>
                   </tr>
                 </tbody>
               </table>
@@ -700,7 +700,7 @@ export default function ImpactDashboard() {
           <div className="bg-gradient-to-r from-teal-900 to-slate-900 border border-teal-500/20 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
             <h2 className="text-3xl font-extrabold text-white mb-2 text-center relative z-10">City-wide Scale-up Projection</h2>
-            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.4Cr total value/year · 198 wards × avg ₹9.4Cr = city-wide potential</p>
+            <p className="text-center font-medium text-teal-400 mb-8 tracking-wide relative z-10">HSR Layout: ₹9.42Cr total value/year · 198 wards × ₹9.42Cr = ₹1,865 Crores</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
@@ -713,7 +713,7 @@ export default function ImpactDashboard() {
               </div>
               <div className="bg-white/5 border border-teal-500/30 rounded-2xl p-6 text-center backdrop-blur-sm shadow-[0_0_30px_rgba(20,184,166,0.15)] transform md:-translate-y-2">
                 <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Potential Annual Value</div>
-                <div className="text-4xl font-black text-[#00d4aa]">₹1,861 Cr</div>
+                <div className="text-4xl font-black text-[#00d4aa]">₹1,865 Cr</div>
               </div>
             </div>
           </div>

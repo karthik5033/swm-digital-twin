@@ -8,11 +8,11 @@ import Image from 'next/image';
 import { HSR_DATA } from '@/lib/constants';
 
 const buildingData = {
-  total: 9483,
+  total: 9471,
   source: "OpenStreetMap",
   types: {
-    "Residential (House)": 8993,
-    "Residential (Apartment)": 243,
+    "Residential (House)": 8998,
+    "Residential (Apartment)": 250,
     "Commercial/Retail": 136,
     "Other/Unclassified": 42,
     "Office/IT": 39,
@@ -42,8 +42,8 @@ const mapColors: Record<string, string> = {
 };
 
 const chartData = [
-  { name: "Residential House", count: 8993, fill: mapColors["Residential (House)"] },
-  { name: "Residential Apt", count: 243, fill: mapColors["Residential (Apartment)"] },
+  { name: "Residential House", count: 8998, fill: mapColors["Residential (House)"] },
+  { name: "Residential Apt", count: 250, fill: mapColors["Residential (Apartment)"] },
   { name: "Commercial/Retail", count: 136, fill: mapColors["Commercial/Retail"] },
   { name: "Other", count: 42, fill: mapColors["Other/Unclassified"] },
   { name: "Office/IT", count: 39, fill: mapColors["Office/IT"] },
@@ -88,7 +88,7 @@ export default function OsmAnalysisPage() {
             <div className="flex items-center gap-4">
               <span className="text-xl text-gray-400 font-light">HSR Layout · Bengaluru</span>
               <span className="bg-[#111827] border border-gray-700 text-gray-300 text-xs px-3 py-1.5 rounded-full font-mono tracking-wider">
-                9,483 buildings mapped · OpenStreetMap
+                {HSR_DATA.buildings_total.toLocaleString()} buildings mapped · OpenStreetMap
               </span>
             </div>
           </div>
@@ -96,15 +96,15 @@ export default function OsmAnalysisPage() {
           <div className="flex flex-wrap gap-4">
             <div className="bg-[#111827] border border-gray-800 px-5 py-3 rounded-2xl flex flex-col min-w-[130px]">
               <span className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Total Buildings</span>
-              <span className="text-2xl font-black text-white">9,483</span>
+              <span className="text-2xl font-black text-white">{HSR_DATA.buildings_total.toLocaleString()}</span>
             </div>
             <div className="bg-[#111827] border border-gray-800 px-5 py-3 rounded-2xl flex flex-col min-w-[130px]">
               <span className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Total Footprint</span>
-              <span className="text-2xl font-black text-[#00d4aa]">155 ha</span>
+              <span className="text-2xl font-black text-[#00d4aa]">{HSR_DATA.buildings_footprint_ha} ha</span>
             </div>
             <div className="bg-[#111827] border border-gray-800 px-5 py-3 rounded-2xl flex flex-col min-w-[130px]">
               <span className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Avg Size</span>
-              <span className="text-2xl font-black text-white">163 m²</span>
+              <span className="text-2xl font-black text-white">{HSR_DATA.buildings_avg_sqm} m²</span>
             </div>
             <div className="bg-[#111827] border border-gray-800 px-5 py-3 rounded-2xl flex flex-col min-w-[130px]">
               <span className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Categories</span>
@@ -162,12 +162,12 @@ export default function OsmAnalysisPage() {
             >
               <h2 className="text-xl font-bold mb-4 text-[#00d4aa]">City View Context</h2>
               <p className="text-gray-300 text-lg leading-relaxed font-light mb-6">
-                HSR Layout has <strong className="text-white">{HSR_DATA.total_buildings.toLocaleString()} mapped buildings</strong> across <strong className="text-white">{HSR_DATA.area_sq_km} sq km</strong>, housing <strong className="text-white">{HSR_DATA.population_building_based.toLocaleString()} residents</strong> — calculated from Census 2011 Karnataka household sizes applied to each building type. Daily waste: <strong className="text-[#00d4aa]">{HSR_DATA.daily_waste_display}</strong>.
+                HSR Layout has <strong className="text-white">{HSR_DATA.buildings_total.toLocaleString()} mapped buildings</strong> across <strong className="text-white">{HSR_DATA.area_sq_km} sq km</strong>, housing <strong className="text-white">{HSR_DATA.population.toLocaleString()} residents</strong> — calculated from Census 2011 Karnataka household sizes applied to each building type. Daily waste: <strong className="text-[#00d4aa]">{HSR_DATA.waste_display}</strong>.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-[#f59e0b] font-black text-xl mb-1">{HSR_DATA.building_density_per_sqkm} /km²</div>
+                  <div className="text-[#f59e0b] font-black text-xl mb-1">{HSR_DATA.buildings_density} /km²</div>
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Building Density</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
@@ -175,7 +175,7 @@ export default function OsmAnalysisPage() {
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Ward Character</div>
                 </div>
                 <div className="bg-[#0a0f1e] p-4 rounded-2xl border border-gray-800">
-                  <div className="text-white font-black text-xl mb-1">{HSR_DATA.daily_waste_display}</div>
+                  <div className="text-white font-black text-xl mb-1">{HSR_DATA.waste_daily_tons} tons</div>
                   <div className="text-gray-500 text-xs font-bold uppercase tracking-wider">Daily Waste</div>
                 </div>
               </div>
@@ -288,7 +288,7 @@ export default function OsmAnalysisPage() {
                     <tr className="bg-[#00d4aa]/10 border-t border-[#00d4aa]/30">
                       <td className="py-4 px-6 font-bold text-white">TOTAL GENERATED</td>
                       <td className="py-4 px-6 text-right font-mono font-bold text-white">-</td>
-                      <td className="py-4 px-6 text-right font-mono font-bold text-[#00d4aa]">{HSR_DATA.daily_waste_kg.toLocaleString()} kg</td>
+                      <td className="py-4 px-6 text-right font-mono font-bold text-[#00d4aa]">{HSR_DATA.waste_daily_kg.toLocaleString()} kg</td>
                       <td className="py-4 px-6 text-right font-mono font-bold text-white">100%</td>
                     </tr>
                   </tbody>
@@ -319,7 +319,7 @@ export default function OsmAnalysisPage() {
                 <h3 className="text-lg font-bold text-[#00d4aa]">Residential Dominance</h3>
               </div>
               <p className="text-gray-400 font-light leading-relaxed">
-                <strong className="text-gray-200">94.8%</strong> of HSR Layout&apos;s 9,483 buildings are residential — 8,993 houses and 243 apartments. This makes door-to-door collection the most efficient waste pickup strategy.
+                <strong className="text-gray-200">{HSR_DATA.buildings_residential_pct}%</strong> of HSR Layout&apos;s {HSR_DATA.buildings_total.toLocaleString()} buildings are residential — 8,998 houses and 250 apartments. This makes door-to-door collection the most efficient waste pickup strategy.
               </p>
             </div>
 

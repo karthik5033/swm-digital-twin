@@ -211,13 +211,14 @@ export default function SimulationPanel() {
                 <span>📡</span> Verified Building-Based Data
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
-                <div className="flex justify-between"><span className="text-slate-400">Population:</span> <span className="text-white font-bold">{HSR_DATA.population_building_based.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Population:</span> <span className="text-white font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-400">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.houses.count.toLocaleString()} × {HSR_DATA.population_breakdown.houses.per_unit} = {HSR_DATA.population_breakdown.houses.total.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.apartments.count} × {HSR_DATA.population_breakdown.apartments.per_unit} = {HSR_DATA.population_breakdown.apartments.total.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.offices.count} × {HSR_DATA.population_breakdown.offices.per_unit} = {HSR_DATA.population_breakdown.offices.total}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.schools.count} × {HSR_DATA.population_breakdown.schools.per_unit} = {HSR_DATA.population_breakdown.schools.total.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-300">{HSR_DATA.population_breakdown.others.count} × {HSR_DATA.population_breakdown.others.per_unit} = {HSR_DATA.population_breakdown.others.total}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-300">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-300">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-300">39 × 15 = {HSR_DATA.population_offices}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Hospitals:</span> <span className="text-slate-300">2 × 50 = {HSR_DATA.population_hospitals}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-300">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-300">30 × 3 = {HSR_DATA.population_others}</span></div>
               </div>
               <div className="mb-2 border-b border-slate-700/50 pb-2">
                 <div className="flex justify-between"><span className="text-slate-400">Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
@@ -232,10 +233,10 @@ export default function SimulationPanel() {
                 <div className="text-slate-600 ml-2 mt-1 text-[9px] italic">BBMP data: wet rose 42% (1999) → 61% (2013). Bio-meth critical.</div>
               </div>
               <div className="mb-2">
-                <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.daily_waste_display} base:</div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-300">23.3 × 1.15 = 26.8T</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.3 × 1.28 = 29.8T</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-300">23.3 × 1.49 = 34.7T</span></div>
+                <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.waste_daily_tons}T base:</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-300">23.1 × 1.15 = 26.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.1 × 1.28 = 29.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-300">23.1 × 1.49 = 34.4T</span></div>
               </div>
               <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-800">Source: CPCB + Census 2011 Karnataka</div>
 

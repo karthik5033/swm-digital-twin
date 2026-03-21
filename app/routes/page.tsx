@@ -183,7 +183,7 @@ export default function RoutesAnalysisPage() {
         {/* SECTION 3: Optimization Results */}
         <section className="mb-16">
           <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white mb-6">Optimization Results</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Before</span>
               <span className="text-3xl font-black text-slate-700 dark:text-slate-300">{HSR_DATA.baseline_route_km} km/day</span>
@@ -195,7 +195,42 @@ export default function RoutesAnalysisPage() {
             <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-lg text-white">
               <span className="text-xs font-bold text-emerald-100 uppercase tracking-widest mb-2">Saving</span>
               <span className="text-3xl font-black">{HSR_DATA.route_improvement_pct}%</span>
-              <span className="text-sm font-semibold text-emerald-100 mt-1">— ₹{HSR_DATA.annual_savings_cr}Cr/year</span>
+              <span className="text-sm font-semibold text-emerald-100 mt-1">— {HSR_DATA.baseline_route_km - HSR_DATA.optimized_route_km} km reduced</span>
+            </div>
+            <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Annual Savings</span>
+              <span className="text-3xl font-black text-emerald-600">₹{HSR_DATA.annual_savings_cr}Cr</span>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: Fleet & Frequency */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white mb-6">Fleet & Frequency Analysis</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+              <div className="text-3xl mb-2">🚛</div>
+              <div className="text-2xl font-black text-slate-800 dark:text-white">{HSR_DATA.fleet_trucks}</div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Heavy Trucks</div>
+              <p className="text-[11px] text-slate-400 mt-2">Primary arterial collection</p>
+            </div>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+              <div className="text-3xl mb-2">🛺</div>
+              <div className="text-2xl font-black text-slate-800 dark:text-white">{HSR_DATA.fleet_autos}</div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Auto Rickshaws</div>
+              <p className="text-[11px] text-slate-400 mt-2">Secondary lane collection</p>
+            </div>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+              <div className="text-3xl mb-2">🔄</div>
+              <div className="text-2xl font-black text-slate-800 dark:text-white">{HSR_DATA.fleet_rounds_per_day}</div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Rounds per day</div>
+              <p className="text-[11px] text-slate-400 mt-2">Collection frequency</p>
+            </div>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+              <div className="text-3xl mb-2">📍</div>
+              <div className="text-2xl font-black text-emerald-500">89%</div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Sub-road coverage</div>
+              <p className="text-[11px] text-slate-400 mt-2">High-granularity reach</p>
             </div>
           </div>
         </section>

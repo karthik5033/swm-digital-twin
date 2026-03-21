@@ -772,9 +772,9 @@ export default function SmartMap() {
       {/* ══════════════════════════════════════════════════════ */}
       <div className="shrink-0 bg-[#0a0f1a] border-b border-white/10 px-6 py-2 flex items-center justify-center gap-0 text-xs font-semibold tracking-wide">
         {[
-          { label: 'mapped', value: `${HSR_DATA.area_sq_km} km²`, warn: false },
+          { label: 'sq km', value: `${HSR_DATA.area_sq_km}`, warn: false },
           { label: 'population', value: HSR_DATA.population_building_based.toLocaleString(), warn: false },
-          { label: 'waste/day', value: `${Math.round(HSR_DATA.daily_waste_tons)}T`, warn: false },
+          { label: 'waste/day', value: `${HSR_DATA.waste_daily_tons}T`, warn: false },
           { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
           { label: 'dump sites', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
         ].map(({ label, value, warn }, i) => (
@@ -782,7 +782,7 @@ export default function SmartMap() {
             {i > 0 && <span className="text-white/15 mx-4 select-none">|</span>}
             <div className="flex items-center gap-2 text-white/55">
               <span className={`text-sm font-black ${warn ? 'text-orange-400' : 'text-[#00d4aa]'}`}>{value}</span>
-              <span>{warn ? `⚠️ ${label}` : label}</span>
+              <span>{label}</span>
             </div>
           </React.Fragment>
         ))}
@@ -901,7 +901,7 @@ export default function SmartMap() {
                 <span className="text-lg leading-none">📊</span> Zone Analysis
               </h3>
               <div className="text-teal-400/80 text-[10px] font-bold uppercase tracking-wider mt-1">
-                HSR Layout · 45 zones · 500m grid
+                HSR Layout · 36 zones · 500m grid
               </div>
             </div>
             
@@ -915,20 +915,20 @@ export default function SmartMap() {
                     <span className="font-mono font-bold text-white">{HSR_DATA.population_building_based.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
-                    <span>Houses {HSR_DATA.population_breakdown.houses.count.toLocaleString()} × 4:</span>
-                    <span>{HSR_DATA.population_breakdown.houses.total.toLocaleString()}</span>
+                    <span>Houses 8,998 × 4:</span>
+                    <span>35,992</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
-                    <span>Apartments {HSR_DATA.population_breakdown.apartments.count} × 30:</span>
-                    <span>{HSR_DATA.population_breakdown.apartments.total.toLocaleString()}</span>
+                    <span>Apartments 250 × 30:</span>
+                    <span>7,500</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
-                    <span>Others (offices/schools/etc):</span>
-                    <span>3,025</span>
+                    <span>Others (offices/etc):</span>
+                    <span>2,727</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>Method:</span>
-                    <span>Census 2011 Karnataka avg</span>
+                    <span>{HSR_DATA.population_source}</span>
                   </div>
                 </div>
               </div>
@@ -946,20 +946,20 @@ export default function SmartMap() {
                 
                 <div className="space-y-1 border-b border-slate-800 pb-2">
                   <div className="flex justify-between text-xs text-slate-300">
-                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🟢</span> Wet {HSR_DATA.waste_wet_pct}%:</span>
-                    <span className="font-mono text-slate-400">{HSR_DATA.waste_wet_kg.toLocaleString()} kg — Bio-meth</span>
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🟢</span> Wet 61%:</span>
+                    <span className="font-mono text-slate-400">14,100 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
-                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🔵</span> Dry {HSR_DATA.waste_dry_pct}%:</span>
-                    <span className="font-mono text-slate-400">{HSR_DATA.waste_dry_kg.toLocaleString()} kg — DWCC</span>
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🔵</span> Dry 30%:</span>
+                    <span className="font-mono text-slate-400">6,933 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
-                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🔴</span> Haz {HSR_DATA.waste_hazardous_pct}%:</span>
-                    <span className="font-mono text-slate-400">{HSR_DATA.waste_hazardous_kg.toLocaleString()} kg — Special</span>
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">🔴</span> Haz 5%:</span>
+                    <span className="font-mono text-slate-400">1,156 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
-                    <span className="flex items-center gap-1.5"><span className="text-[10px]">⚪</span> Other {HSR_DATA.waste_other_pct}%:</span>
-                    <span className="font-mono text-slate-400">{HSR_DATA.waste_other_kg.toLocaleString()} kg — Sweep</span>
+                    <span className="flex items-center gap-1.5"><span className="text-[10px]">⚪</span> Other 4%:</span>
+                    <span className="font-mono text-slate-400">921 kg</span>
                   </div>
                 </div>
                 <div className="text-[10px] text-slate-500 pt-1 leading-relaxed">
@@ -975,15 +975,15 @@ export default function SmartMap() {
                 <div className="grid grid-cols-3 gap-1">
                   <div className="bg-red-500/10 border border-red-500/20 rounded-md p-1.5 text-center">
                     <div className="text-[10px] text-red-500 font-bold mb-0.5">High</div>
-                    <div className="text-sm font-bold text-white">13</div>
+                    <div className="text-sm font-bold text-white">8</div>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded-md p-1.5 text-center">
                     <div className="text-[10px] text-amber-500 font-bold mb-0.5">Med</div>
-                    <div className="text-sm font-bold text-white">14</div>
+                    <div className="text-sm font-bold text-white">11</div>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded-md p-1.5 text-center">
                     <div className="text-[10px] text-green-500 font-bold mb-0.5">Low</div>
-                    <div className="text-sm font-bold text-white">18</div>
+                    <div className="text-sm font-bold text-white">17</div>
                   </div>
                 </div>
               </div>
@@ -1045,7 +1045,7 @@ export default function SmartMap() {
               <SidebarRow icon="🏠" label="Rooftops mapped" value={HSR_DATA.total_buildings.toLocaleString()} />
               <SidebarRow icon="👥" label="Population (building-based)" value={HSR_DATA.population_building_based.toLocaleString()} />
               <SidebarRow icon="📦" label="Waste generated" value={`${HSR_DATA.daily_waste_tons} T/day`} highlight />
-              <SidebarRow icon="🌿" label="Green cover" value="4.0%" warn />
+              <SidebarRow icon="🌿" label="Green cover" value={`${HSR_DATA.lulc_vegetation}%`} warn />
               <SidebarRow icon="📐" label="Total area" value={`${HSR_DATA.area_sq_km} sq km`} />
             </SidebarSection>
             <div className="h-px bg-white/10" />

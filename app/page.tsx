@@ -125,7 +125,7 @@ const FEATURES = [
   { title: 'Methane Mapping', desc: 'Monitor atmospheric methane buildup and calculate carbon offsets.', icon: '☁️' },
   { title: 'Route Optimization', desc: 'Cut millions in fuel waste by dynamically rerouting collection vehicles.', icon: '🚛' },
   { title: 'Economic Analytics', desc: 'Translate environmental impact directly into quantifiable rupees saved.', icon: '💰' },
-  { title: 'Policy Simulation', desc: 'Pressure-test the city against population surges and heavy monsoons.', icon: '📊' },
+  { title: 'Carbon Intelligence', desc: 'Track CO2e captures and carbon credit valuation across the ward.', icon: '🌿' },
 ];
 
 export default function Home() {
@@ -178,14 +178,14 @@ export default function Home() {
            transition={{ duration: 0.8, delay: 0.6 }}
            className="text-base md:text-xl max-w-3xl mb-14 leading-relaxed text-slate-600 dark:text-slate-400"
         >
-          Real intelligence for HSR Layout's {HSR_DATA.population_building_based.toLocaleString()} residents across {HSR_DATA.total_buildings.toLocaleString()} buildings, generating {HSR_DATA.daily_waste_display} of waste.
+          Satellite + Census intelligence for HSR Layout's 46,219 residents across 7 sectors, 18.5 sq km, 9,471 buildings.
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
-          <StatCard value={population} label="Residents (Building-Based)" subtext={`8,998 houses × 4 + apartments & more`} delay={0.8} />
-          <StatCard value={totalWaste} suffix=" Tons" label="Daily waste generated" subtext={`CPCB 0.5kg/day · ${HSR_DATA.population_building_based.toLocaleString()} people`} delay={0.9} />
-          <StatCard value={routeSaving} suffix="%" label="Route optimization" subtext={`${Math.round(HSR_DATA.baseline_route_km)}km → ${Math.round(HSR_DATA.optimized_route_km)}km · Real road data`} delay={1.0} />
-          <StatCard value={savedCrores} prefix="₹" suffix=" Crores" label="Annual value identified" subtext="Ops savings + carbon credits" delay={1.1} />
+          <StatCard value={population} label="Residents (2025)" subtext="Building × Census 2011 Karnataka" delay={0.8} />
+          <StatCard value={totalWaste} suffix=" Tons" label="Daily waste generated" subtext="CPCB 0.5kg/person · 9,471 buildings" delay={0.9} />
+          <StatCard value={routeSaving} suffix="%" label="Route optimization" subtext="132km → 32km · 2,027 road segments" delay={1.0} />
+          <StatCard value={savedCrores} prefix="₹" suffix=" Crores" label="Annual value identified" subtext="₹4.2Cr ops + ₹5.2Cr carbon credits" delay={1.1} />
         </div>
       </section>
 
