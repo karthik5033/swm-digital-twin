@@ -15,6 +15,7 @@ const MAIN_LINKS = [
   { href: '/routes', label: 'Routes' },
   { href: '/report', label: 'Report' },
   { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
+  { href: '/forecast', label: '🔮 Forecast' },
 ];
 
 const FEATURES_LINKS = [
