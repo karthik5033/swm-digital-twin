@@ -55,7 +55,11 @@ const LAYERS: LayerConfig[] = [
   // SPATIAL
   { id: 'ward',    label: 'Ward Boundary', color: '#00d4aa', defaultOn: true, category: 'SPATIAL' },
   { id: 'roads',   label: 'Road Network',  color: '#475569', defaultOn: true, category: 'SPATIAL' },
+<<<<<<< Updated upstream
   { id: 'dumps',   label: 'Dry Waste Centers', color: '#0ea5e9', defaultOn: true, count: '16', category: 'SPATIAL' },
+=======
+  { id: 'dumps',   label: 'Dry Waste Centers', color: '#0ea5e9', defaultOn: true, count: '4', category: 'SPATIAL' },
+>>>>>>> Stashed changes
   { id: 'heatmap', label: 'Waste Heatmap', color: '#f59e0b', defaultOn: false, category: 'SPATIAL' },
   { id: 'routes',  label: 'Truck Routes',  color: '#00d4aa', defaultOn: false, category: 'SPATIAL' },
 
@@ -103,6 +107,9 @@ export default function SmartMap() {
     daily_waste_kg: 19780,
     daily_waste_tons: 19.78,
     daily_waste_display: "19.78 Tons",
+    waste_daily_tons: 19.78,
+    population_source: "Building-based estimate",
+    lulc_vegetation: 12.4,
     waste_wet_tons: 11.87,
     waste_wet_kg: 11870,
     waste_wet_pct: 60,
@@ -117,7 +124,11 @@ export default function SmartMap() {
     waste_per_capita_kg: 0.5,
     total_buildings: 9471,
     route_improvement_pct: 75.5,
+<<<<<<< Updated upstream
     dump_sites_detected: 16
+=======
+    dump_sites_detected: 4
+>>>>>>> Stashed changes
   };
 
   useEffect(() => {
@@ -149,7 +160,11 @@ export default function SmartMap() {
         await Promise.all([
           fetch('/data/hsr_ward_boundary.geojson').then((r) => r.json()),
           fetch('/data/hsr_road_network.geojson').then((r) => r.json()),
+<<<<<<< Updated upstream
           fetch('/data/dry_waste_centres.geojson').then((r) => r.ok ? r.json() : {type: "FeatureCollection", features: []}),
+=======
+          fetch(`/data/dump_sites.json?v=${Date.now()}`).then((r) => r.json()),
+>>>>>>> Stashed changes
           fetch('/data/buildings_osm.geojson').then((r) => r.json()).catch(() => null),
           fetch('/data/truck_routes.json').then((r) => r.json()),
           fetch('/data/zone_analysis.json').then((r) => r.json()),

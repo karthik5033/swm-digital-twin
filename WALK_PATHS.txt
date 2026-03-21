@@ -1,0 +1,4 @@
+C:\Users\Kishan Shetty\Downloads\AstraSky-main\AstraSky-main\astracity\data\bengaluru_wards.geojson
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\AstraSky\astracity\data\bengaluru_wards.geojson
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\data\bengaluru_wards.geojson
+C:\Users\Kishan Shetty\Downloads\AstraSky-maing\public\data\bengaluru_wards.geojson

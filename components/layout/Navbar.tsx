@@ -18,6 +18,7 @@ const LINKS = [
   { href: '/report', label: 'Report' },
   { href: '/economics', label: 'Economics' },
   { href: '/routing', label: 'Routing' },
+  { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
 ];
 
 export default function Navbar() {

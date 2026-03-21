@@ -4,9 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useSpring, useTransform } from 'framer-motion';
+import { HSR_DATA } from '@/lib/constants';
 
 import { Skeleton } from "@/components/ui/Skeleton";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, ReferenceLine, Scatter, ComposedChart } from 'recharts';
 
 // --- Icons ---
 const SettingsIcon = () => (
@@ -41,27 +41,6 @@ function AnimatedNumber({ value }: { value: number }) {
   return <motion.span>{display}</motion.span>;
 }
 
-const getWeather = async () => {
-  const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=Bangalore&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_KEY}&units=metric`
-  )
-  const data = await res.json()
-  return data.list.slice(0, 10).map(
-    (item: any, idx: number) => ({
-      day: idx + 1,
-      temp: item.main.temp,
-      rainfall: item.rain?.['3h'] || 0,
-      humidity: item.main.humidity,
-      description: item.weather[0].description
-    })
-  )
-}
-
-const FESTIVAL_DAYS: Record<number, { name: string; factor: number }> = {
-  3: { name: "Weekend", factor: 1.10 },
-  7: { name: "Local Event", factor: 1.15 }
-}
-
 export default function SimulationPanel() {
   const [demolition, setDemolition] = useState(false);
   const [apartments, setApartments] = useState(false);
@@ -69,24 +48,11 @@ export default function SimulationPanel() {
   const [extraAutos, setExtraAutos] = useState(false);
   const [segregation, setSegregation] = useState(0);
 
-  const [rainfallValue, setRainfallValue] = useState(5);
-  const [weatherData, setWeatherData] = useState<any[]>([]);
-  const [festivalEnabled, setFestivalEnabled] = useState(false);
-  const [festivalType, setFestivalType] = useState('none');
-  const [apiError, setApiError] = useState<string | null>(null);
-
   const [isRunning, setIsRunning] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [wardList, setWardList] = useState<string[]>([]);
 
   useEffect(() => {
-    getWeather().then(data => {
-      setWeatherData(data);
-      if (data.length > 0) {
-        setRainfallValue(data[0].rainfall);
-      }
-    }).catch(console.error);
-
     fetch('/api/geojson').then(res => res.json()).then(data => {
       if (data.features) {
         const names = data.features.map((f: { properties: { name: string } }) => f.properties.name).sort();
@@ -99,175 +65,127 @@ export default function SimulationPanel() {
   }, []);
 
   const baselineValues = {
-    wasteGenerated: 54.0,
-    dumpsPredicted: 14,
-    landfillInflow: 35.0,
+    wasteGenerated: HSR_DATA.daily_waste_tons || 23.11,
+    dumpsPredicted: HSR_DATA.dump_sites_detected || 4,
+    landfillInflow: Math.round((HSR_DATA.daily_waste_tons || 23.11) * 0.65), // Estimate based on 110t
     methaneProjection: 420,
     subRoadCoverage: 89,
     costPerDay: 2100,
+    riskLevel: 'LOW',
+    alert: null as string | null,
+    recommendation: null as string | null,
   };
 
   const [metrics, setMetrics] = useState({ ...baselineValues });
 
-  const handleRunSimulation = async () => {
+  const handleRunSimulation = () => {
     setIsRunning(true);
-    setApiError(null);
     
-    try {
-      const response = await fetch('http://localhost:8000/run-digital-twin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          rainfall: rainfallValue,
-          festival: festivalEnabled,
-          festival_type: festivalType,
-          days: 30
-        })
-      });
+    setTimeout(() => {
+      const baseWaste = HSR_DATA.daily_waste_tons || 23.11;
+      const baseDumps = HSR_DATA.dump_sites_detected || 4;
+      let newCoverage = 89;
+      let newCost = 2100;
+
+      let wasteMult = 1.0;
+      let dumpsAdd = 0;
+      let landfillMult = 1.0;
+      let methaneMult = 1.0;
+
+      if (demolition) {
+        wasteMult *= 1.40;
+        dumpsAdd += 6;
+        landfillMult *= 1.35;
+        methaneMult *= 1.15;
+      }
+      if (apartments) {
+        wasteMult *= 1.18;
+        dumpsAdd += 3;
+        landfillMult *= 1.20;
+        methaneMult *= 1.12;
+      }
+      if (encroachment) {
+        wasteMult *= 1.05;
+        dumpsAdd += 8;
+        landfillMult *= 1.08;
+        methaneMult *= 1.28;
+      }
+      if (extraAutos) {
+        dumpsAdd -= 4;
+        landfillMult *= 1.12;
+        methaneMult *= 0.92;
+        newCoverage = 96;
+        newCost += 800; // Rs 800/day
+      }
+
+      let newWaste = baseWaste * wasteMult;
+      let newLandfill = baselineValues.landfillInflow * landfillMult;
+      let newMethane = 420 * methaneMult;
+      let newDumps = baseDumps + dumpsAdd;
+
+      const reductionFactor = segregation * 0.008; 
+      newWaste = newWaste - (baseWaste * reductionFactor);
+      newLandfill = newLandfill - (newLandfill * (segregation * 0.012));
+      newDumps = Math.max(0, newDumps - Math.floor(segregation / 5));
+      newMethane = newMethane - (newMethane * (segregation * 0.01));
+
+      let riskLevel = "LOW";
+      if (newDumps > 25 || newMethane > 700) {
+        riskLevel = "CRITICAL";
+      } else if (newDumps >= 20 || newMethane >= 551) {
+        riskLevel = "HIGH";
+      } else if (newDumps >= 15 || newMethane >= 421) {
+        riskLevel = "MODERATE";
+      }
+
+      let alertMsg = null;
+      let recommendationMsg = null;
       
-      if (!response.ok) throw new Error("Backend not responding");
-      
-      const data = await response.json();
-      
+      if (riskLevel === "CRITICAL" || riskLevel === "HIGH") {
+        alertMsg = "The alarming surge in illegal dump sites indicates an imminent public health and environmental crisis.";
+        recommendationMsg = "Deploy immediate cleanup crews and enforce strict anti-dumping regulations around construction zones and wetland areas.";
+      } else if (riskLevel === "MODERATE") {
+        alertMsg = "Noticeable increase in waste disposal issues. Monitor areas closely.";
+        recommendationMsg = "Increase patrol frequency in vulnerable zones to prevent further dumping.";
+      }
+
       setMetrics({
-        wasteGenerated: data.waste_prediction.total_waste_tons,
-        dumpsPredicted: data.summary.critical_dumpyards + 14,
-        landfillInflow: data.waste_prediction.total_waste_tons * 0.7,
-        methaneProjection: 400 + data.summary.critical_dumpyards * 5,
-        subRoadCoverage: data.route_optimization.road_coverage_after,
-        costPerDay: 2100 - (data.route_optimization.annual_fuel_savings_inr / 365)
+        wasteGenerated: Math.max(0, newWaste),
+        dumpsPredicted: Math.round(Math.max(0, newDumps)),
+        landfillInflow: Math.max(0, newLandfill),
+        methaneProjection: Math.max(0, newMethane),
+        subRoadCoverage: newCoverage,
+        costPerDay: newCost,
+        riskLevel,
+        alert: alertMsg,
+        recommendation: recommendationMsg
       });
-      
+
       setIsRunning(false);
-    } catch (error) {
-      console.warn(error);
-      setApiError("Backend offline — showing cached data");
-      
-      setTimeout(() => {
-        const baseWaste = 54.0;
-        let newWaste = baseWaste;
-        let newDumps = 14;
-        let newLandfill = 35.0;
-        let newMethane = 420;
-        let newCoverage = 89;
-        let newCost = 2100;
-
-        if (demolition) {
-          newWaste += baseWaste * 0.40;
-          newLandfill += (baseWaste * 0.40) * 0.9;
-          newDumps += 3;
-        }
-        if (apartments) {
-          newWaste += 5.0;
-          newLandfill += 3.5;
-          newMethane += 40;
-        }
-        if (encroachment) {
-          newDumps += 8;
-          newMethane += 20;
-        }
-        if (extraAutos) {
-          newCoverage = 96;
-          newCost += 800;
-          newWaste += 4.2;
-        }
-
-        const reductionFactor = segregation * 0.008; 
-        newWaste = newWaste - (baseWaste * reductionFactor);
-        newLandfill = newLandfill - (newLandfill * (segregation * 0.012));
-        newDumps = Math.max(0, newDumps - Math.floor(segregation / 5));
-        newMethane = newMethane - (newMethane * (segregation * 0.01));
-
-        setMetrics({
-          wasteGenerated: Math.max(0, newWaste),
-          dumpsPredicted: Math.max(0, newDumps),
-          landfillInflow: Math.max(0, newLandfill),
-          methaneProjection: Math.max(0, newMethane),
-          subRoadCoverage: newCoverage,
-          costPerDay: newCost
-        });
-
-        setIsRunning(false);
-      }, 800);
-    }
+    }, 800);
   };
 
-  const forecast = React.useMemo(() => {
-    if (!weatherData || weatherData.length === 0) return [];
+  useEffect(() => {
+    handleRunSimulation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [demolition, apartments, encroachment, extraAutos, segregation]);
+
+  const renderMetricDiff = (current: number, base: number) => {
+    const diffNum = current - base;
+    if (Math.abs(diffNum) < 0.1) return <span className="text-slate-500 bg-slate-100 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">0% vs normal</span>;
+    const percentChange = ((diffNum / base) * 100).toFixed(1);
+    const isIncrease = diffNum > 0;
     
-    const BASE_WASTE = 23.26;
-    const CAPACITY = 50.0;
-    
-    return weatherData.map(day => {
-      let waste = BASE_WASTE;
+    const colorClass = isIncrease 
+      ? 'text-rose-600 bg-rose-50 border border-rose-200' 
+      : 'text-emerald-700 bg-emerald-50 border border-emerald-200';
       
-      if (demolition) waste += BASE_WASTE * 0.40;
-      if (apartments) waste += 5.0;
-      
-      if (day.rainfall > 10) waste *= 1.05;
-      if (day.temp > 32) waste *= 1.02;
-      
-      const festival = FESTIVAL_DAYS[day.day];
-      let eventName = "-";
-      let isFestival = false;
-      if (festival) {
-        waste *= festival.factor;
-        eventName = festival.name;
-        isFestival = true;
-      }
-      
-      if (extraAutos) waste += 4.2;
-      const reductionFactor = segregation * 0.008; 
-      waste = waste - (BASE_WASTE * reductionFactor);
-      
-      const riskScore = waste / CAPACITY;
-      const risk = 
-        riskScore > 0.85 ? 'CRITICAL' :
-        riskScore > 0.65 ? 'HIGH' :
-        riskScore > 0.45 ? 'MEDIUM' : 'LOW';
-
-      // Round to 2 decimals
-      waste = Math.round(waste * 100) / 100;
-
-      // Wet/dry split
-      // Source: BBMP 2013 chemical analysis
-      const wet = Math.round(waste * 0.61 * 100) / 100;
-      const dry = Math.round(waste * 0.30 * 100) / 100;
-
-      // Cost calculation
-      let cost = Math.round(31 * 20 * 10); // distance x fuel x trucks
-      if (extraAutos) cost += 800;
-
-      const dateStr = new Date(Date.now() + day.day * 86400000).toLocaleDateString('en-IN');
-
-      return {
-        ...day,
-        dayLabel: `Day ${day.day}`,
-        date: dateStr,
-        waste,
-        wet,
-        dry,
-        risk,
-        riskScore,
-        cost,
-        event: eventName,
-        isFestival,
-        isRainy: day.rainfall > 10,
-        capacityLimit: CAPACITY,
-        baseWasteLine: BASE_WASTE
-      };
-    });
-  }, [weatherData, demolition, apartments, encroachment, extraAutos, segregation]);
-
-  const summary = React.useMemo(() => {
-    if (!forecast || forecast.length === 0) return null;
-    const today = forecast[0];
-    const peakDay = forecast.reduce((prev, current) => (prev.waste > current.waste) ? prev : current);
-    const highRiskDays = forecast.filter(d => d.risk === 'CRITICAL' || d.risk === 'HIGH').length;
-    const totalWaste = forecast.reduce((sum, d) => sum + d.waste, 0).toFixed(1);
-    return { today, peakDay, highRiskDays, totalWaste };
-  }, [forecast]);
-
+    return (
+      <span className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${colorClass}`}>
+        {isIncrease ? '+' : ''}{percentChange}% vs normal
+      </span>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">
@@ -285,37 +203,53 @@ export default function SimulationPanel() {
             </div>
           </div>
 
-          {weatherData && weatherData.length > 0 && (
-            <div className="bg-slate-800 text-white rounded-xl p-4 shadow-md flex flex-col justify-center relative overflow-hidden border border-slate-700">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[40px] rounded-full pointer-events-none" />
-              <h3 className="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest mb-3 z-10">Current Bengaluru Weather</h3>
-              <div className="flex items-center justify-between z-10 text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🌡️</span>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase">Temp</span>
-                    <span className="font-black leading-none">{Math.round(weatherData[0].temp)}°C</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">🌧️</span>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase">Rain</span>
-                    <span className="font-black leading-none">{weatherData[0].rainfall} mm</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">💧</span>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase">Humidity</span>
-                    <span className="font-black leading-none">{weatherData[0].humidity}%</span>
-                  </div>
-                </div>
+          <div className="flex flex-col gap-6">
+
+            {/* REAL DATA BASELINE CARD */}
+            <div className="bg-slate-900 border border-slate-700 p-5 rounded-2xl shadow-inner font-mono text-[11px] text-teal-400">
+              <div className="flex items-center gap-2 mb-3 text-white font-bold text-sm">
+                <span>📡</span> Verified Building-Based Data
+              </div>
+              <div className="mb-2 border-b border-slate-700/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-400">Population:</span> <span className="text-white font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Method:</span> <span className="text-slate-300">Buildings × household size</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-300">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-300">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-300">39 × 15 = {HSR_DATA.population_offices}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Hospitals:</span> <span className="text-slate-300">2 × 50 = {HSR_DATA.population_hospitals}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-300">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Others:</span> <span className="text-slate-300">30 × 3 = {HSR_DATA.population_others}</span></div>
+              </div>
+              <div className="mb-2 border-b border-slate-700/50 pb-2">
+                <div className="flex justify-between"><span className="text-slate-400">Per capita:</span> <span className="text-white">{HSR_DATA.waste_per_capita_kg} kg/day (CPCB)</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Daily Waste:</span> <span className="text-white font-bold text-amber-400">{HSR_DATA.daily_waste_kg.toLocaleString()} kg = {HSR_DATA.daily_waste_display}</span></div>
+              </div>
+              <div className="mb-3 border-b border-slate-700/50 pb-3">
+                <div className="text-teal-500 font-bold mb-1">Composition (BBMP 2013 Official):</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🟢 Wet {HSR_DATA.waste_wet_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_wet_tons}T → Bio-methanisation</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔵 Dry {HSR_DATA.waste_dry_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_dry_tons}T → 16 DWCC centres</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">🔴 Haz {HSR_DATA.waste_hazardous_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_hazardous_tons}T → Special contractor</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">⚪ Other {HSR_DATA.waste_other_pct}%:</span> <span className="text-slate-300">{HSR_DATA.waste_other_tons}T → Street sweep</span></div>
+                <div className="text-slate-600 ml-2 mt-1 text-[9px] italic">BBMP data: wet rose 42% (1999) → 61% (2013). Bio-meth critical.</div>
+              </div>
+              <div className="mb-2">
+                <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.waste_daily_tons}T base:</div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-300">23.1 × 1.15 = 26.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-300">23.1 × 1.28 = 29.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-300">23.1 × 1.49 = 34.4T</span></div>
+              </div>
+              <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-800">Source: CPCB + Census 2011 Karnataka</div>
+
+              {/* Climate block */}
+              <div className="mt-3 border-t border-slate-700/50 pt-3">
+                <div className="text-emerald-500 font-bold mb-1 text-xs uppercase tracking-wider">Climate Impact (IPCC 2006)</div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CH₄ produced:</span> <span className="text-teal-300">3,548 m³/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">CO₂ equivalent:</span> <span className="text-blue-300">71.1 T/day captured</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Energy output:</span> <span className="text-amber-300">21,285 kWh/day</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">Methane risk:</span> <span className="text-green-400 font-bold">LOW ✅ (0 dumps)</span></div>
+                <div className="text-[9px] text-slate-600 mt-1 italic">CH₄ GWP = 28× CO₂ (IPCC AR5) · 6 kWh/m³</div>
               </div>
             </div>
-          )}
-
-          <div className="flex flex-col gap-6">
 
             {/* HSR Scenario: Demolition Spikes */}
             <div className="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-slate-300 transition-colors">
@@ -393,216 +327,159 @@ export default function SimulationPanel() {
 
           </div>
 
-          <div className="w-full flex flex-col mt-4">
-            {apiError && (
-              <div className="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 mb-3 shadow-sm">
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                {apiError}
-              </div>
+          <button
+            onClick={handleRunSimulation}
+            disabled={isRunning}
+            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-white font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
+          >
+            {isRunning ? (
+              <>
+                <SpinnerIcon />
+                <span>Simulating Layout Impact...</span>
+              </>
+            ) : (
+              'Run Simulation'
             )}
-            <button
-              onClick={handleRunSimulation}
-              disabled={isRunning}
-              className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-white font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] hover:-translate-y-0.5"
-            >
-              {isRunning ? (
-                <>
-                  <SpinnerIcon />
-                  <span>Simulating Layout Impact...</span>
-                </>
-              ) : (
-                'Run Simulation'
-              )}
-            </button>
-          </div>
+          </button>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="w-full md:w-[65%] flex flex-col gap-6">
-          {isLoading || !summary ? (
+          {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 h-full">
               {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} className="h-[120px] w-full rounded-2xl shadow-sm" />
+                <Skeleton key={i} className="h-[250px] w-full rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]" />
               ))}
-              <Skeleton className="col-span-1 sm:col-span-2 h-[300px] w-full rounded-2xl shadow-sm" />
             </div>
           ) : (
-            <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration: 0.5}} className="flex flex-col gap-6 flex-1">
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration: 0.5}} className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 h-full">
               
-              {/* 1. Top Summary Cards (4) */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white border rounded-xl p-4 shadow-sm flex flex-col justify-between">
-                  <h3 className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Today's Waste</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-black text-slate-800">{summary.today.waste}</span>
-                    <span className="text-slate-400 text-[10px] font-bold">tons</span>
-                  </div>
+              {/* Card 1: Waste Generated */}
+            <div className="flex flex-col justify-between bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden group hover:border-slate-300 hover:shadow-md transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 blur-[80px] rounded-full pointer-events-none" />
+              <div className="flex justify-between items-start mb-6 z-10">
+                <div className="p-3 bg-teal-50 rounded-xl border border-teal-100 text-teal-600 shadow-sm">
+                  <WasteIcon />
                 </div>
-                <div className="bg-white border rounded-xl p-4 shadow-sm flex flex-col justify-between">
-                  <h3 className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Peak Day</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-black text-rose-600">{summary.peakDay.dayLabel}</span>
-                  </div>
-                  <span className="text-[10px] font-bold text-slate-400">({summary.peakDay.waste} tons)</span>
-                </div>
-                <div className="bg-white border rounded-xl p-4 shadow-sm flex flex-col justify-between">
-                  <h3 className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">High Risk Days</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-black text-amber-500">{summary.highRiskDays}</span>
-                  </div>
-                </div>
-                <div className="bg-white border rounded-xl p-4 shadow-sm flex flex-col justify-between">
-                  <h3 className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Total (10-day)</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-black text-teal-600">{summary.totalWaste}</span>
-                    <span className="text-slate-400 text-[10px] font-bold">tons</span>
-                  </div>
+                {renderMetricDiff(metrics.wasteGenerated, baselineValues.wasteGenerated)}
+              </div>
+              <div className="z-10">
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Waste Generated</h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
+                    <AnimatedNumber value={metrics.wasteGenerated} />
+                  </span>
+                  <span className="text-slate-400 text-sm font-bold">tons/day</span>
                 </div>
               </div>
+            </div>
 
-              {/* 2. Day-by-day Recharts LineChart */}
-              <div className="bg-white border rounded-2xl p-6 shadow-sm overflow-hidden">
-                <h3 className="text-slate-800 text-md font-extrabold mb-4">10-Day Waste Forecast</h3>
-                <div className="w-full overflow-x-auto">
-                    <div className="min-w-[500px]">
-                        <ResponsiveContainer width="100%" height={300}>
-                          <ComposedChart data={forecast} margin={{ top: 5, right: 20, bottom: 5, left: -20 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                            <XAxis dataKey="dayLabel" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#64748b'}} />
-                            <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#64748b'}} />
-                            <RechartsTooltip 
-                              contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                              labelStyle={{ fontWeight: 'bold', color: '#1e293b' }}
-                            />
-                            <Legend iconType="circle" wrapperStyle={{ fontSize: '10px', paddingTop: '10px' }} />
-                            <Line type="monotone" dataKey="waste" stroke="#0d9488" strokeWidth={3} name="Predicted Waste" dot={(props: any) => {
-                              const { cx, cy, payload } = props;
-                              if (!cx || !cy) return null;
-                              if (payload.isRainy && payload.isFestival) return <circle key={`dot-${cx}`} cx={cx} cy={cy} r={6} fill="#8b5cf6" stroke="white" strokeWidth={2}/>;
-                              if (payload.isRainy) return <circle key={`dot-${cx}`} cx={cx} cy={cy} r={6} fill="#3b82f6" stroke="white" strokeWidth={2}/>;
-                              if (payload.isFestival) return <circle key={`dot-${cx}`} cx={cx} cy={cy} r={6} fill="#f97316" stroke="white" strokeWidth={2}/>;
-                              return <circle key={`dot-${cx}`} cx={cx} cy={cy} r={4} fill="#0d9488" stroke="white" strokeWidth={1} />;
-                            }} activeDot={{ r: 8 }} />
-                            <Line type="monotone" dataKey="baseWasteLine" stroke="#94a3b8" strokeDasharray="5 5" strokeWidth={2} name="Base Waste" dot={false} activeDot={false} />
-                            <Line type="monotone" dataKey="capacityLimit" stroke="#e11d48" strokeDasharray="5 5" strokeWidth={2} name="Capacity Limit" dot={false} activeDot={false} />
-                          </ComposedChart>
-                        </ResponsiveContainer>
-                    </div>
+            {/* Card 2: Dumps Predicted */}
+            <div className="flex flex-col justify-between bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden group hover:border-slate-300 hover:shadow-md transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-50 blur-[80px] rounded-full pointer-events-none" />
+              <div className="flex justify-between items-start mb-6 z-10">
+                <div className="p-3 bg-rose-50 rounded-xl border border-rose-100 text-rose-500 shadow-sm">
+                  <MapIcon />
+                </div>
+                {renderMetricDiff(metrics.dumpsPredicted, baselineValues.dumpsPredicted)}
+              </div>
+              <div className="z-10">
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Dumps Predicted</h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
+                    <AnimatedNumber value={metrics.dumpsPredicted} />
+                  </span>
+                  <span className="text-slate-400 text-sm font-bold">sites</span>
                 </div>
               </div>
+            </div>
 
-              {/* Bottom Grid: Breakdown & Risk Meter */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                {/* 4. Waste Breakdown BarChart */}
-                <div className="bg-white border rounded-2xl p-6 shadow-sm overflow-hidden">
-                  <h3 className="text-slate-800 text-md font-extrabold mb-4">Daily Breakdown</h3>
-                  <div className="w-full overflow-x-auto">
-                      <div className="min-w-[300px]">
-                          <ResponsiveContainer width="100%" height={220}>
-                            <BarChart data={forecast} margin={{ top: 0, right: 0, bottom: 0, left: -20 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                              <XAxis dataKey="dayLabel" tick={{fontSize: 10}} interval="preserveStartEnd" axisLine={false} tickLine={false} />
-                              <YAxis tick={{fontSize: 10}} axisLine={false} tickLine={false} />
-                              <RechartsTooltip cursor={{fill: '#f8fafc'}} />
-                              <Legend iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
-                              <Bar dataKey="wet" stackId="a" fill="#22c55e" name="Wet Waste" radius={[0, 0, 4, 4]} />
-                              <Bar dataKey="dry" stackId="a" fill="#3b82f6" name="Dry Waste" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                          </ResponsiveContainer>
-                      </div>
-                  </div>
+            {/* Card 3: Landfill Inflow */}
+            <div className="flex flex-col justify-between bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden group hover:border-slate-300 hover:shadow-md transition-all">
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-50 blur-[80px] rounded-full pointer-events-none" />
+              <div className="flex justify-between items-start mb-6 z-10">
+                <div className="p-3 bg-amber-50 rounded-xl border border-amber-100 text-amber-500 shadow-sm">
+                  <TrendingDownIcon />
                 </div>
-
-                {/* 5. Risk Meter */}
-                <div className="bg-white border rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 blur-[50px] rounded-full pointer-events-none" />
-                  <h3 className="text-slate-800 text-md font-extrabold mb-2 w-full text-left">Today's Risk Level</h3>
-                  
-                  {(() => {
-                    const score = summary.today.riskScore;
-                    const radius = 60;
-                    const circumference = 2 * Math.PI * radius;
-                    const strokeDashoffset = circumference - (Math.min(score, 1) * circumference);
-                    const color = score > 0.85 ? '#e11d48' : score > 0.65 ? '#ea580c' : score > 0.45 ? '#d97706' : '#16a34a';
-                    const riskText = score > 0.85 ? 'CRITICAL' : score > 0.65 ? 'HIGH' : score > 0.45 ? 'MEDIUM' : 'LOW';
-                    
-                    return (
-                      <div className="flex flex-col items-center justify-center py-4">
-                        <div className="relative flex items-center justify-center w-40 h-40">
-                          <svg className="transform -rotate-90 w-32 h-32">
-                            <circle cx="64" cy="64" r={radius} stroke="#f1f5f9" strokeWidth="12" fill="transparent" />
-                            <circle cx="64" cy="64" r={radius} stroke={color} strokeWidth="12" fill="transparent" 
-                              strokeLinecap="round"
-                              strokeDasharray={circumference} 
-                              strokeDashoffset={strokeDashoffset} 
-                              className="transition-all duration-1000 ease-out" 
-                            />
-                          </svg>
-                          <div className="absolute flex flex-col items-center">
-                            <span className="text-3xl font-black" style={{ color }}>{(score * 100).toFixed(0)}%</span>
-                          </div>
-                        </div>
-                        <div className="text-center mt-2">
-                          <span className="hidden">Gauge generated color</span>
-                          <span className="px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm" style={{ backgroundColor: color }}>
-                            {riskText} RISK
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </div>
-
+                {renderMetricDiff(metrics.landfillInflow, baselineValues.landfillInflow)}
               </div>
-
-              {/* 3. Day-by-day Table */}
-              <div className="bg-white border rounded-2xl shadow-sm overflow-hidden">
-                <div className="p-4 border-b border-slate-100 bg-slate-50/50">
-                  <h3 className="text-slate-800 text-sm font-extrabold">Detailed 10-Day Forecast</h3>
+              <div className="z-10">
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Landfill Inflow (%)</h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
+                    <AnimatedNumber value={metrics.landfillInflow} />
+                  </span>
+                  <span className="text-slate-400 text-sm font-bold">tons/day</span>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left">
-                    <thead>
-                      <tr className="bg-slate-50 text-slate-500 text-[10px] uppercase tracking-wider">
-                        <th className="p-3 font-bold border-b">Day</th>
-                        <th className="p-3 font-bold border-b">Date</th>
-                        <th className="p-3 font-bold border-b">Temp</th>
-                        <th className="p-3 font-bold border-b">Rain</th>
-                        <th className="p-3 font-bold border-b">Waste (T)</th>
-                        <th className="p-3 font-bold border-b">Wet</th>
-                        <th className="p-3 font-bold border-b">Dry</th>
-                        <th className="p-3 font-bold border-b">Risk</th>
-                        <th className="p-3 font-bold border-b">Cost</th>
-                        <th className="p-3 font-bold border-b">Event</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {forecast.map((d: any, i: number) => (
-                        <tr key={i} className="hover:bg-slate-50/50 transition-colors">
-                          <td className="p-3 font-bold text-slate-700">{d.dayLabel}</td>
-                          <td className="p-3 text-slate-500 font-medium whitespace-nowrap">{d.date}</td>
-                          <td className="p-3 text-slate-600">{Math.round(d.temp)}°C</td>
-                          <td className="p-3 text-slate-600">{d.rainfall}mm</td>
-                          <td className="p-3 font-black text-slate-800">{d.waste}</td>
-                          <td className="p-3 font-semibold text-emerald-600">{d.wet}</td>
-                          <td className="p-3 font-semibold text-sky-600">{d.dry}</td>
-                          <td className="p-3">
-                             <span className={`px-2 py-1 rounded text-[10px] font-bold shadow-sm ${
-                               d.risk === 'CRITICAL' ? 'bg-rose-500 text-white' :
-                               d.risk === 'HIGH' ? 'bg-orange-500 text-white' :
-                               d.risk === 'MEDIUM' ? 'bg-amber-400 text-amber-900' :
-                               'bg-emerald-500 text-white'
-                             }`}>{d.risk}</span>
-                          </td>
-                          <td className="p-3 font-medium text-slate-600">₹{d.cost}</td>
-                          <td className="p-3 text-[10px] font-bold text-slate-500">{d.event}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="text-xs text-slate-500 mt-2 font-bold bg-slate-50 inline-block px-2 py-1 rounded-md border border-slate-200">
+                  {((metrics.landfillInflow / metrics.wasteGenerated) * 100).toFixed(1)}% of total generated waste
                 </div>
               </div>
+            </div>
+
+            {/* Card 4: Methane Projection */}
+            <div className="flex flex-col justify-between bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden group hover:border-slate-300 hover:shadow-md transition-all">
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-50 blur-[80px] rounded-full pointer-events-none" />
+              <div className="flex justify-between items-start mb-6 z-10">
+                <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100 text-indigo-500 shadow-sm">
+                  <CloudIcon />
+                </div>
+                {renderMetricDiff(metrics.methaneProjection, baselineValues.methaneProjection)}
+              </div>
+              <div className="z-10">
+                <h3 className="text-slate-500 text-sm font-extrabold uppercase tracking-wider mb-2">Methane Projection</h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-800 tracking-tighter">
+                    <AnimatedNumber value={metrics.methaneProjection} />
+                  </span>
+                  <span className="text-slate-400 text-sm font-bold">tons/month</span>
+                </div>
+              </div>
+            </div>
+
+            {/* TWO-TIER METRICS (Fleet Coverage) */}
+            <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-6">
+              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-700 flex flex-col justify-between">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/20 blur-[80px] rounded-full pointer-events-none" />
+                <h3 className="text-slate-400 text-xs font-extrabold uppercase tracking-wider mb-2">Sub Road Coverage</h3>
+                <div className="flex items-baseline gap-2 mt-auto">
+                  <span className="text-4xl font-black text-white tracking-tighter">
+                    <AnimatedNumber value={metrics.subRoadCoverage} />%
+                  </span>
+                </div>
+                {extraAutos && <div className="text-teal-400 text-xs font-bold mt-2">Coverage improved from 89%</div>}
+              </div>
+              
+              <div className="bg-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden border border-slate-700 flex flex-col justify-between">
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-rose-500/20 blur-[80px] rounded-full pointer-events-none" />
+                <h3 className="text-slate-400 text-xs font-extrabold uppercase tracking-wider mb-2">Daily Fleet Cost</h3>
+                <div className="flex items-baseline gap-2 mt-auto">
+                  <span className="text-4xl font-black text-white tracking-tighter">
+                    ₹<AnimatedNumber value={metrics.costPerDay} />
+                  </span>
+                </div>
+                {extraAutos && <div className="text-rose-400 text-xs font-bold mt-2">+₹800/d constraint added</div>}
+              </div>
+            </div>
+
+            {/* ALERT SECTION */}
+            {metrics.riskLevel !== 'LOW' && (
+              <div className={`col-span-1 sm:col-span-2 rounded-2xl p-6 shadow-md border group hover:shadow-lg transition-all ${
+                metrics.riskLevel === 'CRITICAL' ? 'bg-rose-50 border-rose-200' : 
+                metrics.riskLevel === 'HIGH' ? 'bg-orange-50 border-orange-200' : 
+                'bg-amber-50 border-amber-200'
+              }`}>
+                 <h3 className={`text-sm font-extrabold uppercase tracking-wider mb-2 flex items-center gap-2 ${
+                    metrics.riskLevel === 'CRITICAL' ? 'text-rose-600' : 
+                    metrics.riskLevel === 'HIGH' ? 'text-orange-600' : 
+                    'text-amber-600'
+                 }`}>
+                    Risk Level: {metrics.riskLevel}
+                 </h3>
+                 {metrics.alert && <p className="text-slate-800 text-sm font-bold mb-1">{metrics.alert}</p>}
+                 {metrics.recommendation && <p className="text-slate-600 text-sm">{metrics.recommendation}</p>}
+              </div>
+            )}
 
             </motion.div>
           )}

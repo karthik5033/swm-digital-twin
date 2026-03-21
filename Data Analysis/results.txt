@@ -1,0 +1,15 @@
+﻿=== OVERALL SUMMARY ===
+  Total Zones  : 67
+  Total Waste  : 110,000.5 kg/day (110.0 tons/day)
+  Total Vehicles: 256
+  DWCC count   : 4
+
+Sector         Zones  Waste kg/d  Vehicles       DWCC  AvgDist km
+------------------------------------------------------------------
+  Sector 1         7     18317.3        40   DWCC-004        1.83
+  Sector 2        14     27587.9        60   DWCC-004        0.80
+  Sector 3        18     17387.4        44   DWCC-003        0.49
+  Sector 4         5      2958.1         8   DWCC-003        1.81
+  Sector 5         4       246.2         4   DWCC-001        1.35
+  Sector 6        13     30326.7        69   DWCC-002        1.74
+  Unknown          6     13176.9        31   DWCC-001        1.25
