@@ -47,6 +47,11 @@ export default function SimulationPanel() {
   const [extraAutos, setExtraAutos] = useState(false);
   const [segregation, setSegregation] = useState(0);
 
+  const [rainfallValue, setRainfallValue] = useState(5);
+  const [festivalEnabled, setFestivalEnabled] = useState(false);
+  const [festivalType, setFestivalType] = useState('none');
+  const [apiError, setApiError] = useState<string | null>(null);
+
   const [isRunning, setIsRunning] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [wardList, setWardList] = useState<string[]>([]);
@@ -70,103 +75,92 @@ export default function SimulationPanel() {
     methaneProjection: 420,
     subRoadCoverage: 89,
     costPerDay: 2100,
-    riskLevel: 'LOW',
-    alert: null as string | null,
-    recommendation: null as string | null,
   };
 
   const [metrics, setMetrics] = useState({ ...baselineValues });
 
-  const handleRunSimulation = () => {
+  const handleRunSimulation = async () => {
     setIsRunning(true);
+    setApiError(null);
     
-    setTimeout(() => {
-      const baseWaste = 54.0;
-      let newCoverage = 89;
-      let newCost = 2100;
-
-      let wasteMult = 1.0;
-      let dumpsAdd = 0;
-      let landfillMult = 1.0;
-      let methaneMult = 1.0;
-
-      if (demolition) {
-        wasteMult *= 1.40;
-        dumpsAdd += 6;
-        landfillMult *= 1.35;
-        methaneMult *= 1.15;
-      }
-      if (apartments) {
-        wasteMult *= 1.18;
-        dumpsAdd += 3;
-        landfillMult *= 1.20;
-        methaneMult *= 1.12;
-      }
-      if (encroachment) {
-        wasteMult *= 1.05;
-        dumpsAdd += 8;
-        landfillMult *= 1.08;
-        methaneMult *= 1.28;
-      }
-      if (extraAutos) {
-        dumpsAdd -= 4;
-        landfillMult *= 1.12;
-        methaneMult *= 0.92;
-        newCoverage = 96;
-        newCost += 800; // Rs 800/day
-      }
-
-      let newWaste = baseWaste * wasteMult;
-      let newLandfill = 35.0 * landfillMult;
-      let newMethane = 420 * methaneMult;
-      let newDumps = 14 + dumpsAdd;
-
-      const reductionFactor = segregation * 0.008; 
-      newWaste = newWaste - (baseWaste * reductionFactor);
-      newLandfill = newLandfill - (newLandfill * (segregation * 0.012));
-      newDumps = Math.max(0, newDumps - Math.floor(segregation / 5));
-      newMethane = newMethane - (newMethane * (segregation * 0.01));
-
-      let riskLevel = "LOW";
-      if (newDumps > 25 || newMethane > 700) {
-        riskLevel = "CRITICAL";
-      } else if (newDumps >= 20 || newMethane >= 551) {
-        riskLevel = "HIGH";
-      } else if (newDumps >= 15 || newMethane >= 421) {
-        riskLevel = "MODERATE";
-      }
-
-      let alertMsg = null;
-      let recommendationMsg = null;
-      
-      if (riskLevel === "CRITICAL" || riskLevel === "HIGH") {
-        alertMsg = "The alarming surge in illegal dump sites indicates an imminent public health and environmental crisis.";
-        recommendationMsg = "Deploy immediate cleanup crews and enforce strict anti-dumping regulations around construction zones and wetland areas.";
-      } else if (riskLevel === "MODERATE") {
-        alertMsg = "Noticeable increase in waste disposal issues. Monitor areas closely.";
-        recommendationMsg = "Increase patrol frequency in vulnerable zones to prevent further dumping.";
-      }
-
-      setMetrics({
-        wasteGenerated: Math.max(0, newWaste),
-        dumpsPredicted: Math.round(Math.max(0, newDumps)),
-        landfillInflow: Math.max(0, newLandfill),
-        methaneProjection: Math.max(0, newMethane),
-        subRoadCoverage: newCoverage,
-        costPerDay: newCost,
-        riskLevel,
-        alert: alertMsg,
-        recommendation: recommendationMsg
+    try {
+      const response = await fetch('http://localhost:8000/run-digital-twin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rainfall: rainfallValue,
+          festival: festivalEnabled,
+          festival_type: festivalType,
+          days: 30
+        })
       });
-
+      
+      if (!response.ok) throw new Error("Backend not responding");
+      
+      const data = await response.json();
+      
+      setMetrics({
+        wasteGenerated: data.waste_prediction.total_waste_tons,
+        dumpsPredicted: data.summary.critical_dumpyards + 14,
+        landfillInflow: data.waste_prediction.total_waste_tons * 0.7,
+        methaneProjection: 400 + data.summary.critical_dumpyards * 5,
+        subRoadCoverage: data.route_optimization.road_coverage_after,
+        costPerDay: 2100 - (data.route_optimization.annual_fuel_savings_inr / 365)
+      });
+      
       setIsRunning(false);
-    }, 800);
-  };
+    } catch (error) {
+      console.warn(error);
+      setApiError("Backend offline — showing cached data");
+      
+      setTimeout(() => {
+        const baseWaste = 54.0;
+        let newWaste = baseWaste;
+        let newDumps = 14;
+        let newLandfill = 35.0;
+        let newMethane = 420;
+        let newCoverage = 89;
+        let newCost = 2100;
 
-  useEffect(() => {
-    handleRunSimulation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [demolition, apartments, encroachment, extraAutos, segregation]);
+        if (demolition) {
+          newWaste += baseWaste * 0.40;
+          newLandfill += (baseWaste * 0.40) * 0.9;
+          newDumps += 3;
+        }
+        if (apartments) {
+          newWaste += 5.0;
+          newLandfill += 3.5;
+          newMethane += 40;
+        }
+        if (encroachment) {
+          newDumps += 8;
+          newMethane += 20;
+        }
+        if (extraAutos) {
+          newCoverage = 96;
+          newCost += 800;
+          newWaste += 4.2;
+        }
+
+        const reductionFactor = segregation * 0.008; 
+        newWaste = newWaste - (baseWaste * reductionFactor);
+        newLandfill = newLandfill - (newLandfill * (segregation * 0.012));
+        newDumps = Math.max(0, newDumps - Math.floor(segregation / 5));
+        newMethane = newMethane - (newMethane * (segregation * 0.01));
+
+        setMetrics({
+          wasteGenerated: Math.max(0, newWaste),
+          dumpsPredicted: Math.max(0, newDumps),
+          landfillInflow: Math.max(0, newLandfill),
+          methaneProjection: Math.max(0, newMethane),
+          subRoadCoverage: newCoverage,
+          costPerDay: newCost
+        });
+
+        setIsRunning(false);
+      }, 800);
+    }
+  };
 
   const renderMetricDiff = (current: number, base: number) => {
     const diffNum = current - base;
@@ -279,20 +273,28 @@ export default function SimulationPanel() {
 
           </div>
 
-          <button
-            onClick={handleRunSimulation}
-            disabled={isRunning}
-            className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-white font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] mt-4 hover:-translate-y-0.5"
-          >
-            {isRunning ? (
-              <>
-                <SpinnerIcon />
-                <span>Simulating Layout Impact...</span>
-              </>
-            ) : (
-              'Run Simulation'
+          <div className="w-full flex flex-col mt-4">
+            {apiError && (
+              <div className="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 mb-3 shadow-sm">
+                <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                {apiError}
+              </div>
             )}
-          </button>
+            <button
+              onClick={handleRunSimulation}
+              disabled={isRunning}
+              className="w-full bg-teal-600 hover:bg-teal-500 disabled:bg-teal-600/50 flex items-center justify-center gap-3 py-4 rounded-xl text-white font-extrabold tracking-wide transition-all shadow-[0_8px_20px_rgba(13,148,136,0.25)] hover:shadow-[0_8px_30px_rgba(13,148,136,0.35)] hover:-translate-y-0.5"
+            >
+              {isRunning ? (
+                <>
+                  <SpinnerIcon />
+                  <span>Simulating Layout Impact...</span>
+                </>
+              ) : (
+                'Run Simulation'
+              )}
+            </button>
+          </div>
         </div>
 
         {/* RIGHT PANEL */}
@@ -413,25 +415,6 @@ export default function SimulationPanel() {
                 {extraAutos && <div className="text-rose-400 text-xs font-bold mt-2">+₹800/d constraint added</div>}
               </div>
             </div>
-
-            {/* ALERT SECTION */}
-            {metrics.riskLevel !== 'LOW' && (
-              <div className={`col-span-1 sm:col-span-2 rounded-2xl p-6 shadow-md border group hover:shadow-lg transition-all ${
-                metrics.riskLevel === 'CRITICAL' ? 'bg-rose-50 border-rose-200' : 
-                metrics.riskLevel === 'HIGH' ? 'bg-orange-50 border-orange-200' : 
-                'bg-amber-50 border-amber-200'
-              }`}>
-                 <h3 className={`text-sm font-extrabold uppercase tracking-wider mb-2 flex items-center gap-2 ${
-                    metrics.riskLevel === 'CRITICAL' ? 'text-rose-600' : 
-                    metrics.riskLevel === 'HIGH' ? 'text-orange-600' : 
-                    'text-amber-600'
-                 }`}>
-                    Risk Level: {metrics.riskLevel}
-                 </h3>
-                 {metrics.alert && <p className="text-slate-800 text-sm font-bold mb-1">{metrics.alert}</p>}
-                 {metrics.recommendation && <p className="text-slate-600 text-sm">{metrics.recommendation}</p>}
-              </div>
-            )}
 
             </motion.div>
           )}

@@ -22,6 +22,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
+  const [apiStatus, setApiStatus] = useState<'online' | 'offline' | 'checking'>('checking');
+
   useEffect(() => {
     const saved = localStorage.getItem('astracity-theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -31,6 +33,19 @@ export default function Navbar() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    const checkApi = async () => {
+      try {
+        const res = await fetch('http://localhost:8000/');
+        setApiStatus(res.ok ? 'online' : 'offline');
+      } catch {
+        setApiStatus('offline');
+      }
+    };
+    
+    checkApi();
+    const interval = setInterval(checkApi, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const toggleTheme = () => {
@@ -52,6 +67,14 @@ export default function Navbar() {
       </Link>
       
       <div className="flex items-center gap-2 md:gap-6">
+        {/* Global API Indicator */}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-medium text-xs">
+          <span className={`w-2 h-2 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500 animate-pulse' : apiStatus === 'checking' ? 'bg-amber-500' : 'bg-red-500'}`}></span>
+          <span className="text-slate-600 dark:text-slate-300">
+            {apiStatus === 'online' ? 'API Online' : apiStatus === 'checking' ? 'Checking...' : 'API Offline'}
+          </span>
+        </div>
+
         {/* Dark Mode Toggle */}
         <button 
           onClick={toggleTheme} 

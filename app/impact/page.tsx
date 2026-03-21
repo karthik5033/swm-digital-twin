@@ -8,7 +8,6 @@ import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, ReferenceLine, ReferenceDot
 } from "recharts";
 import { Skeleton } from "@/components/ui/Skeleton";
-import hsrData from "@/data/hsr_ward_scores.json";
 
 // --- Icons ---
 const FuelIcon = () => (
@@ -40,11 +39,11 @@ export default function ImpactDashboard() {
   const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setMounted(true);
-    const t = setTimeout(() => setIsLoading(false), 600);
-    return () => clearTimeout(t);
-  }, []);
+  const buildingTypeData = [
+    { name: 'Residential', value: 70, color: '#3b82f6' },
+    { name: 'Commercial', value: 20, color: '#f59e0b' },
+    { name: 'Mixed Use', value: 10, color: '#8b5cf6' }
+  ];
 
   const projectionData = Array.from({ length: 30 }, (_, i) => {
     return {
@@ -56,20 +55,6 @@ export default function ImpactDashboard() {
   });
   
   const showWarningBanner = true; 
-
-  const buildingTypeData = [
-    { name: 'Residential', value: 70, color: '#3b82f6' },
-    { name: 'Commercial', value: 20, color: '#f59e0b' },
-    { name: 'Mixed Use', value: 10, color: '#8b5cf6' }
-  ];
-  
-  // Calculate dynamic values from HSR dataset
-  const totalWaste = hsrData.reduce((sum, item) => sum + item.wasteTons, 0);
-  // Estimate population: (Total Waste in kg / 0.45 kg per capita)
-  // 99 tons = 99,000 kg. 99000 / 0.45 = 220,000 people.
-  // This matches our design target perfectly.
-  const estimatedPop = Math.round((totalWaste * 1000) / 0.45);
-  const estimatedHouseholds = Math.round(estimatedPop / 4);
 
   const dumpyardCapacityData = [
     { name: 'D1 HSR Main', fill: 65, fillHex: '#f97316' },
@@ -84,6 +69,61 @@ export default function ImpactDashboard() {
     { name: 'Somasundara', Organic: 5.6, Dry: 2.8, Hazardous: 1.0 },
     { name: '7th Sector', Organic: 3.2, Dry: 1.6, Hazardous: 0.6 }
   ];
+
+  const [totalBuildings, setTotalBuildings] = useState<number | string>("9,471");
+  const [dailyWaste, setDailyWaste] = useState<number | string>("19.78");
+  const [dumpSites, setDumpSites] = useState<number | string>("29");
+  const [routeSaving, setRouteSaving] = useState<number | string>("75.5");
+
+  const [buildingTypes, setBuildingTypes] = useState(buildingTypeData);
+  const [wasteByType, setWasteByType] = useState(zoneWasteData);
+  const [zones, setZones] = useState([]);
+
+  const [oldDistance, setOldDistance] = useState<number | string>("132.4");
+  const [newDistance, setNewDistance] = useState<number | string>("32.4");
+  const [savingsPercent, setSavingsPercent] = useState<number | string>("75.5");
+  const [annualSavings, setAnnualSavings] = useState<number | string>("0");
+
+  const [apiStatus, setApiStatus] = useState<"connected" | "cached" | "loading">("loading");
+
+  useEffect(() => {
+    setMounted(true);
+    const t = setTimeout(() => setIsLoading(false), 600);
+
+    fetch('http://localhost:8000/ward-stats')
+      .then(res => res.json())
+      .then(data => {
+        setTotalBuildings(data.buildings.toLocaleString())
+        setDailyWaste(data.daily_waste_tons)
+        setDumpSites(data.dump_sites)
+        setRouteSaving(data.route_saving_percent)
+        setApiStatus('connected');
+      })
+      .catch(() => {
+        setTotalBuildings("9,471")
+        setDailyWaste("19.78")
+        setApiStatus('cached');
+      })
+
+    fetch('http://localhost:8000/building-analysis')
+      .then(res => res.json())
+      .then(data => {
+        // map type_summary if it's returning right structural formats in real implementation
+      })
+      .catch(() => console.log('Building API offline'))
+
+    fetch('http://localhost:8000/optimize-routes')
+      .then(res => res.json())
+      .then(data => {
+        setOldDistance(data.old_distance_km)
+        setNewDistance(data.optimized_distance_km)
+        setSavingsPercent(data.savings_percent)
+        setAnnualSavings(data.annual_fuel_savings_inr)
+      })
+      .catch(() => console.log('Routes API offline'))
+
+    return () => clearTimeout(t);
+  }, []);
 
   const populationData = [
     { year: '2001', population: 45000, waste: 15.7 },
@@ -136,7 +176,19 @@ export default function ImpactDashboard() {
         
         {/* SECTION 1: HSR Layout Overview Cards */}
         <section className="mb-12">
-          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white mb-6">HSR Layout Overview</h2>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+            <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white">HSR Layout Overview</h2>
+            {apiStatus !== 'loading' && (
+              <div className={`px-4 py-2 rounded-full border text-sm font-bold flex items-center gap-2 ${
+                apiStatus === 'connected' 
+                  ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800' 
+                  : 'bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800'
+              }`}>
+                <span className={`w-2.5 h-2.5 rounded-full ${apiStatus === 'connected' ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                {apiStatus === 'connected' ? 'Backend Connected' : 'Using Cached Data'}
+              </div>
+            )}
+          </div>
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array.from({ length: 4 }).map((_, idx) => <Skeleton key={idx} className="h-[210px] w-full rounded-3xl" />)}
@@ -144,10 +196,10 @@ export default function ImpactDashboard() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { title: "Total Population", icon: <ActivityIcon />, value: estimatedPop.toLocaleString(), unit: "", desc: "2026 Census Estimate" },
-                { title: "Daily Waste", icon: <TrashIcon />, value: totalWaste.toFixed(0), unit: " tons/day", desc: "Total waste generated" },
-                { title: "Households", icon: <HardHatIcon />, value: estimatedHouseholds.toLocaleString(), unit: "", desc: "Mapped residential units" },
-                { title: "Per Capita Target", icon: <LeafIcon />, value: "0.45", unit: " kg/day", desc: "Waste per person inside HSR" }
+                { title: "Total Buildings", icon: <HardHatIcon />, value: totalBuildings, unit: "", desc: "Mapped across HSR" },
+                { title: "Total Daily Waste", icon: <TrashIcon />, value: dailyWaste, unit: " tons/day", desc: "Calculated from OSM" },
+                { title: "Residential Houses", icon: <ActivityIcon />, value: "8,998", unit: "", desc: "95% of total buildings" },
+                { title: "Commercial & IT", icon: <LeafIcon />, value: "176", unit: "", desc: "Main bulk generators" }
               ].map((card, idx) => (
                 <motion.div 
                   key={idx}
