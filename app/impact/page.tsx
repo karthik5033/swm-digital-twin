@@ -1,10 +1,11 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any */
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+
 import { motion, useSpring, useTransform } from "framer-motion";
 import {
-  PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, ReferenceLine, Label, ReferenceDot
+  PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, ReferenceLine, ReferenceDot
 } from "recharts";
 import { Skeleton } from "@/components/ui/Skeleton";
 

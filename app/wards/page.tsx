@@ -127,7 +127,7 @@ export default function WardsPage() {
     });
 
     return result;
-  }, [searchQuery, filterZone, sortKey, sortDir, filteredWards]);
+  }, [searchQuery, filterZone, sortKey, sortDir, filteredWards, wardScoresList]);
 
   const totalPages = Math.ceil(processedWards.length / rowsPerPage);
   const currentWards = processedWards.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
