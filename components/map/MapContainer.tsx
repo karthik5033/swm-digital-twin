@@ -535,24 +535,6 @@ export default function MapContainer() {
         layout: { visibility: 'none' }
       });
 
-      // 9. Main Truck Route
-      map.current!.addLayer({
-        id: 'mainRoute',
-        type: 'line',
-        source: 'mainRoute-source',
-        paint: { 'line-color': '#22c55e', 'line-width': 4 },
-        layout: { visibility: 'visible' }
-      });
-
-      // 10. Auto Routes
-      map.current!.addLayer({
-        id: 'autoRoutes',
-        type: 'line',
-        source: 'autoRoutes-source',
-        paint: { 'line-color': '#f97316', 'line-width': 2, 'line-dasharray': [2, 2] },
-        layout: { visibility: 'visible' }
-      });
-
       // 13. Buildings Layer (Real 9,471 Polygons via dynamic fetch)
       fetch('/data/buildings_osm.geojson')
         .then(res => res.json())
@@ -595,33 +577,6 @@ export default function MapContainer() {
         })
         .catch(err => console.error("Failed to load buildings_osm.geojson", err));
 
-      // Add HTML Markers for Truck Hubs
-      TRUCK_HUBS_GEOJSON.features.forEach((feature: any) => {
-        const el = document.createElement('div');
-        // Simple CSS animation via tailwind: animate-pulse, blue square
-        el.className = 'w-6 h-6 bg-blue-600 border-2 border-white rounded-md shadow-[0_0_15px_rgba(37,99,235,0.8)] cursor-pointer hover:bg-blue-500 transition-colors duration-300';
-        
-        // Inline styles for extra pulse effect
-        el.style.animation = 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite';
-
-        const p = feature.properties;
-        const popupHtml = `<div style="font-family:Inter,sans-serif;color:#0f172a;padding:4px">
-            <strong>🚛 ${p.name}</strong><br/>
-            Capacity: ${p.limit}<br/>
-            Load: <span style="color:${p.status === 'Full' ? '#ef4444' : '#10b981'}">${p.load}</span><br/>
-            Status: <b>${p.status}</b><br/>
-            Autos Feeding: <b>${p.autos}</b>
-          </div>`;
-          
-        const popup = new maplibregl.Popup({ closeButton: true, offset: 15 }).setHTML(popupHtml);
-        const marker = new maplibregl.Marker(el)
-          .setLngLat(feature.geometry.coordinates)
-          .setPopup(popup)
-          .addTo(map.current!);
-          
-        hubMarkers.current.push(marker);
-      });
-      
       // Setup Popups
       const setupPopup = (layerId: string, getHtml: (p: any) => string) => {
         map.current!.on('click', layerId, (e) => {
