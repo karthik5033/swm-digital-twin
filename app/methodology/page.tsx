@@ -81,7 +81,7 @@ export default function EnginePage() {
                     <span className="text-rose-600 font-mono font-bold">+30% (1.30x)</span>
                   </li>
                   <li className="flex justify-between items-center bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm">
-                    <span className="text-slate-700">Festival (Diwali)</span>
+                    <span className="text-slate-700">Festival</span>
                     <span className="text-orange-400 font-mono font-bold">+35% (1.35x)</span>
                   </li>
                 </ul>
