@@ -813,7 +813,7 @@ export default function SmartMap() {
           { label: 'population', value: HSR_DATA.population_building_based.toLocaleString(), warn: false },
           { label: 'waste/day', value: `${HSR_DATA.daily_waste_tons}T`, warn: false },
           { label: 'route saving', value: `${HSR_DATA.route_improvement_pct}%`, warn: false },
-          { label: 'dump sites', value: `${HSR_DATA.dump_sites_detected}`, warn: true },
+          { label: 'dry waste centers', value: `${HSR_DATA.dump_sites_detected}`, warn: false },
         ].map(({ label, value, warn }, i) => (
           <React.Fragment key={label}>
             {i > 0 && <span className="text-white/15 mx-4 select-none">|</span>}

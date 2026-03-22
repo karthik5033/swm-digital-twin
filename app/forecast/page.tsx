@@ -81,15 +81,15 @@ export default function ForecastPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans transition-colors relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-[300px] bg-gradient-to-b from-teal-500/10 to-transparent pointer-none" />
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans transition-colors relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-[300px] bg-gradient-to-b from-teal-500/5 to-transparent pointer-none" />
 
       {/* Header */}
-      <div className="relative border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 flex items-center justify-between z-50">
+      <div className="relative border-b border-slate-200 bg-white/95 backdrop-blur-md px-6 py-4 flex items-center justify-between z-50">
         <div className="flex items-center gap-4">
-          <Link href="/impact" className="text-teal-400 font-bold hover:opacity-80 transition-opacity">← Back</Link>
-          <div className="w-[1px] h-4 bg-slate-700" />
-          <h1 className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-400 to-sky-400 bg-clip-text text-transparent">
+          <Link href="/impact" className="text-teal-600 font-bold hover:text-teal-500 transition-opacity">← Back</Link>
+          <div className="w-[1px] h-4 bg-slate-300" />
+          <h1 className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-teal-600 to-sky-600 bg-clip-text text-transparent">
             🔮 10-Day Formula Simulator
           </h1>
         </div>
@@ -99,48 +99,48 @@ export default function ForecastPage() {
         
         {/* 📋 INPUT DASHBOARD (2/3 Grid) */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-md overflow-x-auto">
-            <h2 className="text-xl font-extrabold text-slate-100 mb-2">Live Parameter Inputs</h2>
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-x-auto">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-2">Live Parameter Inputs</h2>
             <p className="text-sm text-slate-500 mb-6">Modify temperature, rain, or festival flags to satisfy the math formula live.</p>
 
-            <table className="w-full text-left text-sm text-slate-400">
-              <thead className="bg-slate-800 border-b border-slate-700">
+            <table className="w-full text-left text-sm text-slate-500">
+              <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
-                  <th className="px-3 py-3">Date</th>
-                  <th className="px-3 py-3">Temp (°C)</th>
-                  <th className="px-3 py-3">Rain (mm)</th>
-                  <th className="px-3 py-3">Festival</th>
-                  <th className="px-3 py-3">Total Waste</th>
-                  <th className="px-3 py-3">Status</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Date</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Temp (°C)</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Rain (mm)</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Festival</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Total Waste</th>
+                  <th className="px-3 py-3 font-bold text-slate-700">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 font-medium">
+              <tbody className="divide-y divide-slate-100 font-medium">
                 {computedData.map((d, i) => (
-                  <tr key={i} className="hover:bg-slate-800/20 transition-colors">
-                    <td className="px-3 py-3 text-white font-bold text-xs">
+                  <tr key={i} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="px-3 py-3 text-slate-900 font-bold text-xs">
                       {d.date.split('-')[2]} Mar ({d.day})
-                      {d.is_weekend && <span className="block text-sky-400 text-xxs">Weekend</span>}
+                      {d.is_weekend && <span className="block text-sky-600 text-[10px] uppercase tracking-wider mt-0.5 font-black">Weekend</span>}
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        <input type="range" min={20} max={40} step={1} value={d.temp} onChange={(e) => updateDay(i, 'temp', Number(e.target.value))} className="w-16 accent-teal-400" />
-                        <span className="text-xs text-slate-300 w-5">{d.temp}°</span>
+                        <input type="range" min={20} max={40} step={1} value={d.temp} onChange={(e) => updateDay(i, 'temp', Number(e.target.value))} className="w-16 accent-teal-600" />
+                        <span className="text-xs text-slate-600 font-bold w-5">{d.temp}°</span>
                       </div>
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        <input type="range" min={0} max={50} step={1} value={d.rain} onChange={(e) => updateDay(i, 'rain', Number(e.target.value))} className="w-16 accent-emerald-400" />
-                        <span className="text-xs text-slate-300 w-5">{d.rain}</span>
+                        <input type="range" min={0} max={50} step={1} value={d.rain} onChange={(e) => updateDay(i, 'rain', Number(e.target.value))} className="w-16 accent-emerald-600" />
+                        <span className="text-xs text-slate-600 font-bold w-5">{d.rain}</span>
                       </div>
                     </td>
                     <td className="px-3 py-3">
                       <input type="checkbox" checked={d.is_festival} onChange={(e) => updateDay(i, 'is_festival', e.target.checked)} className="accent-orange-500 w-4 h-4 cursor-pointer" />
                     </td>
-                    <td className="px-3 py-3 font-extrabold text-white text-xs">
+                    <td className="px-3 py-3 font-black text-slate-900 text-xs">
                       {d.total_waste} T
                     </td>
-                    <td className="px-3 py-3 text-xxs">
-                      {d.is_overflow ? <span className="text-red-400 font-black">OVERLOAD</span> : <span className="text-emerald-500">Normal</span>}
+                    <td className="px-3 py-3 text-[10px] font-bold">
+                      {d.is_overflow ? <span className="text-red-600 uppercase">OVERLOAD</span> : <span className="text-emerald-600">Normal</span>}
                     </td>
                   </tr>
                 ))}
@@ -151,17 +151,17 @@ export default function ForecastPage() {
 
         {/* 📈 REAL-TIME CHART RENDERING (1/3 Grid) */}
         <div className="flex flex-col gap-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-md">
-            <h2 className="text-base font-extrabold text-slate-200 mb-1">Live Formula Graph</h2>
-            <p className="text-xxs text-slate-500 mb-6">Redraws instantly with parameter slider triggers.</p>
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-base font-extrabold text-slate-900 mb-1">Live Formula Graph</h2>
+            <p className="text-[11px] text-slate-500 mb-6 font-medium">Redraws instantly with parameter slider triggers.</p>
             
             <div className="h-64 w-full">
               <ResponsiveContainer>
                 <AreaChart data={computedData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" />
-                  <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 10 }} />
-                  <YAxis tick={{ fill: '#64748b', fontSize: 10 }} />
-                  <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', fontSize: '11px' }} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '12px', color: '#0f172a', fontWeight: 'bold' }} />
                   
                   <ReferenceLine y={CAP_WET} stroke="#ef4444" strokeDasharray="4 4" />
                   <ReferenceLine y={CAP_DRY} stroke="#f59e0b" strokeDasharray="4 4" />
@@ -173,16 +173,16 @@ export default function ForecastPage() {
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-md">
-            <h3 className="text-base font-extrabold text-slate-200 mb-4">Formula Multipliers Used</h3>
-            <ul className="text-xs space-y-2 text-slate-400 font-medium">
-              <li className="flex justify-between"><span>Baseline Waste TPD:</span> <span className="text-white font-bold">19.78 Tons</span></li>
-              <li className="border-t border-slate-800 my-2"></li>
-              <li className="flex justify-between"><span>Rain &gt; 20mm:</span> <span className="text-emerald-400 font-bold">+25% Wet</span></li>
-              <li className="flex justify-between"><span>Rain &gt; 0mm:</span> <span className="text-emerald-400 font-bold">+8% Wet</span></li>
-              <li className="flex justify-between"><span>Temp &gt; 34°C:</span> <span className="text-blue-400 font-bold">+12% Dry</span></li>
-              <li className="flex justify-between"><span>Festival day:</span> <span className="text-orange-400 font-bold">+35% Wet, +15% Dry</span></li>
-              <li className="flex justify-between"><span>Weekend:</span> <span className="text-sky-400 font-bold">+10% Wet, +5% Dry</span></li>
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <h3 className="text-base font-extrabold text-slate-900 mb-4">Formula Multipliers Used</h3>
+            <ul className="text-xs space-y-2 text-slate-500 font-medium">
+              <li className="flex justify-between"><span>Baseline Waste TPD:</span> <span className="text-slate-900 font-bold">19.78 Tons</span></li>
+              <li className="border-t border-slate-100 my-2"></li>
+              <li className="flex justify-between"><span>Rain &gt; 20mm:</span> <span className="text-emerald-600 font-bold">+25% Wet</span></li>
+              <li className="flex justify-between"><span>Rain &gt; 0mm:</span> <span className="text-emerald-600 font-bold">+8% Wet</span></li>
+              <li className="flex justify-between"><span>Temp &gt; 34°C:</span> <span className="text-blue-600 font-bold">+12% Dry</span></li>
+              <li className="flex justify-between"><span>Festival day:</span> <span className="text-orange-500 font-bold">+35% Wet, +15% Dry</span></li>
+              <li className="flex justify-between"><span>Weekend:</span> <span className="text-sky-600 font-bold">+10% Wet, +5% Dry</span></li>
             </ul>
           </div>
         </div>
