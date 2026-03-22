@@ -535,24 +535,6 @@ export default function MapContainer() {
         layout: { visibility: 'none' }
       });
 
-      // 9. Main Truck Route
-      map.current!.addLayer({
-        id: 'mainRoute',
-        type: 'line',
-        source: 'mainRoute-source',
-        paint: { 'line-color': '#22c55e', 'line-width': 4 },
-        layout: { visibility: 'visible' }
-      });
-
-      // 10. Auto Routes
-      map.current!.addLayer({
-        id: 'autoRoutes',
-        type: 'line',
-        source: 'autoRoutes-source',
-        paint: { 'line-color': '#f97316', 'line-width': 2, 'line-dasharray': [2, 2] },
-        layout: { visibility: 'visible' }
-      });
-
       // 13. Buildings Layer (Real 9,471 Polygons via dynamic fetch)
       fetch('/data/buildings_osm.geojson')
         .then(res => res.json())
@@ -595,33 +577,6 @@ export default function MapContainer() {
         })
         .catch(err => console.error("Failed to load buildings_osm.geojson", err));
 
-      // Add HTML Markers for Truck Hubs
-      TRUCK_HUBS_GEOJSON.features.forEach((feature: any) => {
-        const el = document.createElement('div');
-        // Simple CSS animation via tailwind: animate-pulse, blue square
-        el.className = 'w-6 h-6 bg-blue-600 border-2 border-white rounded-md shadow-[0_0_15px_rgba(37,99,235,0.8)] cursor-pointer hover:bg-blue-500 transition-colors duration-300';
-        
-        // Inline styles for extra pulse effect
-        el.style.animation = 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite';
-
-        const p = feature.properties;
-        const popupHtml = `<div style="font-family:Inter,sans-serif;color:#0f172a;padding:4px">
-            <strong>🚛 ${p.name}</strong><br/>
-            Capacity: ${p.limit}<br/>
-            Load: <span style="color:${p.status === 'Full' ? '#ef4444' : '#10b981'}">${p.load}</span><br/>
-            Status: <b>${p.status}</b><br/>
-            Autos Feeding: <b>${p.autos}</b>
-          </div>`;
-          
-        const popup = new maplibregl.Popup({ closeButton: true, offset: 15 }).setHTML(popupHtml);
-        const marker = new maplibregl.Marker(el)
-          .setLngLat(feature.geometry.coordinates)
-          .setPopup(popup)
-          .addTo(map.current!);
-          
-        hubMarkers.current.push(marker);
-      });
-      
       // Setup Popups
       const setupPopup = (layerId: string, getHtml: (p: any) => string) => {
         map.current!.on('click', layerId, (e) => {
@@ -770,19 +725,24 @@ export default function MapContainer() {
         if (!e.features || !e.features.length) return;
         const p = e.features[0].properties;
         const riskColor = p.risk_level === 'CRITICAL' ? '#ef4444' : p.risk_level === 'HIGH' ? '#f97316' : p.risk_level === 'MEDIUM' ? '#eab308' : '#22c55e';
-        new maplibregl.Popup()
+        const riskBg = p.risk_level === 'CRITICAL' ? '#fef2f2' : p.risk_level === 'HIGH' ? '#fff7ed' : p.risk_level === 'MEDIUM' ? '#fefce8' : '#f0fdf4';
+        new maplibregl.Popup({ closeButton: true, maxWidth: '280px' })
           .setLngLat(e.lngLat)
           .setHTML(`
-            <div style="padding:12px;min-width:200px;font-family:Inter,sans-serif;color:#0f172a">
-              <h3 style="color:#0d9488;margin:0 0 8px;font-size:15px;font-weight:900">
-                \ud83d\udccd ${p.zone_id} \u2014 HSR Layout
-              </h3>
-              <p style="margin:4px 0">\ud83c\udfe2 Buildings: <b>${p.buildings}</b></p>
-              <p style="margin:4px 0">\ud83d\udc65 Population: <b>${p.population}</b></p>
-              <p style="margin:4px 0">\ud83d\uddd1\ufe0f Daily Waste: <b>${p.waste_total_tons}T</b></p>
-              <p style="margin:4px 0">\ud83c\udf0a Wet: <b>${p.wet_waste}T</b> \u2192 Bio-meth</p>
-              <p style="margin:4px 0">\u267b\ufe0f Dry: <b>${p.dry_waste}T</b> \u2192 DWCC</p>
-              <p style="margin:4px 0">\u26a0\ufe0f Risk: <b style="color:${riskColor}">${p.risk_level}</b></p>
+            <div style="font-family:'Inter',system-ui,sans-serif;color:#1e293b;padding:16px;min-width:240px;line-height:1.6">
+              <div style="font-size:16px;font-weight:900;color:#0d9488;margin-bottom:10px;border-bottom:2px solid #0d9488;padding-bottom:8px;display:flex;align-items:center;gap:6px">
+                <span style="font-size:18px">📍</span> ${p.zone_id} — HSR Layout
+              </div>
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:13px;margin-bottom:12px">
+                <span>🏢</span><span>Buildings: <b style="color:#1e293b">${p.buildings}</b></span>
+                <span>👥</span><span>Population: <b style="color:#1e293b">${p.population}</b></span>
+                <span>🗑️</span><span>Daily Waste: <b style="color:#ea580c">${p.waste_total_tons} T</b></span>
+                <span>🌊</span><span>Wet: <b style="color:#0ea5e9">${p.wet_waste} T</b> → Bio-meth</span>
+                <span>♻️</span><span>Dry: <b style="color:#16a34a">${p.dry_waste} T</b> → DWCC</span>
+              </div>
+              <div style="background:${riskBg};border:1.5px solid ${riskColor};border-radius:8px;padding:8px 12px;text-align:center;font-size:13px;font-weight:800">
+                ⚠️ Risk Level: <span style="color:${riskColor};font-size:14px">${p.risk_level}</span>
+              </div>
             </div>
           `)
           .addTo(map.current!);

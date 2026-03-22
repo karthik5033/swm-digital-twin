@@ -12,12 +12,10 @@ const MAIN_LINKS = [
   { href: '/osm', label: 'OSM' },
   { href: '/simulation', label: 'Simulation' },
   { href: '/routes', label: 'Routes' },
-  { href: '/vehicle-sim', label: '🚛 Vehicle Sim' },
   { href: '/forecast', label: '🔮 Forecast' },
   { href: '/methodology', label: 'Methodology' },
   { href: '/impact', label: 'Impact' },
   { href: '/wards', label: 'Wards' },
-  { href: '/report', label: 'Report' },
 ];
 
 const FEATURES_LINKS = [
@@ -97,31 +95,13 @@ export default function Navbar() {
   const isFeaturesActive = FEATURES_LINKS.some(l => pathname === l.href);
 
   return (
+    <>
     <nav className="relative flex items-center justify-between p-4 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50">
-      {/* LEFT: Logo + API badge + Dark mode toggle */}
+      {/* LEFT: Logo */}
       <div className="flex items-center gap-2">
         <Link href="/" onClick={() => setIsOpen(false)} className="font-extrabold text-2xl tracking-tight text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-2">
           <span className="text-xl">🛰️</span> AstraCity
         </Link>
-
-        {/* API Status Badge — next to logo */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border-slate-300 border font-medium text-xs ml-2">
-          <span className={`w-2 h-2 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500 animate-pulse' : apiStatus === 'checking' ? 'bg-amber-500' : 'bg-red-500'}`}></span>
-          <span className="text-slate-600">
-            {apiStatus === 'online' ? 'API Online' : apiStatus === 'checking' ? 'Checking...' : 'API Offline'}
-          </span>
-        </div>
-
-        {/* Dark Mode Toggle — between brand and nav */}
-        <button 
-          onClick={toggleTheme} 
-          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors text-slate-600 ml-1"
-          aria-label="Toggle dark mode"
-        >
-          <motion.div initial={false} animate={{ rotate: isDark ? 180 : 0 }} transition={{ duration: 0.5, ease: "backOut" }}>
-            {isDark ? <span className="text-xl">☀️</span> : <span className="text-xl">🌙</span>}
-          </motion.div>
-        </button>
       </div>
       
       <div className="flex items-center gap-2 md:gap-6">
@@ -236,74 +216,77 @@ export default function Navbar() {
           )}
         </AnimatePresence>
       </div>
-
-      {/* ⓘ Data Sources Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-slate-100/60 backdrop-blur-sm cursor-pointer"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-slate-100 border border-slate-300 rounded-3xl shadow-lg z-10 p-6 sm:p-8"
-            >
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors"
-              >
-                ✕
-              </button>
-
-              <h2 className="text-2xl font-black text-slate-900 mb-6 pr-10">Data Sources & Methodology</h2>
-              
-              <div className="overflow-x-auto border border-slate-200 rounded-2xl mb-8">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-100/80 text-slate-600">
-                    <tr>
-                      <th className="px-5 py-3 font-extrabold uppercase tracking-widest text-[11px]">Data Point</th>
-                      <th className="px-5 py-3 font-extrabold uppercase tracking-widest text-[11px]">Value</th>
-                      <th className="px-5 py-3 font-extrabold uppercase tracking-widest text-[11px]">Source</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 font-medium text-slate-500">
-                    {[
-                      { point: 'Area', val: '18.5 sq km', src: 'OSM boundary' },
-                      { point: 'Buildings', val: '9,471', src: 'OpenStreetMap' },
-                      { point: 'Building density', val: '512/sq km', src: 'Calculated' },
-                      { point: 'Road segments', val: '2,027', src: 'OpenStreetMap' },
-                      { point: 'Road density', val: '110/sq km', src: 'Calculated' },
-                      { point: 'Truck roads', val: '352 (17.4%)', src: 'OSM road types' },
-                      { point: 'Auto roads', val: '1,579 (77.9%)', src: 'OSM road types' },
-                      { point: 'Population', val: '46,219', src: 'Buildings×Census 2011 Karnataka' },
-                      { point: 'Per capita', val: '0.5 kg/day', src: 'CPCB large city official' },
-                      { point: 'Daily waste', val: '23.1 Tons', src: '46,219 × 0.5kg' },
-                      { point: `Wet ${HSR_DATA.waste_wet_pct}%`, val: `${HSR_DATA.waste_wet_tons}T`, src: 'BBMP Chemical Analysis' },
-                      { point: `Dry ${HSR_DATA.waste_dry_pct}%`, val: `${HSR_DATA.waste_dry_tons}T`, src: 'CPCB 59-cities' },
-                      { point: `Hazardous ${HSR_DATA.waste_hazardous_pct}%`, val: `${HSR_DATA.waste_hazardous_tons}T`, src: 'BBMP guidelines' },
-                      { point: 'Route saving', val: '75.5%', src: 'NetworkX VRP' },
-                      { point: 'Collection schedule', val: 'Daily/2×wk', src: 'hsrcitizenforum.in' },
-                      { point: 'Wet routing', val: '→ Bio-meth', src: 'ceeindia.org/hsr-swm' },
-                    ].map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-100/30">
-                        <td className="px-5 py-3 text-slate-200 font-semibold">{row.point}</td>
-                        <td className="px-5 py-3 font-mono text-teal-600">{row.val}</td>
-                        <td className="px-5 py-3">{row.src}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </nav>
+
+    {/* ⓘ Data Sources Modal — OUTSIDE nav for proper centering */}
+    <AnimatePresence>
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            onClick={() => setIsModalOpen(false)}
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative max-w-2xl w-full max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl z-10 p-6 sm:p-8"
+            style={{ margin: 'auto' }}
+          >
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-2xl font-black text-slate-900 mb-6 pr-10">Data Sources & Methodology</h2>
+            
+            <div className="overflow-x-auto border border-slate-200 rounded-2xl">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="px-5 py-3.5 font-extrabold uppercase tracking-widest text-[11px]">Data Point</th>
+                    <th className="px-5 py-3.5 font-extrabold uppercase tracking-widest text-[11px]">Value</th>
+                    <th className="px-5 py-3.5 font-extrabold uppercase tracking-widest text-[11px]">Source</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-sm">
+                  {[
+                    { point: 'Area', val: '18.5 sq km', src: 'OSM boundary' },
+                    { point: 'Buildings', val: '9,471', src: 'OpenStreetMap' },
+                    { point: 'Building density', val: '512/sq km', src: 'Calculated' },
+                    { point: 'Road segments', val: '2,027', src: 'OpenStreetMap' },
+                    { point: 'Road density', val: '110/sq km', src: 'Calculated' },
+                    { point: 'Truck roads', val: '352 (17.4%)', src: 'OSM road types' },
+                    { point: 'Auto roads', val: '1,579 (77.9%)', src: 'OSM road types' },
+                    { point: 'Population', val: '46,219', src: 'Buildings×Census 2011 Karnataka' },
+                    { point: 'Per capita', val: '0.5 kg/day', src: 'CPCB large city official' },
+                    { point: 'Daily waste', val: '23.1 Tons', src: '46,219 × 0.5kg' },
+                    { point: `Wet ${HSR_DATA.waste_wet_pct}%`, val: `${HSR_DATA.waste_wet_tons}T`, src: 'BBMP Chemical Analysis' },
+                    { point: `Dry ${HSR_DATA.waste_dry_pct}%`, val: `${HSR_DATA.waste_dry_tons}T`, src: 'CPCB 59-cities' },
+                    { point: `Hazardous ${HSR_DATA.waste_hazardous_pct}%`, val: `${HSR_DATA.waste_hazardous_tons}T`, src: 'BBMP guidelines' },
+                    { point: 'Route saving', val: '75.5%', src: 'NetworkX VRP' },
+                    { point: 'Collection schedule', val: 'Daily/2×wk', src: 'hsrcitizenforum.in' },
+                    { point: 'Wet routing', val: '→ Bio-meth', src: 'ceeindia.org/hsr-swm' },
+                  ].map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
+                      <td className="px-5 py-3 text-slate-800 font-semibold">{row.point}</td>
+                      <td className="px-5 py-3 font-mono text-teal-600 font-bold">{row.val}</td>
+                      <td className="px-5 py-3 text-slate-500">{row.src}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
