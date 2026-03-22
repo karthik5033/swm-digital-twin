@@ -91,13 +91,20 @@ export default function Navbar() {
 
   const isActive = (href: string) => pathname === href;
   const isFeaturesActive = FEATURES_LINKS.some(l => pathname === l.href);
+  const isHome = pathname === '/';
 
   return (
     <>
-    <nav className="relative flex items-center justify-between p-4 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50">
+    <nav className={`relative flex items-center justify-between p-4 border-b sticky top-0 z-50 transition-colors ${
+      isHome 
+        ? 'border-white/10 bg-[#000814]/80 backdrop-blur-md' 
+        : 'border-slate-200 bg-white/95 backdrop-blur-md'
+    }`}>
       {/* LEFT: Logo */}
       <div className="flex items-center gap-2">
-        <Link href="/" onClick={() => setIsOpen(false)} className="font-extrabold text-2xl tracking-tight text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-2">
+        <Link href="/" onClick={() => setIsOpen(false)} className={`font-extrabold text-2xl tracking-tight transition-colors flex items-center gap-2 ${
+          isHome ? 'text-teal-400 hover:text-teal-300' : 'text-teal-600 hover:text-teal-500'
+        }`}>
           <span className="text-xl">🛰️</span> AstraCity
         </Link>
       </div>
@@ -105,12 +112,16 @@ export default function Navbar() {
       <div className="flex items-center gap-2 md:gap-6">
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-500">
+        <div className={`hidden md:flex items-center gap-1 text-sm font-medium ${isHome ? 'text-white/70' : 'text-slate-500'}`}>
           {MAIN_LINKS.map(link => (
             <Link 
               key={link.href}
               href={link.href} 
-              className={`px-3 py-1.5 rounded-lg transition-all duration-200 ${isActive(link.href) ? 'text-slate-900 font-bold bg-slate-100/60' : 'hover:text-slate-900 hover:bg-slate-100/40'}`}
+              className={`px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                isActive(link.href) 
+                  ? (isHome ? 'text-white font-bold bg-white/10' : 'text-slate-900 font-bold bg-slate-100/60') 
+                  : (isHome ? 'hover:text-white hover:bg-white/5' : 'hover:text-slate-900 hover:bg-slate-100/40')
+              }`}
             >
               {link.label}
             </Link>
@@ -122,8 +133,8 @@ export default function Navbar() {
               onClick={() => setFeaturesOpen(!featuresOpen)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all duration-200 ${
                 isFeaturesActive || featuresOpen 
-                  ? 'text-slate-900 font-bold bg-slate-100/60' 
-                  : 'hover:text-slate-900 hover:bg-slate-100/40'
+                  ? (isHome ? 'text-white font-bold bg-white/10' : 'text-slate-900 font-bold bg-slate-100/60') 
+                  : (isHome ? 'hover:text-white hover:bg-white/5' : 'hover:text-slate-900 hover:bg-slate-100/40')
               }`}
             >
               Features
@@ -169,8 +180,12 @@ export default function Navbar() {
           {/* ⓘ Info Button — VERY LAST after all links */}
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="ml-2 w-7 h-7 rounded-full flex items-center justify-center transition-colors text-sm font-bold text-slate-600 hover:bg-slate-100"
-            style={{ border: '1.5px solid #cbd5e1', fontSize: '14px', width: '28px', height: '28px' }}
+            className={`ml-2 rounded-full flex items-center justify-center transition-colors text-sm font-bold ${
+              isHome 
+                ? 'text-white/70 hover:bg-white/10 hover:text-white' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+            style={{ border: isHome ? '1.5px solid rgba(255,255,255,0.2)' : '1.5px solid #cbd5e1', fontSize: '14px', width: '28px', height: '28px' }}
             aria-label="Data Sources"
           >
             ⓘ
@@ -178,7 +193,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Hamburger */}
-        <button className="md:hidden text-slate-600 p-2" onClick={() => setIsOpen(!isOpen)}>
+        <button className={`md:hidden p-2 ${isHome ? 'text-white' : 'text-slate-600'}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           ) : (

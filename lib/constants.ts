@@ -99,7 +99,7 @@ export const HSR_DATA = {
 
   // Satellite/LULC
   dump_sites: 29,
-  dump_sites_detected: 29,
+  dump_sites_detected: 4,
   dump_high: 10,
   high_risk_dumps: 10,
   dump_medium: 3,
