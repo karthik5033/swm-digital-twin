@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+import { HSR_DATA } from '@/lib/constants';
+
 const fadeInUp: any = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
@@ -10,8 +12,8 @@ const fadeInUp: any = {
 
 export default function EconomicsPage() {
   // --- LIVE CALCULATOR STATE ---
-  const [distBefore, setDistBefore] = useState(100);
-  const [distAfter, setDistAfter] = useState(75);
+  const [distBefore, setDistBefore] = useState(HSR_DATA.route_baseline_km);
+  const [distAfter, setDistAfter] = useState(HSR_DATA.route_optimized_km);
   const [mileage, setMileage] = useState(5);
   const [fuelPrice, setFuelPrice] = useState(100);
 
