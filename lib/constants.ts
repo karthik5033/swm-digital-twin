@@ -8,44 +8,44 @@ export const HSR_DATA = {
   sectors: 7,
 
   // Population
-  population: 46219,
+  population: 110000,
   population_houses: 35992,
-  population_apts: 7500,
+  population_apts: 71000,
   population_offices: 585,
   population_hospitals: 100,
   population_schools: 2250,
   population_others: 90,
   population_source: 'Buildings × Census 2011 Karnataka',
-  population_building_based: 46219,
+  population_building_based: 110000,
 
   // Waste
   waste_per_capita: 0.5,
   waste_per_capita_kg: 0.5,
-  waste_daily_tons: 23.11,
-  daily_waste_tons: 23.11, // Missing Alias Fixed
-  waste_daily_kg: 23110,
-  daily_waste_kg: 23110,
-  waste_display: '23.1 tons/day',
-  waste_daily_display: '23.1 tons/day',
-  daily_waste_display: '23.1 tons/day',
+  waste_daily_tons: 55,
+  daily_waste_tons: 55,
+  waste_daily_kg: 55000,
+  daily_waste_kg: 55000,
+  waste_display: '55 tons/day',
+  waste_daily_display: '55 tons/day',
+  daily_waste_display: '55 tons/day',
   
-  waste_wet_tons: 14.1,
+  waste_wet_tons: 33.55,
   waste_wet_pct: 61,
-  waste_wet_kg: 14100,
+  waste_wet_kg: 33550,
   
-  waste_dry_tons: 6.93,
+  waste_dry_tons: 16.5,
   waste_dry_pct: 30,
-  waste_dry_kg: 6933,
+  waste_dry_kg: 16500,
   
-  waste_haz_tons: 1.16,
-  waste_hazardous_tons: 1.16,
+  waste_haz_tons: 2.75,
+  waste_hazardous_tons: 2.75,
   waste_haz_pct: 5,
   waste_hazardous_pct: 5,
-  waste_hazardous_kg: 1156,
+  waste_hazardous_kg: 2750,
   
-  waste_other_tons: 0.92,
+  waste_other_tons: 2.2,
   waste_other_pct: 4,
-  waste_other_kg: 924,
+  waste_other_kg: 2200,
   
   waste_diversion_pct: 80,
   waste_source: 'BBMP 2013 Chemical Analysis',
@@ -98,7 +98,7 @@ export const HSR_DATA = {
   dumpyards: 0,
 
   // Satellite/LULC
-  dump_sites: 29,
+  dump_sites: 4,
   dump_sites_detected: 4,
   dump_high: 10,
   high_risk_dumps: 10,
@@ -176,7 +176,7 @@ export const HSR_DATA = {
   // Legacy Breakdown for backward compatibility
   population_breakdown: {
     houses:     { count: 8998, per_unit: 4,   total: 35992 },
-    apartments: { count: 250,  per_unit: 30,  total: 7500  },
+    apartments: { count: 250,  per_unit: 284, total: 71000 },
     offices:    { count: 39,   per_unit: 15,  total: 585   },
     hospitals:  { count: 2,    per_unit: 50,  total: 100   },
     schools:    { count: 15,   per_unit: 150, total: 2250  },
