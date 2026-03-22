@@ -428,7 +428,7 @@ export default function AnalysisPage() {
                     </ResponsiveContainer>
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <div className="text-center">
-                        <div className="text-2xl font-black text-slate-900">23.1</div>
+                        <div className="text-2xl font-black text-slate-900">55</div>
                         <div className="text-xs text-slate-600">T/day</div>
                       </div>
                     </div>
@@ -522,9 +522,9 @@ export default function AnalysisPage() {
                 <div className="flex justify-center mb-4">
                   <div className="bg-slate-50 border-2 border-teal-500 rounded-2xl px-8 py-4 text-center min-w-[220px]">
                     <div className="text-teal-600 font-bold text-xs uppercase tracking-widest mb-2">Generation</div>
-                    <div className="text-slate-900 font-bold">46,219 residents</div>
+                    <div className="text-slate-900 font-bold">1,10,000 residents</div>
                     <div className="text-slate-600 text-sm">× 0.5 kg/day (CPCB)</div>
-                    <div className="text-amber-600 font-black text-2xl mt-1">23.1 tons/day</div>
+                    <div className="text-amber-600 font-black text-2xl mt-1">55 tons/day</div>
                   </div>
                 </div>
 
@@ -655,7 +655,7 @@ export default function AnalysisPage() {
                     </thead>
                     <tbody className="divide-y divide-slate-200">
                       {[
-                        { metric: 'Daily waste',       hsr: '23.1T',  blr: '3,250T' },
+                        { metric: 'Daily waste',       hsr: '55T',  blr: '3,250T' },
                         { metric: 'DWCCs',             hsr: '16',     blr: '164' },
                         { metric: 'Waste segregated',  hsr: '80%',    blr: '47%' },
                         { metric: 'Open dumpyards',    hsr: '0 ✔',    blr: 'Multiple' },

@@ -370,7 +370,7 @@ export default function Home() {
            transition={{ duration: 0.8, delay: 0.6 }}
            className="text-lg md:text-xl max-w-3xl mb-16 leading-relaxed text-slate-300 font-medium"
         >
-          Satellite + Census intelligence for HSR Layout&apos;s 46,219 residents across 7 sectors, 18.5 sq km, 9,471 buildings.
+          Satellite + Census intelligence for HSR Layout&apos;s 1,10,000 residents across 7 sectors, 18.5 sq km, 9,471 buildings.
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-20">

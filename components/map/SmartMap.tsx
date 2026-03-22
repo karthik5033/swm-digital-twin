@@ -956,8 +956,8 @@ export default function SmartMap() {
                     <span>35,992</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
-                    <span>Apartments 250 × 30:</span>
-                    <span>7,500</span>
+                    <span>Apartments 250 × 284:</span>
+                    <span>71,000</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
                     <span>Others (offices/etc):</span>
@@ -984,19 +984,19 @@ export default function SmartMap() {
                 <div className="space-y-1 border-b border-slate-800 pb-2">
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">🟢</span> Wet 61%:</span>
-                    <span className="font-mono text-slate-400">14,100 kg</span>
+                    <span className="font-mono text-slate-400">33,550 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">🔵</span> Dry 30%:</span>
-                    <span className="font-mono text-slate-400">6,933 kg</span>
+                    <span className="font-mono text-slate-400">16,500 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">🔴</span> Haz 5%:</span>
-                    <span className="font-mono text-slate-400">1,156 kg</span>
+                    <span className="font-mono text-slate-400">2,750 kg</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5"><span className="text-[10px]">⚪</span> Other 4%:</span>
-                    <span className="font-mono text-slate-400">921 kg</span>
+                    <span className="font-mono text-slate-400">2,200 kg</span>
                   </div>
                 </div>
                 <div className="text-[10px] text-slate-500 pt-1 leading-relaxed">

@@ -217,7 +217,7 @@ export default function SimulationPanel() {
                 <div className="flex justify-between"><span className="text-slate-500">Population:</span> <span className="text-slate-800 font-bold">{HSR_DATA.population.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500">Method:</span> <span className="text-slate-600">Buildings × household size</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Houses:</span> <span className="text-slate-600">8,998 × 4.0 = {HSR_DATA.population_houses.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-600">250 × 30 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Apts:</span> <span className="text-slate-600">250 × 284 = {HSR_DATA.population_apts.toLocaleString()}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Offices:</span> <span className="text-slate-600">39 × 15 = {HSR_DATA.population_offices}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Hospitals:</span> <span className="text-slate-600">2 × 50 = {HSR_DATA.population_hospitals}</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Schools:</span> <span className="text-slate-600">15 × 150 = {HSR_DATA.population_schools.toLocaleString()}</span></div>
@@ -237,9 +237,9 @@ export default function SimulationPanel() {
               </div>
               <div className="mb-2">
                 <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.waste_daily_tons}T base:</div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-600">23.1 × 1.15 = 26.6T</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Festival:</span> <span className="text-slate-600">23.1 × 1.28 = 29.6T</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-600">23.1 × 1.49 = 34.4T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-600">55 × 1.15 = 63.3T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Festival:</span> <span className="text-slate-600">55 × 1.28 = 70.4T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-600">55 × 1.49 = 81.9T</span></div>
               </div>
               <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-200">Source: CPCB + Census 2011 Karnataka</div>
 
