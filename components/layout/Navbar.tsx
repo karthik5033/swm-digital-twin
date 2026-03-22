@@ -14,8 +14,6 @@ const MAIN_LINKS = [
   { href: '/routes', label: 'Routes' },
   { href: '/forecast', label: '🔮 Forecast' },
   { href: '/methodology', label: 'Methodology' },
-  { href: '/impact', label: 'Impact' },
-  { href: '/wards', label: 'Wards' },
 ];
 
 const FEATURES_LINKS = [
@@ -157,7 +155,7 @@ export default function Navbar() {
                       >
                         <div className="text-2xl mt-0.5 grayscale group-hover:grayscale-0 transition-all">{link.icon}</div>
                         <div>
-                          <div className={`text-sm font-bold mb-0.5 ${isActive(link.href) ? 'text-teal-600' : 'text-slate-200 group-hover:text-teal-600'} transition-colors`}>{link.label}</div>
+                          <div className={`text-sm font-bold mb-0.5 ${isActive(link.href) ? 'text-teal-600' : 'text-slate-700 group-hover:text-teal-600'} transition-colors`}>{link.label}</div>
                           <div className="text-xs text-slate-500 font-medium">{link.desc}</div>
                         </div>
                       </Link>
