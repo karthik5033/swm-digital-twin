@@ -67,7 +67,7 @@ const LAYERS: LayerConfig[] = [
 
   // DATA
   { id: 'zone-grid',   label: 'Zone Grid',   color: '#fb923c', defaultOn: false, category: 'DATA' },
-
+  { id: 'openspaces',  label: 'Open Spaces',  color: '#22c55e', defaultOn: false, category: 'DATA' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
