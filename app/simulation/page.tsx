@@ -238,7 +238,7 @@ export default function SimulationPanel() {
               <div className="mb-2">
                 <div className="text-teal-500 font-bold mb-1">Scenarios from {HSR_DATA.waste_daily_tons}T base:</div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Heavy rain:</span> <span className="text-slate-600">23.1 × 1.15 = 26.6T</span></div>
-                <div className="flex justify-between"><span className="text-slate-500 ml-2">Ganesh festival:</span> <span className="text-slate-600">23.1 × 1.28 = 29.6T</span></div>
+                <div className="flex justify-between"><span className="text-slate-500 ml-2">Festival:</span> <span className="text-slate-600">23.1 × 1.28 = 29.6T</span></div>
                 <div className="flex justify-between"><span className="text-slate-500 ml-2">Worst case:</span> <span className="text-slate-600">23.1 × 1.49 = 34.4T</span></div>
               </div>
               <div className="text-[10px] text-slate-500 text-right mt-2 pt-2 border-t border-slate-200">Source: CPCB + Census 2011 Karnataka</div>
