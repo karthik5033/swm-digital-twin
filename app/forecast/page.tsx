@@ -3,17 +3,16 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine
-} from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
+import { HSR_DATA } from '@/lib/constants';
 
 export default function ForecastPage() {
-  const BASE_WET = 11.86; // 60% of 19.78T
-  const BASE_DRY = 5.94;  // 30% of 19.78T
-  const BASE_HAZ = 1.98;  // 10% of 19.78T
+  const BASE_WET = HSR_DATA.waste_wet_tons; 
+  const BASE_DRY = HSR_DATA.waste_dry_tons;  
+  const BASE_HAZ = HSR_DATA.waste_haz_tons;  
 
-  const CAP_WET = 14.5;
-  const CAP_DRY = 7.5;
+  const CAP_WET = Number((BASE_WET * 1.25).toFixed(1)); // Buffet limit
+  const CAP_DRY = Number((BASE_DRY * 1.25).toFixed(1));
 
   // Initialize 10 days with basic static calendar defaults
   const initialDays = Array.from({ length: 10 }, (_, i) => {
