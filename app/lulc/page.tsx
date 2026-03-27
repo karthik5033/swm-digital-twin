@@ -196,7 +196,7 @@ export default function LulcAnalysisPage() {
                     <Tooltip 
                       cursor={{fill: 'rgba(0,0,0,0.05)'}}
                       contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', color: '#0f172a', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                      formatter={(val: number) => [`${val}%`, 'Coverage']}
+                      formatter={(val: number | string | (string | number)[] | undefined) => [`${val ?? ''}%`, 'Coverage']}
                     />
                     <Bar dataKey="pct" radius={[0, 4, 4, 0]} maxBarSize={40}>
                       {chartData.map((entry, index) => (
