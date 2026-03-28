@@ -54,10 +54,6 @@
   border-color: rgba(0, 0, 0, 0.05) !important;
 }
 
-.maplibregl-ctrl-group button span {
-  /* No invert for light map */
-}
-
 /* Hide default mapbox attribution for cleaner look */
 .maplibregl-ctrl-attrib {
   opacity: 0.3;
