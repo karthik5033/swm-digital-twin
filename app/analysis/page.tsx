@@ -232,7 +232,7 @@ export default function AnalysisPage() {
                         </Pie>
                         <RechartsTooltip 
                           contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '12px' }}
-                          formatter={(value: number | string) => [`${value}%`]}
+                          formatter={((value: any) => [`${value}%`]) as any}
                         />
                         <Legend />
                       </PieChart>
