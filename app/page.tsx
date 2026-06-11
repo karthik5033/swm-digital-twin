@@ -30,212 +30,6 @@ function useCounter(target: number, duration = 2.2, decimals = 0) {
   return display;
 }
 
-// ============================================
-// SPACE BACKGROUND CANVAS
-// ============================================
-function SpaceBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let raf: number;
-    let W = window.innerWidth;
-    let H = window.innerHeight;
-
-    const resize = () => {
-      W = window.innerWidth;
-      H = window.innerHeight;
-      canvas.width = W;
-      canvas.height = H;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Stars
-    const stars = Array.from({ length: 300 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.5 + 0.3,
-      twinkle: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.02 + 0.005,
-    }));
-
-    // Satellites
-    const makeSat = (y: number, dx: number, dy: number, color: string) => ({
-      x: dx > 0 ? -50 : W + 50,
-      y,
-      dx,
-      dy,
-      trail: [] as { x: number; y: number }[],
-      color,
-    });
-
-    const satellites = [
-      makeSat(H * 0.18, 0.8, 0.1, 'teal'),
-      makeSat(H * 0.55, -0.6, -0.15, 'white'),
-      makeSat(H * 0.78, 1.2, -0.3, 'blue'),
-    ];
-
-    const satColors: Record<string, (a: number) => string> = {
-      teal: (a) => `rgba(0,212,170,${a})`,
-      white: (a) => `rgba(255,255,255,${a})`,
-      blue: (a) => `rgba(96,165,250,${a})`,
-    };
-
-    // Data detection points
-    interface DataPt {
-      x: number; y: number; opacity: number; growing: boolean; label: string;
-    }
-    const dataPoints: DataPt[] = [];
-    const labels = ['DUMP DETECTED', 'SCANNING...', 'ANOMALY FOUND', 'PROCESSING...'];
-
-    let scanY = 0;
-    let frame = 0;
-
-    const draw = () => {
-      ctx.clearRect(0, 0, W, H);
-
-      // Deep space gradient
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#000814');
-      bg.addColorStop(0.5, '#001a2e');
-      bg.addColorStop(1, '#002a1a');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, W, H);
-
-      // Earth glow bottom
-      const eg = ctx.createRadialGradient(W / 2, H + 200, 100, W / 2, H + 200, 600);
-      eg.addColorStop(0, 'rgba(13,148,136,0.4)');
-      eg.addColorStop(0.5, 'rgba(5,150,105,0.15)');
-      eg.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = eg;
-      ctx.fillRect(0, 0, W, H);
-
-      // Stars
-      for (const s of stars) {
-        s.twinkle += s.speed;
-        const a = Math.sin(s.twinkle) * 0.4 + 0.6;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${a})`;
-        ctx.fill();
-      }
-
-      // Grid lines
-      ctx.strokeStyle = 'rgba(0,212,170,0.03)';
-      ctx.lineWidth = 0.5;
-      for (let x = 0; x < W; x += 80) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, H);
-        ctx.stroke();
-      }
-      for (let y = 0; y < H; y += 80) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(W, y);
-        ctx.stroke();
-      }
-
-      // Scan line
-      scanY += 1.5;
-      if (scanY > H) scanY = 0;
-      const sg = ctx.createLinearGradient(0, scanY - 20, 0, scanY + 20);
-      sg.addColorStop(0, 'rgba(0,212,170,0)');
-      sg.addColorStop(0.5, 'rgba(0,212,170,0.08)');
-      sg.addColorStop(1, 'rgba(0,212,170,0)');
-      ctx.fillStyle = sg;
-      ctx.fillRect(0, scanY - 20, W, 40);
-
-      // Satellites
-      for (const sat of satellites) {
-        sat.x += sat.dx;
-        sat.y += sat.dy;
-        if (sat.dx > 0 && sat.x > W + 100) { sat.x = -50; sat.trail = []; }
-        if (sat.dx < 0 && sat.x < -100) { sat.x = W + 50; sat.trail = []; }
-
-        sat.trail.push({ x: sat.x, y: sat.y });
-        if (sat.trail.length > 40) sat.trail.shift();
-
-        const colorFn = satColors[sat.color];
-        for (let i = 0; i < sat.trail.length; i++) {
-          const a = (i / sat.trail.length) * 0.6;
-          ctx.beginPath();
-          ctx.arc(sat.trail[i].x, sat.trail[i].y, 0.8, 0, Math.PI * 2);
-          ctx.fillStyle = colorFn(a);
-          ctx.fill();
-        }
-
-        ctx.beginPath();
-        ctx.arc(sat.x, sat.y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = colorFn(1);
-        ctx.fill();
-
-        const glow = ctx.createRadialGradient(sat.x, sat.y, 0, sat.x, sat.y, 8);
-        glow.addColorStop(0, colorFn(0.5));
-        glow.addColorStop(1, 'transparent');
-        ctx.fillStyle = glow;
-        ctx.beginPath();
-        ctx.arc(sat.x, sat.y, 8, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Spawn data points
-      frame++;
-      if (frame % 120 === 0) {
-        dataPoints.push({
-          x: Math.random() * W * 0.8 + W * 0.1,
-          y: Math.random() * H * 0.7 + H * 0.1,
-          opacity: 0,
-          growing: true,
-          label: labels[Math.floor(Math.random() * labels.length)],
-        });
-      }
-
-      // Draw data points
-      for (let i = dataPoints.length - 1; i >= 0; i--) {
-        const pt = dataPoints[i];
-        if (pt.growing) { pt.opacity += 0.02; if (pt.opacity >= 1) pt.growing = false; }
-        else { pt.opacity -= 0.01; }
-
-        if (pt.opacity <= 0) { dataPoints.splice(i, 1); continue; }
-
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, 6, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0,212,170,${pt.opacity})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,212,170,${pt.opacity})`;
-        ctx.fill();
-
-        ctx.font = '9px monospace';
-        ctx.fillStyle = `rgba(0,212,170,${pt.opacity * 0.8})`;
-        ctx.fillText(pt.label, pt.x + 12, pt.y - 8);
-
-        ctx.font = '8px monospace';
-        ctx.fillStyle = `rgba(0,212,170,${pt.opacity * 0.5})`;
-        ctx.fillText(`${(12.89 + Math.random() * 0.04).toFixed(4)}°N`, pt.x + 12, pt.y + 4);
-      }
-
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} aria-hidden="true" />;
-}
 
 // ============================================
 // FLOATING SCAN TEXT (bottom-left)
@@ -296,7 +90,7 @@ function StatCard({ value, prefix, suffix, label, subtext, delay }: { value: str
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay, ease: [0.22, 0.61, 0.36, 1] }}
-      className="flex flex-col items-center px-8 py-6 rounded-3xl min-w-[220px] bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all text-center group"
+      className="flex flex-col items-center px-8 py-6 rounded-3xl min-w-[220px] bg-black/40 border border-white/10 backdrop-blur-xl hover:bg-black/50 hover:border-white/20 transition-all text-center group shadow-2xl"
     >
       <span className="text-4xl md:text-5xl font-black tabular-nums tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-teal-400 to-emerald-300 mb-1 group-hover:scale-105 transition-transform" style={{ fontFamily: 'var(--font-space-mono)' }}>
         {prefix}{value}{suffix}
@@ -305,7 +99,7 @@ function StatCard({ value, prefix, suffix, label, subtext, delay }: { value: str
         {label}
       </span>
       {subtext && (
-        <span className="mt-1.5 text-[11px] font-medium text-slate-400 max-w-[180px] leading-relaxed">
+        <span className="mt-1.5 text-[11px] font-medium text-slate-200 max-w-[180px] leading-relaxed">
           {subtext}
         </span>
       )}
@@ -331,11 +125,26 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col font-sans" style={{ background: '#000814' }}>
-      <SpaceBackground />
+      {/* Cinematic Background Video with Vignette Overlays */}
+      <div className="fixed inset-0 z-0 w-full h-full overflow-hidden pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute min-w-full min-h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-105"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Overlays to ensure text visibility */}
+        <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000814]/80 via-[#000814]/20 to-[#000814]/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000814] via-transparent to-transparent opacity-90" />
+      </div>
       <ScanText />
 
       {/* Hero Section */}
-      <section className="relative z-10 flex flex-col items-center px-6 pt-32 pb-24 max-w-6xl mx-auto text-center">
+      <section className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 pb-16 min-h-[75vh] max-w-7xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -350,9 +159,9 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-6"
+          className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-6 drop-shadow-2xl"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-br from-white via-teal-200 to-teal-400">AstraCity</span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-br from-white via-teal-100 to-teal-400">AstraCity</span>
         </motion.h1>
 
         <motion.p
@@ -368,7 +177,7 @@ export default function Home() {
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
            transition={{ duration: 0.8, delay: 0.6 }}
-           className="text-lg md:text-xl max-w-3xl mb-16 leading-relaxed text-slate-300 font-medium"
+           className="text-lg md:text-xl max-w-3xl mb-16 leading-relaxed text-slate-100 font-semibold drop-shadow-md"
         >
           Satellite + Census intelligence for HSR Layout&apos;s 1,10,000 residents across 7 sectors, 18.5 sq km, 9,471 buildings.
         </motion.p>
@@ -396,42 +205,81 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-white/5 border border-white/10 p-10 rounded-[2rem] backdrop-blur-sm hover:-translate-y-2 hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300 group"
+              className="bg-black/40 border border-white/10 p-10 rounded-[2rem] backdrop-blur-xl hover:-translate-y-2 hover:bg-black/60 hover:border-teal-500/50 shadow-2xl transition-all duration-300 group"
             >
               <div className="text-5xl mb-6 grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110 origin-left">{f.icon}</div>
               <h3 className="text-2xl font-black text-white mb-3 tracking-tight">{f.title}</h3>
-              <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium">{f.desc}</p>
+              <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium">{f.desc}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Interactive Ward Map Preview */}
+      {/* Premium Intelligence Matrix */}
       <section className="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full flex flex-col items-center">
         <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Live Governance Grid</h2>
-          <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">Sample visualization of ward risk scoring. Lower score alerts require immediate intervention.</p>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Live Intelligence Matrix</h2>
+          <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto font-semibold drop-shadow-md">Real-time geospatial risk analysis and automated threat detection.</p>
         </div>
 
-        <div className="flex flex-wrap gap-2.5 justify-center max-w-3xl bg-white/5 p-12 rounded-[3rem] border border-white/10 backdrop-blur-sm relative overflow-hidden">
-          {wardScoresData.map((ward: { id: string | number; score: number; name: string }, index: number) => {
-             let colorClass = 'bg-emerald-500 shadow-emerald-500/30'; 
-             if (ward.score <= 40) colorClass = 'bg-rose-500 animate-pulse shadow-rose-500/60 ring-2 ring-rose-300'; 
-             else if (ward.score <= 70) colorClass = 'bg-amber-500 shadow-amber-500/30'; 
-
-             return (
-               <motion.div
-                 key={ward.id}
-                 initial={{ opacity: 0, scale: 0 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: index * 0.02 }}
-                 whileHover={{ scale: 1.4, zIndex: 10, borderRadius: '50%' }}
-                 className={`w-12 h-12 rounded-xl cursor-help border border-white/20 shadow-lg ${colorClass} relative z-10 transition-all duration-200`}
-                 title={`${ward.name} \nScore: ${ward.score}`}
-               />
-             )
-          })}
+        <div className="w-full max-w-5xl bg-black/60 p-1 rounded-2xl border border-white/10 backdrop-blur-2xl shadow-[0_0_80px_rgba(0,0,0,0.8)] overflow-hidden">
+          {/* Terminal Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
+            <div className="flex items-center gap-3">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+              </div>
+              <span className="text-xs font-mono text-slate-400 tracking-widest uppercase ml-4 hidden sm:inline-block">System Terminal // Active</span>
+            </div>
+            <div className="flex items-center gap-2">
+               <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+               <span className="text-xs font-mono text-teal-400 tracking-widest">LIVE</span>
+            </div>
+          </div>
+          
+          {/* Terminal Body */}
+          <div className="p-2 sm:p-6 font-mono text-sm overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[600px]">
+              <thead>
+                <tr className="text-slate-500 border-b border-white/5">
+                  <th className="pb-3 pl-4 font-medium uppercase tracking-wider">Target Node</th>
+                  <th className="pb-3 font-medium uppercase tracking-wider">Coordinates</th>
+                  <th className="pb-3 font-medium uppercase tracking-wider">Threat Level</th>
+                  <th className="pb-3 pr-4 font-medium uppercase tracking-wider text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody className="text-slate-300">
+                {wardScoresData.slice(0, 5).map((ward: { id: string | number; score: number; name: string }, idx: number) => (
+                  <tr key={ward.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                    <td className="py-4 pl-4 flex items-center gap-3">
+                      <span className="text-teal-500/50 group-hover:text-teal-400 transition-colors">[{ward.id}]</span>
+                      <span className="font-semibold text-slate-200 group-hover:text-white transition-colors">{ward.name}</span>
+                    </td>
+                    <td className="py-4 text-slate-500 text-xs group-hover:text-slate-400 transition-colors">12.93{idx}4°N, 77.6{idx}2°E</td>
+                    <td className="py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-24 h-1.5 bg-black/50 rounded-full overflow-hidden">
+                           <div className={`h-full ${ward.score <= 40 ? 'bg-rose-500 w-[85%]' : ward.score <= 70 ? 'bg-amber-500 w-[55%]' : 'bg-emerald-500 w-[20%]'}`}></div>
+                        </div>
+                        <span className={`text-xs tracking-wider ${ward.score <= 40 ? 'text-rose-400' : ward.score <= 70 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                          {ward.score <= 40 ? 'CRITICAL' : ward.score <= 70 ? 'ELEVATED' : 'NOMINAL'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 pr-4 text-right">
+                       {ward.score <= 40 ? (
+                         <span className="px-2 py-1 rounded bg-rose-500/20 text-rose-400 text-[10px] uppercase tracking-wider border border-rose-500/20 animate-pulse">Action Req</span>
+                       ) : (
+                         <span className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-500 text-[10px] uppercase tracking-wider border border-emerald-500/10">Monitoring</span>
+                       )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -442,7 +290,7 @@ export default function Home() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-white/5 border border-teal-500/20 backdrop-blur-md p-12 md:p-20 rounded-[4rem] relative overflow-hidden"
+          className="bg-black/50 border border-teal-500/30 backdrop-blur-2xl p-12 md:p-20 rounded-[4rem] relative overflow-hidden shadow-2xl"
         >
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-teal-900/30 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-900/30 rounded-full blur-[100px] pointer-events-none" />
